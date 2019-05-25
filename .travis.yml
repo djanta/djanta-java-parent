@@ -1,0 +1,48 @@
+dist: xenial
+sudo: false
+language: java
+
+cache:
+  directories:
+    - $HOME/.m2
+
+jdk:
+  - openjdk8
+  - openjdk11
+
+before_install:
+  # Parameters used during release
+  - git config user.name "$GH_USER"
+  - git config user.email "$GH_USER_EMAIL"
+  # setup https authentication credentials, used by ./mvnw release:prepare
+  - git config credential.helper "store --file=.git/credentials"
+  - echo "https://$GH_TOKEN:@github.com" > .git/credentials
+
+jobs:
+  include:
+    - stage: snapshot
+      name: "Deploy Snapshot to JCenter"
+      if: branch = master AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+      jdk: openjdk8
+      install: true
+      script:
+        - ./mvnw -B -nsu -s ./travis/settings.xml -P release -pl -:djanta-benchmark -DskipTests=true deploy
+
+    - stage: release
+      name: "Release to JCenter"
+      if: tag =~ /^[0-9\.]+$/
+      jdk: openjdk8
+      install: true
+      script:
+        - ./mvnw -B -nsu -s ./travis/settings.xml -P release -pl -:djanta-benchmark -DskipTests=true deploy
+
+    - stage: sync
+      name: "Sync with Maven Central"
+      if: tag =~ /^[0-9\.]+$/
+      jdk: openjdk8
+      install: true
+      script:
+        # this step can take an inordinate amount of time, so the wait should push it to 30 minutes
+        - travis_wait 30 ./mvnw -B -nsu -s ./travis/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync
+env:
+  global:
