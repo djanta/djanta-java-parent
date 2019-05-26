@@ -28,4 +28,17 @@
             <password>${env.GH_TOKEN}</password>
         </server>
     </servers>
+
+    <profiles>
+        <profile>
+            <id>sonatype</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <gpg.passphrase>${gpg.passphrase}</gpg.passphrase>
+            </properties>
+        </profile>
+    </profiles>
+
 </settings>

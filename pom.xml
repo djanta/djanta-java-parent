@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2013-2019 - The djanta.io Authors
+    MIT License
 
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
-    in compliance with the License. You may obtain a copy of the License at
+    Copyright (c) ${license.git.copyrightYears} DJANTA, LLC (https://www.djanta.io)
 
-    http://www.apache.org/licenses/LICENSE-2.0
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
 
-    Unless required by applicable law or agreed to in writing, software distributed under the License
-    is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
-    or implied. See the License for the specific language governing permissions and limitations under
-    the License.
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -68,7 +78,21 @@
 
         <!-- BOM Generation configuration -->
         <bom-generator.version>0.14.3</bom-generator.version>
-        <bom.template.file.path>file://${project.basedir}/resource/config/bom.xml</bom.template.file.path>
+
+        <!-- openfeign version property -->
+        <io.github.openfeign.version>10.2.3</io.github.openfeign.version>
+
+        <!-- Plugin version control -->
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <com.marvinformatics.formatter.version>2.2.0</com.marvinformatics.formatter.version>
+        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
+
+        <!-- Plugins configurations section -->
+        <license-maven-plugin.header>${main.basedir}/resources/license/header.txt</license-maven-plugin.header>
+        <formatter-maven-plugin.configfile>${main.basedir}/resources/config/eclipse-java-style.xml</formatter-maven-plugin.configfile>
+        <bom.template.file.path>file://${project.basedir}/resources/config/bom.xml</bom.template.file.path>
+        <sortpom-maven-plugin.sortorderfile>resources/config/pomSortOrder.xml</sortpom-maven-plugin.sortorderfile>
     </properties>
 
     <url>https://github.com/djanta/djanta-java-parent</url>
@@ -107,6 +131,30 @@
         <url>https://github.com/djanta/djanta-java-parent/issues</url>
     </issueManagement>
 
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/
+            </url>
+        </repository>
+    </distributionManagement>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <type>pom</type>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>parent</artifactId>
+                <version>${io.github.openfeign.version}</version>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -119,11 +167,64 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <!-- openfeign dependencies -->
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-httpclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-gson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-hystrix</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson-jaxb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jaxb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-jaxrs2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.openfeign</groupId>
+            <artifactId>feign-sax</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging-maven-plugin.version}</version>
+                </plugin>
+
                 <!-- mvn -N io.takari:maven:wrapper -Dmaven=3.5.0 -->
                 <plugin>
                     <groupId>io.takari</groupId>
@@ -168,6 +269,30 @@
         </pluginManagement>
 
         <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-deploy</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <inherited>true</inherited>
@@ -231,7 +356,20 @@
                     <releaseProfiles>release</releaseProfiles>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                     <tagNameFormat>@{project.version}</tagNameFormat>
+
+                    <!-- Beging: Extended configuration -->
+                    <localCheckout>true</localCheckout>
+                    <pushChanges>false</pushChanges>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>1.9.5</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
             <plugin>
@@ -265,7 +403,7 @@
                 <version>${license-maven-plugin.version}</version>
                 <configuration>
                     <!-- session.executionRootDirectory resolves properly even with nested modules -->
-                    <header>${main.basedir}/src/etc/header.txt</header>
+                    <header>${license-maven-plugin.header}</header>
                     <excludes>
                         <exclude>.travis.yml</exclude>
                         <exclude>.editorconfig</exclude>
@@ -273,7 +411,6 @@
                         <exclude>.gitignore</exclude>
                         <exclude>.mvn/**</exclude>
                         <exclude>mvnw*</exclude>
-                        <exclude>etc/header.txt</exclude>
                         <exclude>**/.idea/**</exclude>
                         <exclude>**/target/**</exclude>
                         <exclude>LICENSE</exclude>
@@ -281,6 +418,8 @@
                         <exclude>bnd.bnd</exclude>
                         <exclude>src/test/resources/**</exclude>
                         <exclude>src/main/resources/**</exclude>
+                        <exclude>resources/license/header.txt</exclude>
+                        <exclude>pom-old.xml</exclude>
                     </excludes>
                     <strictCheck>true</strictCheck>
                 </configuration>
@@ -303,10 +442,10 @@
             <plugin>
                 <groupId>com.marvinformatics.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
-                <version>2.2.0</version>
+                <version>${com.marvinformatics.formatter.version}</version>
                 <configuration>
                     <lineEnding>LF</lineEnding>
-                    <configFile>${main.basedir}/src/config/eclipse-java-style.xml</configFile>
+                    <configFile>${formatter-maven-plugin.configfile}</configFile>
                 </configuration>
                 <executions>
                     <execution>
@@ -325,7 +464,7 @@
                 <configuration>
                     <keepBlankLines>true</keepBlankLines>
                     <lineSeparator>\n</lineSeparator>
-                    <sortOrderFile>src/config/pomSortOrder.xml</sortOrderFile>
+                    <sortOrderFile>${sortpom-maven-plugin.sortorderfile}</sortOrderFile>
                     <createBackupFile>false</createBackupFile>
                 </configuration>
                 <executions>
@@ -411,19 +550,36 @@
                     <family>Windows</family>
                 </os>
             </activation>
+            <!--
             <properties>
                 <bom.template.file.path>file:///${project.basedir}/src/config/bom.xml</bom.template.file.path>
             </properties>
+            -->
         </profile>
         <profile>
-            <id>java11</id>
+            <id>feign-java11</id>
             <activation>
                 <jdk>11</jdk>
             </activation>
 
-            <modules>
-                <module>java11</module>
-            </modules>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <type>pom</type>
+                        <groupId>io.github.openfeign</groupId>
+                        <artifactId>parent</artifactId>
+                        <version>${io.github.openfeign.version}</version>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+
+            <dependencies>
+                <dependency>
+                    <groupId>io.github.openfeign</groupId>
+                    <artifactId>feign-java11</artifactId>
+                </dependency>
+            </dependencies>
 
             <build>
                 <plugins>
@@ -441,16 +597,15 @@
 
         <profile>
             <id>validateCodeFormat</id>
-
             <build>
                 <plugins>
                     <plugin>
                         <groupId>com.marvinformatics.formatter</groupId>
                         <artifactId>formatter-maven-plugin</artifactId>
-                        <version>2.2.0</version>
+                        <version>${com.marvinformatics.formatter.version}</version>
                         <configuration>
                             <lineEnding>LF</lineEnding>
-                            <configFile>${main.basedir}/src/config/eclipse-java-style.xml</configFile>
+                            <configFile>${formatter-maven-plugin.configfile}</configFile>
                         </configuration>
                         <executions>
                             <execution>
@@ -469,12 +624,26 @@
         <profile>
             <id>release</id>
             <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-source-plugin</artifactId>
+                            <version>${maven-source-plugin.version}</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>${maven-javadoc-plugin.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+
                 <plugins>
                     <!-- Creates source jar -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -488,7 +657,6 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven-javadoc-plugin.version}</version>
                         <configuration>
                             <failOnError>false</failOnError>
                         </configuration>
@@ -499,6 +667,44 @@
                                     <goal>jar</goal>
                                 </goals>
                                 <phase>package</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- GPG Signature on release -->
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-gpg-plugin</artifactId>
+                            <version>${maven-gpg-plugin.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
                             </execution>
                         </executions>
                     </plugin>
