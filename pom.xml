@@ -87,6 +87,7 @@
         <com.marvinformatics.formatter.version>2.2.0</com.marvinformatics.formatter.version>
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
+        <snyk-maven-plugin.version>1.2.0</snyk-maven-plugin.version>
 
         <!-- Plugins configurations section -->
         <license-maven-plugin.header>${main.basedir}/resources/license/header.txt</license-maven-plugin.header>
@@ -707,6 +708,53 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Snyk vulnerability check -->
+        <profile>
+            <id>snyk.io</id>
+            <activation>
+                <property>
+                    <name>SNYK_API_TOKEN</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <artifactId>snyk-maven-plugin</artifactId>
+                            <groupId>io.snyk</groupId>
+                            <version>${snyk-maven-plugin.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>io.snyk</groupId>
+                        <artifactId>snyk-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>snyk-test</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>snyk-monitor</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>monitor</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <apiToken>${SNYK_API_TOKEN}</apiToken>
+                            <failOnSeverity>medium</failOnSeverity>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

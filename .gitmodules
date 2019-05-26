@@ -1,0 +1,8 @@
+[submodule ".mvn"]
+	path = .mvn
+	url = https://github.com/djanta/djanta-java-maven.git
+	branch = master
+[submodule "travis"]
+	path = travis
+	url = https://github.com/djanta/djanta-java-travisci.git
+	branch = master
