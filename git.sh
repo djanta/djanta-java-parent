@@ -19,4 +19,16 @@
 # under the License.
 # ----------------------------------------------------------------------------
 
-git submodule update --init --recursive --remote --merge
+is_git_submodule() {
+  project_version="$(print_project_version)"
+  if [[ "$project_version" =~ ^[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+$ ]]; then
+    echo "Build started by release commit $project_version. Will synchronize to maven central."
+    return 0
+  else
+    return 1
+  fi
+
+  git submodule update --init --recursive --remote --merge
+}
+
+is_git_submodule

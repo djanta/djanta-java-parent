@@ -8,7 +8,7 @@ cache:
 
 jdk:
   - openjdk8
-#  - openjdk11
+  - openjdk11
 
 before_install:
   # Parameters used during release
