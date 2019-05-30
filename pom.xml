@@ -1004,8 +1004,108 @@
         </profile>
 
         <profile>
-            <id>release</id>
+            <id>mockserver</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <mockserver-maven-plugin.version>5.5.1</mockserver-maven-plugin.version>
+                <mockserver-netty.version>5.5.4</mockserver-netty.version>
+            </properties>
 
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.mock-server</groupId>
+                        <artifactId>mockserver-netty</artifactId>
+                        <version>${mockserver-netty.version}</version>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+
+            <dependencies>
+                <!-- Mocking Rest-Server -->
+                <dependency>
+                    <groupId>org.mock-server</groupId>
+                    <artifactId>mockserver-netty</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.mock-server</groupId>
+                            <artifactId>mockserver-maven-plugin</artifactId>
+                            <version>${mockserver-maven-plugin.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>reserve-ports</id>
+                                <goals>
+                                    <goal>reserve-network-port</goal>
+                                </goals>
+                                <phase>process-resources</phase>
+                                <configuration>
+                                    <portNames>
+                                        <portName>org.mock-server.port</portName>
+                                    </portNames>
+                                    <minPortNumber>1080</minPortNumber>
+                                    <maxPortNumber>5000</maxPortNumber>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.mock-server</groupId>
+                        <artifactId>mockserver-maven-plugin</artifactId>
+                        <configuration>
+                            <serverPort>${org.mock-server.port}</serverPort>
+                            <logLevel>DEBUG</logLevel>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>process-test-classes</id>
+                                <goals>
+                                    <goal>runForked</goal>
+                                </goals>
+                                <phase>process-test-classes</phase>
+                            </execution>
+                            <execution>
+                                <id>verify</id>
+                                <goals>
+                                    <goal>stopForked</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <properties>
+                                <property>
+                                    <name>listener</name>
+                                    <value>org.mockserver.maven.StopMockServerTestListener</value>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+
+        <profile>
+            <id>release</id>
             <build>
                 <pluginManagement>
                     <plugins>
