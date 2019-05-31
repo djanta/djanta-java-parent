@@ -35,4 +35,4 @@ is_git_submodule() {
   git submodule update --init --recursive --remote --merge
 }
 
-is_git_submodule
+#is_git_submodule

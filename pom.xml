@@ -700,15 +700,6 @@
                         <exclude>src/main/resources/**</exclude>
                         <exclude>resources/license/header.txt</exclude>
                         <exclude>pom-old.xml</exclude>
-                        <exclude>pom.xml</exclude>
-                        <exclude>**/pom-sort-order.xml</exclude>
-
-                        <!--
-                        <exclude>git.sh</exclude>
-                        <exclude>**/bom.xml</exclude>
-                        <exclude>**/eclipse-java-style.xml</exclude>
-                        <exclude>**/checkstyle.xml</exclude>
-                        -->
                     </excludes>
                     <strictCheck>true</strictCheck>
                 </configuration>
@@ -1285,6 +1276,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-site-plugin</artifactId>
+                        <version>3.3</version>
                         <executions>
                             <execution>
                                 <goals>
