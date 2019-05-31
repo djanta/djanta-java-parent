@@ -59,7 +59,6 @@
         <mockserver-netty.version>5.5.4</mockserver-netty.version>
         <javax.json-api.version>1.1.4</javax.json-api.version>
 
-
         <release.goals>deploy</release.goals>
 
         <animal-sniffer-maven-plugin.version>1.17</animal-sniffer-maven-plugin.version>
@@ -203,9 +202,9 @@
                 <version>${mockserver-netty.version}</version>
             </dependency>
             <dependency>
-                <version>${mockserver-netty.version}</version>
                 <groupId>org.mock-server</groupId>
                 <artifactId>mockserver-client-java</artifactId>
+                <version>${mockserver-netty.version}</version>
             </dependency>
 
             <!-- JBehave: dependencies -->
@@ -1083,7 +1082,7 @@
                                     <portNames>
                                         <portName>org.mock-server.port</portName>
                                     </portNames>
-                                    <minPortNumber>1080</minPortNumber>
+                                    <minPortNumber>1099</minPortNumber>
                                     <maxPortNumber>5000</maxPortNumber>
                                 </configuration>
                             </execution>
@@ -1095,6 +1094,7 @@
                         <configuration>
                             <serverPort>${org.mock-server.port}</serverPort>
                             <logLevel>DEBUG</logLevel>
+                            <!-- <skip>${maven.test.skip}</skip> -->
                         </configuration>
                         <executions>
                             <execution>
