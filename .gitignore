@@ -32,6 +32,7 @@ out
 *.iws
 *.iml
 atlassian-ide-plugin.xml
+target
 
 # OS generated files
 .DS_Store*

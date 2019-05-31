@@ -56,7 +56,9 @@
         <com.fasterxml.jackson.version>2.9.8</com.fasterxml.jackson.version>
         <assertj.version>3.10.0</assertj.version>
         <datafactory.version>0.8</datafactory.version>
+        <mockserver-netty.version>5.5.4</mockserver-netty.version>
         <javax.json-api.version>1.1.4</javax.json-api.version>
+
 
         <release.goals>deploy</release.goals>
 
@@ -180,7 +182,6 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.powermock</groupId>
                 <artifactId>powermock-module-junit4</artifactId>
@@ -195,6 +196,11 @@
                 <groupId>org.everit.json</groupId>
                 <artifactId>org.everit.json.schema</artifactId>
                 <version>${org.everit.json.schema.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mock-server</groupId>
+                <artifactId>mockserver-netty</artifactId>
+                <version>${mockserver-netty.version}</version>
             </dependency>
 
             <!-- JBehave: dependencies -->
@@ -249,6 +255,12 @@
         <dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>jbehave-junit-runner</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- Mocking Rest-Server -->
+        <dependency>
+            <groupId>org.mock-server</groupId>
+            <artifactId>mockserver-netty</artifactId>
             <scope>test</scope>
         </dependency>
 
@@ -564,31 +576,40 @@
             </plugin>
 
             <plugin>
+                <artifactId>maven-shade-plugin</artifactId>
+                <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <manifestEntries>
+                                <SCM-Revision>${buildNumber}</SCM-Revision>
+                                <Bundle-Version>${project.version}-t${buildNumber}</Bundle-Version>
+                                <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+                                <Bundle-Vendor>DJANTA, LLC</Bundle-Vendor>
+                            </manifestEntries>
+                        </transformer>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"></transformer>
+                    </transformers>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--
+            <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <archive>
                         <manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
-                    <!--
-                    <manifestEntries>
-                        <SCM-Revision>${buildNumber}</SCM-Revision>
-                        <Bundle-Version>${project.version}-t${buildNumber}</Bundle-Version>
-                        <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
-                    </manifestEntries>
-                    <forceCreation>true</forceCreation>
-                    -->
                 </configuration>
-                <!--
-                <executions>
-                    <execution>
-                        <id>test-jar</id>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                -->
             </plugin>
+            -->
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -673,19 +694,32 @@
                         <exclude>pom.xml</exclude>
                         <exclude>**/pom-sort-order.xml</exclude>
 
+                        <!--
                         <exclude>git.sh</exclude>
                         <exclude>**/bom.xml</exclude>
                         <exclude>**/eclipse-java-style.xml</exclude>
                         <exclude>**/checkstyle.xml</exclude>
+                        -->
                     </excludes>
                     <strictCheck>true</strictCheck>
                 </configuration>
                 <executions>
                     <execution>
+                        <id>compile-resources</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
+                    </execution>
+                    <execution>
+                        <id>format-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                        <configuration>
+                            <failIfUnknown>true</failIfUnknown>
+                        </configuration>
                     </execution>
                 </executions>
                 <dependencies>
@@ -745,7 +779,6 @@
                         <bom>
                             <artifactId>djanta-bom</artifactId>
                             <name>DJANTA (Bill Of Materials)</name>
-
                             <properties>
                                 <license.skip>true</license.skip>
                             </properties>
@@ -1006,31 +1039,14 @@
         <profile>
             <id>mockserver</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <!-- <activeByDefault>true</activeByDefault> -->
+                <property>
+                    <name>!skipTests</name>
+                </property>
             </activation>
             <properties>
                 <mockserver-maven-plugin.version>5.5.1</mockserver-maven-plugin.version>
-                <mockserver-netty.version>5.5.4</mockserver-netty.version>
             </properties>
-
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.mock-server</groupId>
-                        <artifactId>mockserver-netty</artifactId>
-                        <version>${mockserver-netty.version}</version>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-
-            <dependencies>
-                <!-- Mocking Rest-Server -->
-                <dependency>
-                    <groupId>org.mock-server</groupId>
-                    <artifactId>mockserver-netty</artifactId>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
 
             <build>
                 <pluginManagement>
@@ -1101,7 +1117,6 @@
                     </plugin>
                 </plugins>
             </build>
-
         </profile>
 
         <profile>
