@@ -8,7 +8,7 @@ cache:
 
 jdk:
   - openjdk8
-  - openjdk11
+#  - openjdk11
 
 before_install:
   # Parameters used during release
@@ -21,29 +21,38 @@ before_install:
 
 jobs:
   include:
-    - stage: snapshot
-      name: "Deploy Snapshot to Maven repo"
-      if: branch = master AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
-      jdk: openjdk8
-      install: true
-      script:
-        - ./mvnw -B -nsu -s ./travis/settings.xml -P release -pl -:djanta-benchmark -DskipTests=true deploy
+  - stage: develop
+    name: "Build and Unit Testing the develop & PR branch"
+    if: (branch = master OR type = pull_request) AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+    jdk: openjdk8
+    install: true
+    script:
+      - ./mvnw -B -nsu -s ./travis/settings.xml -N io.zipkin.centralsync-maven-plugin:\
+        centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=true
 
-    - stage: release
-      name: "Release to OSS SonaType"
-      if: tag =~ /^[0-9\.]+$/
-      jdk: openjdk8
-      install: true
-      script:
-        - ./mvnw -B -nsu -s ./travis/settings.xml -P release -pl -:djanta-benchmark -DskipTests=true deploy
+  - stage: snapshot
+    name: "Deploy Snapshot to Maven repo"
+    if: branch = master AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+    jdk: openjdk8
+    install: true
+    script:
+      - ./mvnw -B -nsu -s ./travis/settings.xml -P release -pl -:djanta-benchmark -DskipTests=true deploy
 
-    - stage: sync
-      name: "Sync with Maven Central"
-      if: tag =~ /^[0-9\.]+$/
-      jdk: openjdk8
-      install: true
-      script:
-        # this step can take an inordinate amount of time, so the wait should push it to 30 minutes
-        - travis_wait 30 ./mvnw -B -nsu -s ./travis/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync
+  - stage: release
+    name: "Release to OSS SonaType"
+    if: tag =~ /^[0-9\.]+$/
+    jdk: openjdk8
+    install: true
+    script:
+      - ./mvnw -B -nsu -s ./travis/settings.xml -P release -pl -:djanta-benchmark -DskipTests=true deploy
+
+  - stage: sync
+    name: "Sync with Maven Central"
+    if: tag =~ /^[0-9\.]+$/
+    jdk: openjdk8
+    install: true
+    script:
+      # this step can take an inordinate amount of time, so the wait should push it to 30 minutes
+      - travis_wait 30 ./mvnw -B -nsu -s ./travis/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync
 env:
   global:
