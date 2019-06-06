@@ -112,6 +112,7 @@
         <sortpom-maven-plugin.sortorderfile>resources/config/pom-sort-order.xml</sortpom-maven-plugin.sortorderfile>
         <sort.nrOfIndentSpace>4</sort.nrOfIndentSpace>
         <maven.compiler.debuglevel>lines,vars,source</maven.compiler.debuglevel>
+        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
     </properties>
 
     <url>https://github.com/djanta/djanta-java-parent</url>
@@ -478,6 +479,12 @@
                     <artifactId>site-maven-plugin</artifactId>
                     <version>${site-maven-plugin.version}</version>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-clean-plugin.version}</version>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -665,6 +672,36 @@
                     <packageName>djanta</packageName>
                 </configuration>
             </plugin>
+
+            <!--
+            <plugin>
+                <artifactId>maven-verifier-plugin</artifactId>
+                <configuration>
+                    <verificationFile>${license-maven-plugin.header}</verificationFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>output-resources</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            -->
 
             <plugin>
                 <groupId>org.apache.felix</groupId>
@@ -1188,7 +1225,7 @@
 
         <!-- Snyk vulnerability check -->
         <profile>
-            <id>snyk.io</id>
+            <id>snyk</id>
             <activation>
                 <property>
                     <name>SNYK_API_TOKEN</name>
