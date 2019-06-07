@@ -8,6 +8,7 @@ cache:
 
 jdk:
   - openjdk8
+  - openjdk9
 #  - openjdk11
 
 before_install:
@@ -19,6 +20,28 @@ before_install:
   - git config credential.helper "store --file=.git/credentials"
   - echo "https://$GH_TOKEN:@github.com" > .git/credentials
 
+  # update all git submodule
+  - git submodule update --init --recursive --remote --merge
+
+install:
+  # Override default travis to use the maven wrapper
+  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+after_success:
+  - mvn jacoco:report coveralls:report
+
+# Don't build release tags. This avoids publish conflicts because the version commit exists both on master and the release tag.
+# See https://github.com/travis-ci/travis-ci/issues/1532
+branches:
+  except:
+    - /^[0-9]/
+
+# safelist
+  only:
+    - master
+    - develop
+    - release
+
 jobs:
   include:
   - stage: develop
@@ -28,7 +51,7 @@ jobs:
     install: true
     script:
       - ./mvnw -B -nsu -s ./travis/settings.xml -N io.zipkin.centralsync-maven-plugin:\
-        centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=true
+        centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false
 
   - stage: snapshot
     name: "Deploy Snapshot to Maven repo"
@@ -54,5 +77,13 @@ jobs:
     script:
       # this step can take an inordinate amount of time, so the wait should push it to 30 minutes
       - travis_wait 30 ./mvnw -B -nsu -s ./travis/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync
-env:
-  global:
+
+notifications:
+  email:
+    recipients:
+      - "$GH_USER_EMAIL"
+    on_success: change  # default: change
+    on_failure: always  # default: always
+
+#env:
+#  global:

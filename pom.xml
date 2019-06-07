@@ -104,6 +104,8 @@
         <site-maven-plugin.version>0.12</site-maven-plugin.version>
         <sortpom-maven-plugin.version>2.8.0</sortpom-maven-plugin.version>
         <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
+        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
+        <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
 
         <!-- Plugins configurations section -->
         <license-maven-plugin.header>${main.basedir}/resources/license/header.txt</license-maven-plugin.header>
@@ -112,7 +114,11 @@
         <sortpom-maven-plugin.sortorderfile>resources/config/pom-sort-order.xml</sortpom-maven-plugin.sortorderfile>
         <sort.nrOfIndentSpace>4</sort.nrOfIndentSpace>
         <maven.compiler.debuglevel>lines,vars,source</maven.compiler.debuglevel>
-        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
+
+        <!-- Sonatype nexus plugin configuration -->
+        <nexus-staging-maven-plugin.serverId>sonatype</nexus-staging-maven-plugin.serverId>
+        <nexus-staging-maven-plugin.nexusUrl>https://oss.sonatype.org/</nexus-staging-maven-plugin.nexusUrl>
+
     </properties>
 
     <url>https://github.com/djanta/djanta-java-parent</url>
@@ -395,13 +401,11 @@
                     <artifactId>maven-deploy-plugin</artifactId>
                     <version>${maven-deploy-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>${nexus-staging-maven-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
@@ -414,17 +418,14 @@
                     <artifactId>maven</artifactId>
                     <version>0.3.4</version>
                 </plugin>
-
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven-compiler-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>${maven-jar-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
@@ -443,43 +444,36 @@
                         </dependency>
                     </dependencies>
                 </plugin>
-
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>
                     <version>${buildnumber-maven-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>${jacoco.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${maven-resources-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${maven-enforcer-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
                     <version>${maven-dependency-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>com.github.github</groupId>
                     <artifactId>site-maven-plugin</artifactId>
                     <version>${site-maven-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
@@ -507,8 +501,8 @@
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <serverId>${nexus-staging-maven-plugin.serverId}</serverId>
+                    <nexusUrl>${nexus-staging-maven-plugin.nexusUrl}</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
@@ -667,9 +661,9 @@
                 <artifactId>centralsync-maven-plugin</artifactId>
                 <version>${centralsync-maven-plugin.version}</version>
                 <configuration>
-                    <subject>io.djanta</subject>
+                    <subject>djanta</subject>
                     <repo>maven</repo>
-                    <packageName>djanta</packageName>
+                    <packageName>io.djanta</packageName>
                 </configuration>
             </plugin>
 
@@ -1003,11 +997,11 @@
             <distributionManagement>
                 <repository>
                     <id>sonatype</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                    <url>${nexus-staging-maven-plugin.nexusUrl}service/local/staging/deploy/maven2/</url>
                 </repository>
                 <snapshotRepository>
                     <id>sonatype</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                    <url>${nexus-staging-maven-plugin.nexusUrl}content/repositories/snapshots</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>
@@ -1064,6 +1058,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>${build-helper-maven-plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>reserve-ports</id>
