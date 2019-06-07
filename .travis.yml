@@ -50,8 +50,7 @@ jobs:
     jdk: openjdk8
     install: true
     script:
-      - ./mvnw -B -nsu -s ./travis/settings.xml -N io.zipkin.centralsync-maven-plugin:\
-        centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false
+      - ./mvnw -B -nsu -s ./travis/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false
 
   - stage: snapshot
     name: "Deploy Snapshot to Maven repo"
