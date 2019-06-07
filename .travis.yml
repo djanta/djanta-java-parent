@@ -46,7 +46,7 @@ jobs:
   include:
   - stage: develop
     name: "Build and Unit Testing the develop & PR branch"
-    if: (branch = master OR type = pull_request) AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+    if: (branch = develop OR type = pull_request) AND commit_message !~ /^(prepare release ([0-9\.]+))$/
     jdk: openjdk8
     install: true
     script:
