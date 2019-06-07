@@ -21,7 +21,7 @@ before_install:
   - echo "https://$GH_TOKEN:@github.com" > .git/credentials
 
   # update all git submodule
-  - git submodule update --init --recursive --remote --merge
+  - git submodule init && git submodule update --init --recursive --remote --merge
 
 install:
   # Override default travis to use the maven wrapper
