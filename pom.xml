@@ -593,8 +593,7 @@
                                 <Bundle-Vendor>DJANTA, LLC</Bundle-Vendor>
                             </manifestEntries>
                         </transformer>
-                        <transformer
-                            implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer">
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer">
                             <!-- No comment yet-->
                         </transformer>
                     </transformers>
