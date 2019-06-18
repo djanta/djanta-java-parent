@@ -21,7 +21,13 @@ before_install:
   - echo "https://$GH_TOKEN:@github.com" > .git/credentials
 
   # Update all git submodule (No need this manual submodule update ...)
-  ##- git submodule init && git submodule update --init --recursive --remote --merge
+  ## Uncomment the line below if the auto update submodule has not been activated by travis
+  #- git submodule init && git submodule update --init --recursive --remote --merge
+
+  ## Running this comment is mandatory to resolve the follwing issue: "No plugin found for prefix 'help' in the current project"
+  ## Otherwise this command will fail: "./mvnw -o help:evaluate -N -Dexpression=project.version | sed -n '/^[0-9]/p'"
+  ## CREDIT: https://stackoverflow.com/questions/26364608/why-is-there-the-error-no-plugin-found-for-prefix-help-in-the-current-project
+  - mvn -X help:effective-pom
 
 install:
   # Override default travis to use the maven wrapper
@@ -83,6 +89,3 @@ notifications:
       - "$GH_USER_EMAIL"
     on_success: change  # default: change
     on_failure: always  # default: always
-
-#env:
-#  global:
