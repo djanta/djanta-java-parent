@@ -1023,9 +1023,14 @@
         <profile>
             <id>mockserver</id>
             <activation>
-                <!-- <activeByDefault>true</activeByDefault> -->
+                <!--
                 <property>
                     <name>!skipTests</name>
+                </property>
+                -->
+                <property>
+                    <name>skipTests</name>
+                    <value>false</value>
                 </property>
             </activation>
             <properties>
@@ -1106,6 +1111,12 @@
 
         <profile>
             <id>release</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -1152,6 +1163,20 @@
                             </execution>
                         </executions>
                     </plugin>
+                    <!--
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-plugin-versions</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    -->
                 </plugins>
             </build>
             <reporting>
@@ -1162,6 +1187,20 @@
                         <configuration>
                             <failOnError>false</failOnError>
                         </configuration>
+                    </plugin>
+
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>versions-maven-plugin</artifactId>
+                        <reportSets>
+                            <reportSet>
+                                <reports>
+                                    <report>dependency-updates-report</report>
+                                    <report>plugin-updates-report</report>
+                                    <report>property-updates-report</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
                     </plugin>
                 </plugins>
             </reporting>
