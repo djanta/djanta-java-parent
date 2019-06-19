@@ -21,7 +21,7 @@
 
     <groupId>io.djanta</groupId>
     <artifactId>parent</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <description>djanta.io makes writing java microservice easier for everyone</description>
