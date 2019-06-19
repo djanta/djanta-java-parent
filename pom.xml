@@ -107,10 +107,16 @@
         <sort.nrOfIndentSpace>4</sort.nrOfIndentSpace>
         <maven.compiler.debuglevel>lines,vars,source</maven.compiler.debuglevel>
 
+        <license.holder>DJANTA, LLC (https://www.djanta.io)</license.holder>
+
         <!-- Sonatype nexus plugin configuration -->
         <nexus-staging-maven-plugin.serverId>sonatype</nexus-staging-maven-plugin.serverId>
         <nexus-staging-maven-plugin.nexusUrl>https://oss.sonatype.org/</nexus-staging-maven-plugin.nexusUrl>
 
+        <!-- Bintray configuration -->
+        <bintray.subject>djanta</bintray.subject>
+        <bintray.repo>io.djanta</bintray.repo>
+        <bintray.packageName>${project.artifactId}</bintray.packageName>
     </properties>
 
     <url>https://github.com/djanta/djanta-java-parent</url>
@@ -655,9 +661,9 @@
                 <artifactId>centralsync-maven-plugin</artifactId>
                 <version>${centralsync-maven-plugin.version}</version>
                 <configuration>
-                    <subject>djanta</subject>
-                    <repo>maven</repo>
-                    <packageName>io.djanta</packageName>
+                    <subject>${bintray.subject}</subject>
+                    <repo>${bintray.repo}</repo>
+                    <packageName>${bintray.packageName}</packageName>
                 </configuration>
             </plugin>
 
@@ -748,6 +754,9 @@
                         </goals>
                         <configuration>
                             <failIfUnknown>true</failIfUnknown>
+                            <properties>
+                                <company>${license.holder}</company>
+                            </properties>
                         </configuration>
                     </execution>
                 </executions>
@@ -811,15 +820,10 @@
                             <properties>
                                 <license.skip>true</license.skip>
                             </properties>
-
                             <modules>
                                 <includes>
                                     <include>io.djanta:*</include>
                                 </includes>
-                                <excludes>
-                                    <exclude>*:djanta-example-*</exclude>
-                                    <exclude>*:djanta-benchmark</exclude>
-                                </excludes>
                             </modules>
                         </bom>
                     </boms>
@@ -957,9 +961,11 @@
 
         <profile>
             <id>sonatype</id>
+            <!--
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            -->
             <distributionManagement>
                 <repository>
                     <id>sonatype</id>
@@ -969,6 +975,22 @@
                     <id>sonatype</id>
                     <url>${nexus-staging-maven-plugin.nexusUrl}content/repositories/snapshots</url>
                 </snapshotRepository>
+            </distributionManagement>
+        </profile>
+
+        <profile>
+            <id>bintray</id>
+            <!--
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            -->
+            <distributionManagement>
+                <repository>
+                    <id>bintray</id>
+                    <name>io.djanta</name>
+                    <url>https://api.bintray.com/maven/${bintray.subject}/${bintray.repo}/${bintray.packageName}/;publish=1</url>
+                </repository>
             </distributionManagement>
         </profile>
 

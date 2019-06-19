@@ -21,7 +21,6 @@ branches:
 jdk:
   - openjdk8
   - openjdk9
-#  - openjdk11
 
 before_install:
   # Parameters used during release
@@ -46,7 +45,7 @@ install:
   - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 after_success:
-  - mvn jacoco:report coveralls:report
+#  - mvn jacoco:report coveralls:report
 
 jobs:
   include:
@@ -64,7 +63,7 @@ jobs:
     jdk: openjdk8
     install: true
     script:
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P release,sonatype -DskipTests=true deploy #-pl -:djanta-benchmark
+      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P release -DskipTests=true deploy #-pl -:djanta-benchmark
 
   - stage: release
     name: "Release to OSS SonaType"
