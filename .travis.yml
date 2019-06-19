@@ -46,6 +46,8 @@ install:
 
 after_success:
 #  - mvn jacoco:report coveralls:report
+  - mvn versions:display-dependency-updates
+  - mvn versions:display-plugin-updates
 
 jobs:
   include:
@@ -63,19 +65,20 @@ jobs:
     jdk: openjdk8
     install: true
     script:
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P release -DskipTests=true deploy #-pl -:djanta-benchmark
+      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P release -DskipTests=true deploy
 
   - stage: release
     name: "Release to OSS SonaType"
-    if: tag =~ /^[0-9\.]+$/
+    if: ((tag =~ /^[0-9\.]+$/ OR $TRAVIS_TAG =~ /^[0-9\.]+$/) OR $TRAVIS_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ OR $TRAVIS_TAG =~ /^[0-9]+\.[0-9]+\.[0-9]+$/)
     jdk: openjdk8
     install: true
     script:
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P release,sonatype -DskipTests=true deploy #-pl -:djanta-benchmark
+      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P release -DskipTests=true deploy
 
   - stage: sync
     name: "Sync with Maven Central"
-    if: tag =~ /^[0-9\.]+$/
+    #if: tag =~ /^[0-9\.]+$/
+    if: ((tag =~ /^[0-9\.]+$/ OR $TRAVIS_TAG =~ /^[0-9\.]+$/) OR $TRAVIS_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ OR $TRAVIS_TAG =~ /^[0-9]+\.[0-9]+\.[0-9]+$/)
     jdk: openjdk8
     install: true
     script:
