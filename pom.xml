@@ -116,7 +116,7 @@
         <!-- Bintray configuration -->
         <bintray.subject>djanta</bintray.subject>
         <bintray.repo>io.djanta</bintray.repo>
-        <bintray.packageName>${project.artifactId}</bintray.packageName>
+        <bintray.packageName>ecosystem</bintray.packageName>
     </properties>
 
     <url>https://github.com/djanta/djanta-java-parent</url>
