@@ -961,11 +961,6 @@
 
         <profile>
             <id>sonatype</id>
-            <!--
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            -->
             <distributionManagement>
                 <repository>
                     <id>sonatype</id>
@@ -980,11 +975,6 @@
 
         <profile>
             <id>bintray</id>
-            <!--
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            -->
             <distributionManagement>
                 <repository>
                     <id>bintray</id>
@@ -1013,6 +1003,59 @@
                                     <goal>validate</goal>
                                 </goals>
                                 <phase>initialize</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>shade</id>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-shade-plugin</artifactId>
+                            <version>${maven-shade-plugin.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-shade-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>shade</goal>
+                                </goals>
+                                <configuration>
+                                    <!--
+                                    <transformers>
+                                        <transformer
+                                            implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                            <manifestEntries>
+                                                <Main-Class></Main-Class>
+                                            </manifestEntries>
+                                        </transformer>
+                                    </transformers>
+                                    -->
+                                    <artifactSet />
+                                    <outputFile>${project.build.directory}/${project.artifactId}-fat.jar</outputFile>
+                                    <filters>
+                                        <filter>
+                                            <artifact>*:*</artifact>
+                                            <excludes>
+                                                <exclude>META-INF/*.SF</exclude>
+                                                <exclude>META-INF/*.DSA</exclude>
+                                                <exclude>META-INF/*.RSA</exclude>
+                                            </excludes>
+                                        </filter>
+                                    </filters>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -1263,8 +1306,8 @@
                     <plugins>
                         <plugin>
                             <groupId>io.snyk</groupId>
-                            <artifactId>snyk-maven-plugin</artifactId>
                             <version>${snyk-maven-plugin.version}</version>
+                            <artifactId>snyk-maven-plugin</artifactId>
                         </plugin>
                     </plugins>
                 </pluginManagement>
@@ -1367,38 +1410,6 @@
             </build>
         </profile>
 
-        <!-- Pre Developement Integration Test -->
-        <profile>
-            <id>predit</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
-                            <trimStackTrace>false</trimStackTrace>
-                            <argLine>${jvm.options}</argLine>
-                            <includes>
-                                <include>**/*PreditTest</include>
-                            </includes>
-                        </configuration>
-                        <dependencies>
-                            <dependency>
-                                <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
-                                <groupId>org.ow2.asm</groupId>
-                                <artifactId>asm</artifactId>
-                                <version>7.0-beta</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
         <!-- Framework Integration Test-->
         <profile>
             <id>fit</id>
@@ -1432,6 +1443,47 @@
             </build>
         </profile>
 
+        <!-- Pre Developement Integration Test -->
+        <profile>
+            <id>predit</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                            <trimStackTrace>false</trimStackTrace>
+                            <argLine>${jvm.options}</argLine>
+                            <includes>
+                                <!-- Include all development Integration testing -->
+                                <include>**/*DitTest</include>
+                                <include>**/*DITTest</include>
+
+                                <!-- Include all (Functional, Framework & Feature) Integration testing -->
+                                <include>**/*FitTest</include>
+                                <include>**/*FITTest</include>
+
+                                <!-- Include any other Pre Integration testing -->
+                                <include>**/*PreditTest</include>
+                            </includes>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
+                                <groupId>org.ow2.asm</groupId>
+                                <artifactId>asm</artifactId>
+                                <version>7.0-beta</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!-- User Acceptance Test-->
         <profile>
             <id>uat</id>
@@ -1448,40 +1500,11 @@
                             <trimStackTrace>false</trimStackTrace>
                             <argLine>${jvm.options}</argLine>
                             <includes>
+                                <!--
+                                    Include all User Acceptance testing
+                                -->
                                 <include>**/*UatTest</include>
                                 <include>**/*UATTest</include>
-                            </includes>
-                        </configuration>
-                        <dependencies>
-                            <dependency>
-                                <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
-                                <groupId>org.ow2.asm</groupId>
-                                <artifactId>asm</artifactId>
-                                <version>7.0-beta</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <!-- Staging Test -->
-        <profile>
-            <id>staging</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
-                            <trimStackTrace>false</trimStackTrace>
-                            <argLine>${jvm.options}</argLine>
-                            <includes>
-                                <include>**/*StagingTest</include>
                             </includes>
                         </configuration>
                         <dependencies>
@@ -1515,6 +1538,53 @@
                             <includes>
                                 <include>**/*QaTest</include>
                                 <include>**/*QATest</include>
+                            </includes>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
+                                <groupId>org.ow2.asm</groupId>
+                                <artifactId>asm</artifactId>
+                                <version>7.0-beta</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Staging Test -->
+        <profile>
+            <id>staging</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                            <trimStackTrace>false</trimStackTrace>
+                            <argLine>${jvm.options}</argLine>
+                            <includes>
+                                <!--
+                                    Include all User Acceptance testing
+                                -->
+                                <include>**/*UatTest</include>
+                                <include>**/*UATTest</include>
+
+                                <!--
+                                    Include all Quality (assurance) Acceptance testing
+                                -->
+                                <include>**/*QaTest</include>
+                                <include>**/*QATest</include>
+
+                                <!--
+                                    Include any other Staging Integration testing
+                                -->
+                                <include>**/*StagingTest</include>
                             </includes>
                         </configuration>
                         <dependencies>
