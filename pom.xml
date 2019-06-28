@@ -1317,7 +1317,7 @@
             <id>snyk</id>
             <activation>
                 <property>
-                    <name>SNYK_API_TOKEN</name>
+                    <name>SNYK_TOKEN</name>
                 </property>
             </activation>
             <build>
@@ -1335,7 +1335,7 @@
                         <groupId>io.snyk</groupId>
                         <artifactId>snyk-maven-plugin</artifactId>
                         <configuration>
-                            <apiToken>${SNYK_API_TOKEN}</apiToken>
+                            <apiToken>${SNYK_TOKEN}</apiToken>
                             <failOnSeverity>medium</failOnSeverity>
                         </configuration>
                         <executions>
