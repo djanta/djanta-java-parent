@@ -50,11 +50,21 @@ after_success:
   - mvn versions:display-dependency-updates
   - mvn versions:display-plugin-updates
 
+stages:
+  - name: develop
+    if: (branch = develop AND type != pull_request) AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+  - name: snapshot
+    if: branch = master AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+  - name: release
+    if: tag =~ /^[0-9\.]+$/
+  - name: sync
+    if: tag =~ /^[0-9\.]+$/
+
 jobs:
   include:
   - stage: develop
     name: "Build and Unit Testing the develop & PR branch"
-    if: (branch = develop OR type = pull_request) AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+    #if: (branch = develop OR type = pull_request) AND commit_message !~ /^(prepare release ([0-9\.]+))$/
     jdk: openjdk8
     install: true
     script:
@@ -62,7 +72,7 @@ jobs:
 
   - stage: snapshot
     name: "Deploy Snapshot to Maven repo"
-    if: branch = master AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+    #if: branch = master AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
     jdk: openjdk8
     install: true
     script:
@@ -70,7 +80,7 @@ jobs:
 
   - stage: release
     name: "Release to OSS SonaType"
-    if: ((tag =~ /^[0-9\.]+$/ OR $TRAVIS_TAG =~ /^[0-9\.]+$/) OR $TRAVIS_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ OR $TRAVIS_TAG =~ /^[0-9]+\.[0-9]+\.[0-9]+$/)
+    #if: ((tag =~ /^[0-9\.]+$/ OR $TRAVIS_TAG =~ /^[0-9\.]+$/) OR $TRAVIS_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ OR $TRAVIS_TAG =~ /^[0-9]+\.[0-9]+\.[0-9]+$/)
     jdk: openjdk8
     install: true
     script:
@@ -78,8 +88,7 @@ jobs:
 
   - stage: sync
     name: "Sync with Maven Central"
-    #if: tag =~ /^[0-9\.]+$/
-    if: ((tag =~ /^[0-9\.]+$/ OR $TRAVIS_TAG =~ /^[0-9\.]+$/) OR $TRAVIS_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ OR $TRAVIS_TAG =~ /^[0-9]+\.[0-9]+\.[0-9]+$/)
+    #if: ((tag =~ /^[0-9\.]+$/ OR $TRAVIS_TAG =~ /^[0-9\.]+$/) OR $TRAVIS_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ OR $TRAVIS_TAG =~ /^[0-9]+\.[0-9]+\.[0-9]+$/)
     jdk: openjdk8
     install: true
     script:
