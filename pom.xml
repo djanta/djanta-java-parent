@@ -1142,6 +1142,7 @@
                             <dependency>
                                 <groupId>org.mock-server</groupId>
                                 <artifactId>mockserver-client-java</artifactId>
+                                <version>${mockserver.version}</version>
                             </dependency>
                         </dependencies>
                         <executions>
