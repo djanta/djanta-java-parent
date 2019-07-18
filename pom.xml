@@ -109,6 +109,7 @@
         <maven.compiler.debuglevel>lines,vars,source</maven.compiler.debuglevel>
 
         <license.holder>DJANTA, LLC (https://www.djanta.io)</license.holder>
+        <version.tag.prefix>v</version.tag.prefix>
 
         <!-- Sonatype nexus plugin configuration -->
         <nexus-staging-maven-plugin.serverId>sonatype</nexus-staging-maven-plugin.serverId>
@@ -737,22 +738,24 @@
                     <!-- session.executionRootDirectory resolves properly even with nested modules -->
                     <header>${license-maven-plugin.header}</header>
                     <excludes>
-                        <exclude>.travis.yml</exclude>
-                        <exclude>.editorconfig</exclude>
-                        <exclude>.gitattributes</exclude>
-                        <exclude>.gitignore</exclude>
-                        <exclude>.mvn/**</exclude>
-                        <exclude>travis/**</exclude>
-                        <exclude>mvnw*</exclude>
+                        <exclude>**/.travis.yml</exclude>
+                        <exclude>**/.editorconfig</exclude>
+                        <exclude>**/.gitattributes</exclude>
+                        <exclude>**/.gitignore</exclude>
+                        <exclude>**/.mvn/**</exclude>
+                        <exclude>**/travis/**</exclude>
+                        <exclude>**/mvnw*</exclude>
                         <exclude>**/.idea/**</exclude>
                         <exclude>**/target/**</exclude>
                         <exclude>**/LICENSE</exclude>
                         <exclude>**/*.md</exclude>
-                        <exclude>bnd.bnd</exclude>
-                        <exclude>src/test/resources/**</exclude>
-                        <exclude>src/main/resources/**</exclude>
-                        <exclude>resources/license/header.txt</exclude>
-                        <exclude>pom-old.xml</exclude>
+                        <exclude>**/bnd.bnd</exclude>
+                        <exclude>**/src/test/resources/**</exclude>
+                        <exclude>**/src/main/resources/**</exclude>
+                        <exclude>**/resources/license/header.txt</exclude>
+                        <exclude>**/pom-old.xml</exclude>
+                        <exclude>**/README</exclude>
+                        <exclude>**/README.txt</exclude>
                     </excludes>
                     <strictCheck>true</strictCheck>
                 </configuration>
@@ -877,7 +880,7 @@
                 <artifactId>maven-scm-plugin</artifactId>
                 <version>${maven-scm-plugin.version}</version>
                 <configuration>
-                    <tag>${project.version}</tag>
+                    <tag>${version.tag.prefix}${project.version}</tag>
                 </configuration>
             </plugin>
             <plugin>
