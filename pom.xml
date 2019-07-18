@@ -750,8 +750,11 @@
                         <exclude>**/LICENSE</exclude>
                         <exclude>**/*.md</exclude>
                         <exclude>**/bnd.bnd</exclude>
+                        <exclude>**/.MF</exclude>
+                        <!--
                         <exclude>**/src/test/resources/**</exclude>
                         <exclude>**/src/main/resources/**</exclude>
+                        -->
                         <exclude>**/resources/license/header.txt</exclude>
                         <exclude>**/pom-old.xml</exclude>
                         <exclude>**/README</exclude>
