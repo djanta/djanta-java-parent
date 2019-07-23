@@ -18,7 +18,7 @@ Simply define the following `<parent>` in your `pom.xml`:
 ```xml
 <parent>
   <groupId>io.djanta</groupId>
-  <artifactId>parent</artifactId>
+  <artifactId>djanta-java-parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 </parent>
 ```
