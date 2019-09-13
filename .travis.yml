@@ -74,7 +74,7 @@ jobs:
     install: true
     script:
       #- ./mvnw -B -nsu -s ./.mvn/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false deploy
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P release -DskipTests=true deploy
+      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P release,github -DskipTests=true deploy
 
   - stage: snapshot
     name: "Deploy Snapshot to Maven repo"
