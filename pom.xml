@@ -1015,28 +1015,28 @@
                     <name>GH_TOKEN</name>
                 </property>
             </activation>
-            <distributionManagement>
-                <repository>
-                    <id>github</id>
-                    <url>https://maven.pkg.github.com/djanta</url>
-                    <name>djanta</name>
-                </repository>
-            </distributionManagement>
             <repositories>
                 <repository>
-                    <id>github</id>
+                    <releases>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
                     <snapshots>
                         <enabled>true</enabled>
                         <checksumPolicy>warn</checksumPolicy>
                     </snapshots>
-                    <releases>
-                        <enabled>true</enabled>
-                        <checksumPolicy>warn</checksumPolicy>
-                        <updatePolicy>always</updatePolicy>
-                    </releases>
+                    <id>github</id>
                     <url>https://maven.pkg.github.com/djanta</url>
                 </repository>
             </repositories>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <name>djanta</name>
+                    <url>https://maven.pkg.github.com/djanta</url>
+                </repository>
+            </distributionManagement>
         </profile>
         <profile>
             <id>format</id>
