@@ -99,6 +99,7 @@
         <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
         <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
         <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
+        <io.takari-maven.version>0.3.4</io.takari-maven.version>
 
         <!-- Plugins configurations section -->
         <license-maven-plugin.header>.mvn/licenses/apache-2.0-header</license-maven-plugin.header>
@@ -121,7 +122,7 @@
         <!-- Bintray configuration -->
         <bintray.subject>djanta</bintray.subject>
         <bintray.repo>io.djanta</bintray.repo>
-        <bintray.packageName>ecosystem</bintray.packageName>
+        <bintray.packageName>community</bintray.packageName>
     </properties>
 
     <url>https://github.com/djanta/djanta-java-parent</url>
@@ -400,7 +401,6 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-pcollections</artifactId>
         </dependency>
-
         <dependency>
             <groupId>io.reactivex</groupId>
             <artifactId>rxjava</artifactId>
@@ -430,7 +430,7 @@
                 <plugin>
                     <groupId>io.takari</groupId>
                     <artifactId>maven</artifactId>
-                    <version>0.3.4</version>
+                    <version>${io.takari-maven.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -495,7 +495,6 @@
                 </plugin>
             </plugins>
         </pluginManagement>
-
         <plugins>
             <!--
             <plugin>
@@ -511,7 +510,6 @@
                 </executions>
             </plugin>
             -->
-
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -531,7 +529,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <inherited>true</inherited>
@@ -550,7 +547,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
@@ -577,7 +573,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
             <!-- Ensures checksums are added to published jars -->
             <plugin>
                 <artifactId>maven-install-plugin</artifactId>
@@ -586,7 +581,6 @@
                     <createChecksum>true</createChecksum>
                 </configuration>
             </plugin>
-
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${maven-release-plugin.version}</version>
@@ -613,7 +607,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
             <!--
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -642,7 +635,6 @@
                 </executions>
             </plugin>
             -->
-
             <!--
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -698,7 +690,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -706,7 +697,6 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
-
             <plugin>
                 <groupId>io.zipkin.centralsync-maven-plugin</groupId>
                 <artifactId>centralsync-maven-plugin</artifactId>
@@ -717,8 +707,7 @@
                     <packageName>${bintray.packageName}</packageName>
                 </configuration>
             </plugin>
-
-            <!--<plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <configuration>
@@ -728,8 +717,7 @@
                         </fileset>
                     </filesets>
                 </configuration>
-            </plugin>-->
-
+            </plugin>
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
@@ -983,7 +971,6 @@
             </plugin>
         </plugins>
     </build>
-
     <profiles>
         <profile>
             <id>windows</id>
@@ -998,7 +985,6 @@
             </properties>
             -->
         </profile>
-
         <profile>
             <id>sonatype</id>
             <distributionManagement>
@@ -1012,7 +998,6 @@
                 </snapshotRepository>
             </distributionManagement>
         </profile>
-
         <profile>
             <id>bintray</id>
             <distributionManagement>
@@ -1023,7 +1008,36 @@
                 </repository>
             </distributionManagement>
         </profile>
-
+        <profile>
+            <id>github</id>
+            <activation>
+                <property>
+                    <name>GH_TOKEN</name>
+                </property>
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>github</id>
+                    <url>https://maven.pkg.github.com/djanta</url>
+                    <name>djanta</name>
+                </repository>
+            </distributionManagement>
+            <repositories>
+                <repository>
+                    <id>github</id>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <checksumPolicy>warn</checksumPolicy>
+                    </snapshots>
+                    <releases>
+                        <enabled>true</enabled>
+                        <checksumPolicy>warn</checksumPolicy>
+                        <updatePolicy>always</updatePolicy>
+                    </releases>
+                    <url>https://maven.pkg.github.com/djanta</url>
+                </repository>
+            </repositories>
+        </profile>
         <profile>
             <id>format</id>
             <build>
@@ -1049,7 +1063,6 @@
                 </plugins>
             </build>
         </profile>
-
         <profile>
             <id>shade</id>
             <build>
@@ -1104,15 +1117,9 @@
                 </plugins>
             </build>
         </profile>
-
         <profile>
             <id>mockserver</id>
             <activation>
-                <!--
-                <property>
-                    <name>!skipTests</name>
-                </property>
-                -->
                 <property>
                     <name>skipTests</name>
                     <value>false</value>
@@ -1120,6 +1127,8 @@
             </activation>
             <properties>
                 <mockserver-maven-plugin.version>5.5.1</mockserver-maven-plugin.version>
+                <minPortNumber>1099</minPortNumber>
+                <maxPortNumber>5000</maxPortNumber>
             </properties>
             <build>
                 <pluginManagement>
@@ -1147,8 +1156,8 @@
                                     <portNames>
                                         <portName>org.mock-server.port</portName>
                                     </portNames>
-                                    <minPortNumber>1099</minPortNumber>
-                                    <maxPortNumber>5000</maxPortNumber>
+                                    <minPortNumber>${minPortNumber}</minPortNumber>
+                                    <maxPortNumber>${maxPortNumber}</maxPortNumber>
                                 </configuration>
                             </execution>
                         </executions>
@@ -1199,7 +1208,6 @@
                 </plugins>
             </build>
         </profile>
-
         <profile>
             <id>release</id>
             <activation>
@@ -1223,7 +1231,6 @@
                         </plugin>
                     </plugins>
                 </pluginManagement>
-
                 <plugins>
                     <!-- Creates source jar -->
                     <plugin>
@@ -1343,6 +1350,9 @@
                     <name>SNYK_TOKEN</name>
                 </property>
             </activation>
+            <properties>
+                <io.snyk.failOnSeverity>medium</io.snyk.failOnSeverity>
+            </properties>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -1357,9 +1367,10 @@
                     <plugin>
                         <groupId>io.snyk</groupId>
                         <artifactId>snyk-maven-plugin</artifactId>
+                        <inherited>false</inherited>
                         <configuration>
                             <apiToken>${SNYK_TOKEN}</apiToken>
-                            <failOnSeverity>medium</failOnSeverity>
+                            <failOnSeverity>${io.snyk.failOnSeverity}</failOnSeverity>
                         </configuration>
                         <executions>
                             <execution>
@@ -1382,7 +1393,7 @@
             </build>
         </profile>
 
-        <!-- Site Publication t-->
+        <!-- Site Publication -->
         <profile>
             <id>site</id>
             <build>
@@ -1441,7 +1452,9 @@
                         </configuration>
                         <dependencies>
                             <dependency>
-                                <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
+                                <!--
+                                surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible
+                                -->
                                 <groupId>org.ow2.asm</groupId>
                                 <artifactId>asm</artifactId>
                                 <version>7.0-beta</version>
@@ -1452,7 +1465,7 @@
             </build>
         </profile>
 
-        <!-- Framework Integration Test-->
+        <!-- Framework & Feature Integration Test-->
         <profile>
             <id>fit</id>
             <activation>
@@ -1554,7 +1567,9 @@
                         </configuration>
                         <dependencies>
                             <dependency>
-                                <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
+                                <!--
+                                surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible
+                                -->
                                 <groupId>org.ow2.asm</groupId>
                                 <artifactId>asm</artifactId>
                                 <version>7.0-beta</version>
@@ -1587,7 +1602,9 @@
                         </configuration>
                         <dependencies>
                             <dependency>
-                                <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
+                                <!--
+                                surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible
+                                -->
                                 <groupId>org.ow2.asm</groupId>
                                 <artifactId>asm</artifactId>
                                 <version>7.0-beta</version>
