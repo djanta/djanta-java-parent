@@ -17,7 +17,8 @@ branches:
     - master
     - develop
     - release
-    - /^[0-9]/
+    #- /^[0-9]/
+    - /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/
 
 jdk:
   - openjdk8
@@ -72,8 +73,7 @@ jobs:
     jdk: openjdk8
     install: true
     script:
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync \
-        -Dsync.dryRun -DskipTests=false deploy
+      - ./mvnw -B -nsu -s ./.mvn/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false deploy
 
   - stage: snapshot
     name: "Deploy Snapshot to Maven repo"
