@@ -1017,7 +1017,7 @@
             </activation>
             <repositories>
                 <repository>
-                    <releases>
+                    <!--<releases>
                         <enabled>true</enabled>
                         <updatePolicy>always</updatePolicy>
                         <checksumPolicy>warn</checksumPolicy>
@@ -1025,7 +1025,8 @@
                     <snapshots>
                         <enabled>true</enabled>
                         <checksumPolicy>warn</checksumPolicy>
-                    </snapshots>
+                    </snapshots>-->
+                    <name>GitHub djanta Apache Maven Packages</name>
                     <id>github</id>
                     <url>https://maven.pkg.github.com/djanta</url>
                 </repository>
@@ -1034,7 +1035,7 @@
                 <repository>
                     <id>github</id>
                     <name>djanta</name>
-                    <url>https://maven.pkg.github.com/djanta</url>
+                    <url>https://maven.pkg.github.com/djanta/${project.artifactId}</url>
                 </repository>
             </distributionManagement>
         </profile>
