@@ -987,6 +987,9 @@
         </profile>
         <profile>
             <id>sonatype</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <distributionManagement>
                 <repository>
                     <id>sonatype</id>
@@ -1010,23 +1013,8 @@
         </profile>
         <profile>
             <id>github</id>
-            <activation>
-                <property>
-                    <name>GH_TOKEN</name>
-                </property>
-            </activation>
             <repositories>
                 <repository>
-                    <!--<releases>
-                        <enabled>true</enabled>
-                        <updatePolicy>always</updatePolicy>
-                        <checksumPolicy>warn</checksumPolicy>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                        <checksumPolicy>warn</checksumPolicy>
-                    </snapshots>-->
-                    <name>GitHub djanta Apache Maven Packages</name>
                     <id>github</id>
                     <url>https://maven.pkg.github.com/djanta</url>
                 </repository>
@@ -1034,7 +1022,6 @@
             <distributionManagement>
                 <repository>
                     <id>github</id>
-                    <name>djanta</name>
                     <url>https://maven.pkg.github.com/djanta/${project.artifactId}</url>
                 </repository>
             </distributionManagement>
