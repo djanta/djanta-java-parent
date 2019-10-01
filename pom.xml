@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2015-2019 DJANTA, LLC (https://www.djanta.io)
+    Copyright 2019 DJANTA, LLC (https://www.djanta.io)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -26,6 +26,10 @@
 
     <description>djanta.io makes writing java microservice easier for everyone</description>
 
+    <modules>
+        <module>djanta-java-bom</module>
+    </modules>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
@@ -40,93 +44,108 @@
         <!-- default bytecode version for src/test -->
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-
         <main.basedir>${project.basedir}</main.basedir>
 
-        <okhttp3.version>3.6.0</okhttp3.version>
-        <gson.version>2.5</gson.version>
-        <slf4j.version>1.7.13</slf4j.version>
-        <bouncy.version>1.60</bouncy.version>
-
-        <junit.version>4.12</junit.version>
         <com.fasterxml.jackson.version>2.9.8</com.fasterxml.jackson.version>
-        <assertj.version>3.10.0</assertj.version>
-        <datafactory.version>0.8</datafactory.version>
-        <mockserver.version>5.5.4</mockserver.version>
-        <javax.json-api.version>1.1.4</javax.json-api.version>
-        <rx.java.version>1.3.8</rx.java.version>
-
-        <release.goals>deploy</release.goals>
-
-        <animal-sniffer-maven-plugin.version>1.17</animal-sniffer-maven-plugin.version>
-        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
-        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
-        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.0.1</maven-javadoc-plugin.version>
-        <license-maven-plugin.version>3.0</license-maven-plugin.version>
-        <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
-        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
-        <maven-bundle-plugin.version>4.0.0</maven-bundle-plugin.version>
-        <centralsync-maven-plugin.version>0.1.0</centralsync-maven-plugin.version>
-        <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
-        <maven-scm-plugin.version>1.11.2</maven-scm-plugin.version>
-        <maven-versions-plugin.version>2.7</maven-versions-plugin.version>
-        <slf4j-api.version>1.7.26</slf4j-api.version>
+        <org.fluttercode.datafactory.version>0.8</org.fluttercode.datafactory.version>
+        <org.mock-server.version>5.5.4</org.mock-server.version>
+        <javax.json.version>1.1.4</javax.json.version>
+        <io.reactivex.version>1.3.8</io.reactivex.version>
+        <org.slf4j.version>1.7.26</org.slf4j.version>
         <junit.version>4.12</junit.version>
-        <powermock-module-junit4.version>1.6.6</powermock-module-junit4.version>
-        <org.mockito.mockito-core.version>2.7.5</org.mockito.mockito-core.version>
-        <org.everit.json.schema.version>1.4.1</org.everit.json.schema.version>
-        <jbehave.version>4.5.1</jbehave.version>
-        <jbehave-junit-runner.version>1.2.0</jbehave-junit-runner.version>
+        <org.powermock.version>1.6.6</org.powermock.version>
+        <org.mockito.version>2.7.5</org.mockito.version>
+        <org.everit.json.version>1.4.1</org.everit.json.version>
+        <org.jbehave.version>4.5.1</org.jbehave.version>
+        <de.codecentric.version>1.2.0</de.codecentric.version>
+        <net.sourceforge.cobertura.version>2.1.1</net.sourceforge.cobertura.version>
+        <com.github.eirslett.version>1.8.0</com.github.eirslett.version>
+        <com.amazonaws.version>1.11.641</com.amazonaws.version>
+        <software.amazon.awssdk.version>2.9.9</software.amazon.awssdk.version>
+        <com.google.http-client.version>1.32.1</com.google.http-client.version>
+        <com.google.cloud.version>2.2.0</com.google.cloud.version>
+        <org.freemarker.version>2.3.28</org.freemarker.version>
+        <io.github.openfeign.version>10.2.3</io.github.openfeign.version>
+        <org.bouncycastle.bcprov-jdk15on.version>1.63</org.bouncycastle.bcprov-jdk15on.version>
+        <org.apache.cxf.version>3.3.3</org.apache.cxf.version>
+        <javax.persistence.version>2.2</javax.persistence.version>
+        <javax.resource.version>1.0</javax.resource.version>
 
-        <!-- BOM Generation configuration -->
-        <bom-generator.version>0.14.3</bom-generator.version>
-
-        <!-- Plugin version control -->
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <com.marvinformatics.formatter.version>2.2.0</com.marvinformatics.formatter.version>
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
-        <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
-        <snyk-maven-plugin.version>1.2.0</snyk-maven-plugin.version>
-        <jacoco.version>0.8.1</jacoco.version>
-        <jacoco-maven-plugin.version>0.8.1</jacoco-maven-plugin.version>
-        <buildnumber-maven-plugin.version>1.4</buildnumber-maven-plugin.version>
-        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
-        <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
-        <maven-dependency-plugin.version>3.0.0</maven-dependency-plugin.version>
-        <site-maven-plugin.version>0.12</site-maven-plugin.version>
-        <sortpom-maven-plugin.version>2.8.0</sortpom-maven-plugin.version>
-        <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
-        <maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
-        <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
-        <io.takari-maven.version>0.3.4</io.takari-maven.version>
+        <!-- :: Maven plugin version configuration -->
+        <maven.plugin.animal-sniffer.version>1.17</maven.plugin.animal-sniffer.version>
+        <maven.plugin.compiler.version>3.8.0</maven.plugin.compiler.version>
+        <maven.plugin.install.version>2.5.2</maven.plugin.install.version>
+        <maven.plugin.source.version>3.0.1</maven.plugin.source.version>
+        <maven.plugin.javadoc.version>3.0.1</maven.plugin.javadoc.version>
+        <maven.plugin.gpg.version>1.6</maven.plugin.gpg.version>
+        <maven.plugin.license.version>3.0</maven.plugin.license.version>
+        <maven.plugin.jar.version>3.1.0</maven.plugin.jar.version>
+        <maven.plugin.release.version>2.5.3</maven.plugin.release.version>
+        <maven.plugin.bundle.version>4.0.0</maven.plugin.bundle.version>
+        <maven.plugin.centralsync.version>0.1.0</maven.plugin.centralsync.version>
+        <maven.plugin.surefire.version>2.22.0</maven.plugin.surefire.version>
+        <maven.plugin.scm.version>1.11.2</maven.plugin.scm.version>
+        <maven.plugin.versions.version>2.7</maven.plugin.versions.version>
+        <maven.plugin.shade.version>3.2.1</maven.plugin.shade.version>
+        <maven.plugin.clean.version>3.0.0</maven.plugin.clean.version>
+        <maven.plugin.resources.version>3.0.2</maven.plugin.resources.version>
+        <maven.plugin.enforcer.version>1.4.1</maven.plugin.enforcer.version>
+        <maven.plugin.dependency.version>3.0.0</maven.plugin.dependency.version>
+        <maven.plugin.site.version>0.12</maven.plugin.site.version>
+        <maven.plugin.jacoco.version>0.8.4</maven.plugin.jacoco.version>
+        <maven.plugin.buildnumber.version>1.4</maven.plugin.buildnumber.version>
+        <maven.plugin.sortpom.version>2.8.0</maven.plugin.sortpom.version>
+        <maven.plugin.build-helper.version>3.0.0</maven.plugin.build-helper.version>
+        <maven.plugin.gpg.version>1.6</maven.plugin.gpg.version>
+        <maven.plugin.deploy.version>2.8.2</maven.plugin.deploy.version>
+        <maven.plugin.nexus-staging.version>1.6.7</maven.plugin.nexus-staging.version>
+        <maven.plugin.snyk.version>1.2.0</maven.plugin.snyk.version>
+        <maven.plugin.sundr.version>0.14.3</maven.plugin.sundr.version>
+        <maven.plugin.takari.version>0.3.4</maven.plugin.takari.version>
+        <maven.plugin.formatter.version>2.2.0</maven.plugin.formatter.version>
+        <maven.plugin.assembly.version>3.1.1</maven.plugin.assembly.version>
 
         <!-- Plugins configurations section -->
-        <license-maven-plugin.header>.mvn/licenses/apache-2.0-header</license-maven-plugin.header>
-        <!--
-        <formatter-maven-plugin.configfile>${main.basedir}/.mvn/coding/eclipse-java-style.xml</formatter-maven-plugin.configfile>
-        -->
-        <formatter-maven-plugin.configfile>.mvn/coding/eclipse-java-style.xml</formatter-maven-plugin.configfile>
-        <bom.template.file.path>file://${project.basedir}/.mvn/resources/bom.xml</bom.template.file.path>
-        <sortpom-maven-plugin.sortorderfile>.mvn/resources/pom-sorter.xml</sortpom-maven-plugin.sortorderfile>
-        <sort.nrOfIndentSpace>4</sort.nrOfIndentSpace>
-        <maven.compiler.debuglevel>lines,vars,source</maven.compiler.debuglevel>
+        <mvn.license.header>.mvn/licenses/apache-2.0-header</mvn.license.header>
+        <mvn.formatter.configfile>.mvn/coding/eclipse-java-style.xml</mvn.formatter.configfile>
+        <mvn.bom.template.filepath>file://${project.basedir}/.mvn/resources/bom.xml</mvn.bom.template.filepath>
+        <mvn.sortpom.file>.mvn/resources/pom-sorter.xml</mvn.sortpom.file>
+        <mvn.sort.indent>4</mvn.sort.indent>
+        <mvn.debuglevel>lines,vars,source</mvn.debuglevel>
+        <mvn.license.holder>DJANTA, LLC (https://www.djanta.io)</mvn.license.holder>
+        <mvn.tag.prefix>v</mvn.tag.prefix>
+        <mvn.sonatype.id>sonatype</mvn.sonatype.id>
+        <mvn.sonatype.url>https://oss.sonatype.org/</mvn.sonatype.url>
+        <mvn.bintray.subject>djanta</mvn.bintray.subject>
+        <mvn.bintray.repo>io.djanta</mvn.bintray.repo>
+        <mvn.bintray.package>community</mvn.bintray.package>
+        <mvn.release.goals>deploy</mvn.release.goals>
+        <mvn.node.version>v6.17.1</mvn.node.version>
+        <mvn.npm.version>2.15.9</mvn.npm.version>
+        <mvn.yarn.version>v1.17.0</mvn.yarn.version>
+        <mvn.nodejs.dist>https://nodejs.org/dist/</mvn.nodejs.dist>
+        <mvn.yarn.dist>https://github.com/yarnpkg/yarn/releases/download/</mvn.yarn.dist>
+        <mvn.npm.dist>https://registry.npmjs.org/npm/-/</mvn.npm.dist>
 
-        <license.holder>DJANTA, LLC (https://www.djanta.io)</license.holder>
-        <version.tag.prefix>v</version.tag.prefix>
-
-        <!-- Sonatype nexus plugin configuration -->
-        <nexus-staging-maven-plugin.serverId>sonatype</nexus-staging-maven-plugin.serverId>
-        <nexus-staging-maven-plugin.nexusUrl>https://oss.sonatype.org/</nexus-staging-maven-plugin.nexusUrl>
-
-        <!-- Bintray configuration -->
-        <bintray.subject>djanta</bintray.subject>
-        <bintray.repo>io.djanta</bintray.repo>
-        <bintray.packageName>community</bintray.packageName>
+        <!-- Maven front end configurtion -->
+        <mvn.frontend.workingdirectory>src/main/javascript/frontend</mvn.frontend.workingdirectory>
+        <mvn.frontend.installdirectory>${project.build.directory}</mvn.frontend.installdirectory>
+        <mvn.frontend.npm.enable>false</mvn.frontend.npm.enable>
+        <mvn.frontend.yarn.enable>false</mvn.frontend.yarn.enable>
+        <!-- run argument -->
+        <mvn.frontend.npm.arugment>install</mvn.frontend.npm.arugment>
+        <mvn.frontend.yarn.arugment>install</mvn.frontend.yarn.arugment>
+        <mvn.frontend.bower.arugment>install</mvn.frontend.bower.arugment>
+        <mvn.frontend.grunt.arugment>build</mvn.frontend.grunt.arugment>
+        <mvn.frontend.gulp.arugment>build</mvn.frontend.gulp.arugment>
+        <mvn.frontend.jspm.arugment>install</mvn.frontend.jspm.arugment>
+        <mvn.frontend.karma.arugment></mvn.frontend.karma.arugment>
+        <mvn.frontend.webpack.arugment>-p</mvn.frontend.webpack.arugment>
+        <!-- Frontend config files -->
     </properties>
 
     <url>https://github.com/djanta/djanta-java-parent</url>
-    <inceptionYear>2015</inceptionYear>
+    <inceptionYear>2019</inceptionYear>
 
     <organization>
         <name>DJANTA, LLC</name>
@@ -158,7 +177,7 @@
             <roles>
                 <role>Architect</role>
                 <role>CTO</role>
-                <role>Co-Founder</role>
+                <role>Founder</role>
             </roles>
             <timezone>+1</timezone>
         </developer>
@@ -172,87 +191,34 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.fluttercode.datafactory</groupId>
-                <artifactId>datafactory</artifactId>
-                <version>${datafactory.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>javax.json</groupId>
-                <artifactId>javax.json-api</artifactId>
-                <version>${javax.json-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>${slf4j-api.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.powermock</groupId>
-                <artifactId>powermock-module-junit4</artifactId>
-                <version>${powermock-module-junit4.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mockito</groupId>
-                <artifactId>mockito-core</artifactId>
-                <version>${org.mockito.mockito-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.everit.json</groupId>
-                <artifactId>org.everit.json.schema</artifactId>
-                <version>${org.everit.json.schema.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mock-server</groupId>
-                <artifactId>mockserver-netty</artifactId>
-                <version>${mockserver.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.mock-server</groupId>
-                <artifactId>mockserver-client-java</artifactId>
-                <version>${mockserver.version}</version>
-            </dependency>
-
-            <!-- JBehave: dependencies -->
-            <dependency>
-                <groupId>org.jbehave</groupId>
-                <artifactId>jbehave-core</artifactId>
-                <version>${jbehave.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>jbehave-junit-runner</artifactId>
-                <version>${jbehave-junit-runner.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.fasterxml.jackson</groupId>
-                <artifactId>jackson-bom</artifactId>
-                <version>${com.fasterxml.jackson.version}</version>
+                <groupId>net.sourceforge.cobertura</groupId>
+                <artifactId>cobertura-runtime</artifactId>
+                <version>${net.sourceforge.cobertura.version}</version>
                 <type>pom</type>
-                <scope>import</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
-
             <dependency>
-                <groupId>io.reactivex</groupId>
-                <artifactId>rxjava</artifactId>
-                <version>${rx.java.version}</version>
+                <groupId>net.sourceforge.cobertura</groupId>
+                <artifactId>cobertura</artifactId>
+                <version>${net.sourceforge.cobertura.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>ch.qos.logback</groupId>
+                        <artifactId>logback-classic</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
         <!-- Testing unit dependencies -->
-        <dependency>
+        <!--<dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
@@ -282,7 +248,7 @@
             <artifactId>jbehave-junit-runner</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Mocking Rest-Server -->
+
         <dependency>
             <groupId>org.mock-server</groupId>
             <artifactId>mockserver-netty</artifactId>
@@ -292,10 +258,10 @@
             <groupId>org.mock-server</groupId>
             <artifactId>mockserver-client-java</artifactId>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- Runtime dependencies -->
-        <dependency>
+        <!--<dependency>
             <groupId>javax.json</groupId>
             <artifactId>javax.json-api</artifactId>
         </dependency>
@@ -310,10 +276,10 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- (com.fasterxml.jackson) - Core -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
@@ -324,10 +290,10 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- (com.fasterxml.jackson) - Data Formats -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-avro</artifactId>
         </dependency>
@@ -362,10 +328,10 @@
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
-        </dependency>
+        </dependency>-->
 
         <!-- (com.fasterxml.jackson) - Data Types -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-guava</artifactId>
         </dependency>
@@ -400,50 +366,53 @@
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-pcollections</artifactId>
-        </dependency>
-        <dependency>
+        </dependency>-->
+
+        <!--<dependency>
             <groupId>io.reactivex</groupId>
             <artifactId>rxjava</artifactId>
-        </dependency>
+        </dependency>-->
+
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName>
+        <!-- <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName> -->
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>${maven-deploy-plugin.version}</version>
+                    <version>${maven.plugin.deploy.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>${nexus-staging-maven-plugin.version}</version>
+                    <version>${maven.plugin.nexus-staging.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-shade-plugin</artifactId>
-                    <version>${maven-shade-plugin.version}</version>
+                    <version>${maven.plugin.shade.version}</version>
                 </plugin>
 
                 <!-- mvn -N io.takari:maven:wrapper -Dmaven=3.5.0 -->
                 <plugin>
                     <groupId>io.takari</groupId>
                     <artifactId>maven</artifactId>
-                    <version>${io.takari-maven.version}</version>
+                    <version>${maven.plugin.takari.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin.version}</version>
+                    <version>${maven.plugin.compiler.version}</version>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>${maven-jar-plugin.version}</version>
+                    <version>${maven.plugin.jar.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
+                    <version>${maven.plugin.surefire.version}</version>
                     <configuration>
                         <redirectTestOutputToFile>true</redirectTestOutputToFile>
                         <trimStackTrace>false</trimStackTrace>
@@ -451,7 +420,6 @@
                     </configuration>
                     <dependencies>
                         <dependency>
-                            <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
                             <groupId>org.ow2.asm</groupId>
                             <artifactId>asm</artifactId>
                             <version>7.0-beta</version>
@@ -461,62 +429,53 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>
-                    <version>${buildnumber-maven-plugin.version}</version>
+                    <version>${maven.plugin.buildnumber.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${jacoco.version}</version>
+                    <version>${maven.plugin.jacoco.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
-                    <version>${maven-resources-plugin.version}</version>
+                    <version>${maven.plugin.resources.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
-                    <version>${maven-enforcer-plugin.version}</version>
+                    <version>${maven.plugin.enforcer.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${maven-dependency-plugin.version}</version>
+                    <version>${maven.plugin.dependency.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>com.github.github</groupId>
                     <artifactId>site-maven-plugin</artifactId>
-                    <version>${site-maven-plugin.version}</version>
+                    <version>${maven.plugin.site.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
-                    <version>${maven-clean-plugin.version}</version>
+                    <version>${maven.plugin.clean.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <version>${com.github.eirslett.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
-            <!--
-            <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>${nexus-staging-maven-plugin.serverId}</serverId>
-                    <nexusUrl>${nexus-staging-maven-plugin.nexusUrl}</nexusUrl>
+                    <serverId>${mvn.sonatype.id}</serverId>
+                    <nexusUrl>${mvn.sonatype.url}</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
                 <executions>
@@ -543,6 +502,9 @@
                         <configuration>
                             <source>${main.java.version}</source>
                             <target>${main.java.version}</target>
+                            <compilerArgs>
+                                <compilerArg>-Xlint:all</compilerArg>
+                            </compilerArgs>
                         </configuration>
                     </execution>
                 </executions>
@@ -550,7 +512,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
-                <version>${animal-sniffer-maven-plugin.version}</version>
+                <version>${maven.plugin.animal-sniffer.version}</version>
                 <configuration>
                     <signature>
                         <groupId>org.codehaus.mojo.signature</groupId>
@@ -576,14 +538,14 @@
             <!-- Ensures checksums are added to published jars -->
             <plugin>
                 <artifactId>maven-install-plugin</artifactId>
-                <version>${maven-install-plugin.version}</version>
+                <version>${maven.plugin.install.version}</version>
                 <configuration>
                     <createChecksum>true</createChecksum>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>${maven-release-plugin.version}</version>
+                <version>${maven.plugin.release.version}</version>
                 <configuration>
                     <useReleaseProfile>false</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
@@ -596,7 +558,7 @@
                     <mavenExecutorId>forked-path</mavenExecutorId>
                     <!-- <arguments>-Dgpg.passphrase=${gpg.passphrase}</arguments> -->
                     <preparationGoals>clean install</preparationGoals>
-                    <goals>${release.goals}</goals>
+                    <goals>${mvn.release.goals}</goals>
                     <!-- <arguments>-Ppackaging</arguments> -->
                 </configuration>
                 <dependencies>
@@ -607,6 +569,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
+
             <!--
             <plugin>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -700,11 +663,11 @@
             <plugin>
                 <groupId>io.zipkin.centralsync-maven-plugin</groupId>
                 <artifactId>centralsync-maven-plugin</artifactId>
-                <version>${centralsync-maven-plugin.version}</version>
+                <version>${maven.plugin.centralsync.version}</version>
                 <configuration>
-                    <subject>${bintray.subject}</subject>
-                    <repo>${bintray.repo}</repo>
-                    <packageName>${bintray.packageName}</packageName>
+                    <subject>${mvn.bintray.subject}</subject>
+                    <repo>${mvn.bintray.repo}</repo>
+                    <packageName>${mvn.bintray.package}</packageName>
                 </configuration>
             </plugin>
             <plugin>
@@ -721,7 +684,7 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>${maven-bundle-plugin.version}</version>
+                <version>${maven.plugin.bundle.version}</version>
                 <executions>
                     <execution>
                         <id>bundle-manifest</id>
@@ -735,10 +698,10 @@
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>${license-maven-plugin.version}</version>
+                <version>${maven.plugin.license.version}</version>
                 <configuration>
                     <!-- session.executionRootDirectory resolves properly even with nested modules -->
-                    <header>${license-maven-plugin.header}</header>
+                    <header>${mvn.license.header}</header>
                     <excludes>
                         <exclude>**/.travis.yml</exclude>
                         <exclude>**/.editorconfig</exclude>
@@ -753,10 +716,7 @@
                         <exclude>**/*.md</exclude>
                         <exclude>**/bnd.bnd</exclude>
                         <exclude>**/.MF</exclude>
-                        <!--
-                        <exclude>**/src/test/resources/**</exclude>
-                        <exclude>**/src/main/resources/**</exclude>
-                        -->
+                        <exclude>**/.variables</exclude>
                         <exclude>**/resources/license/header.txt</exclude>
                         <exclude>**/pom-old.xml</exclude>
                         <exclude>**/README</exclude>
@@ -783,7 +743,7 @@
                         <configuration>
                             <failIfUnknown>true</failIfUnknown>
                             <properties>
-                                <company>${license.holder}</company>
+                                <company>${mvn.license.holder}</company>
                             </properties>
                         </configuration>
                     </execution>
@@ -792,17 +752,17 @@
                     <dependency>
                         <groupId>com.mycila</groupId>
                         <artifactId>license-maven-plugin-git</artifactId>
-                        <version>${license-maven-plugin.version}</version>
+                        <version>${maven.plugin.license.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
             <plugin>
                 <groupId>com.marvinformatics.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
-                <version>${com.marvinformatics.formatter.version}</version>
+                <version>${maven.plugin.formatter.version}</version>
                 <configuration>
                     <lineEnding>LF</lineEnding>
-                    <configFile>${formatter-maven-plugin.configfile}</configFile>
+                    <configFile>${mvn.formatter.configfile}</configFile>
                 </configuration>
                 <executions>
                     <execution>
@@ -816,13 +776,13 @@
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
-                <version>${sortpom-maven-plugin.version}</version>
+                <version>${maven.plugin.sortpom.version}</version>
                 <configuration>
                     <keepBlankLines>true</keepBlankLines>
                     <lineSeparator>\n</lineSeparator>
-                    <sortOrderFile>${sortpom-maven-plugin.sortorderfile}</sortOrderFile>
+                    <sortOrderFile>${mvn.sortpom.file}</sortOrderFile>
                     <createBackupFile>false</createBackupFile>
-                    <nrOfIndentSpace>${sort.nrOfIndentSpace}</nrOfIndentSpace>
+                    <nrOfIndentSpace>${mvn.sort.indent}</nrOfIndentSpace>
                 </configuration>
                 <executions>
                     <execution>
@@ -834,13 +794,13 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>io.sundr</groupId>
                 <artifactId>sundr-maven-plugin</artifactId>
-                <version>${bom-generator.version}</version>
+                <version>${maven.plugin.sundr.version}</version>
                 <inherited>false</inherited>
                 <configuration>
-                    <bomTemplateUrl>${bom.template.file.path}</bomTemplateUrl>
+                    <bomTemplateUrl>${mvn.bom.template.filepath}</bomTemplateUrl>
                     <boms>
                         <bom>
                             <artifactId>djanta-bom</artifactId>
@@ -867,7 +827,7 @@
                     <dependency>
                         <groupId>io.sundr</groupId>
                         <artifactId>sundr-codegen</artifactId>
-                        <version>${bom-generator.version}</version>
+                        <version>${maven.plugin.sundr.version}</version>
                         <exclusions>
                             <exclusion>
                                 <groupId>com.sun</groupId>
@@ -876,18 +836,18 @@
                         </exclusions>
                     </dependency>
                 </dependencies>
-            </plugin>
+            </plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>${maven-versions-plugin.version}</version>
+                <version>${maven.plugin.versions.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-scm-plugin</artifactId>
-                <version>${maven-scm-plugin.version}</version>
+                <version>${maven.plugin.scm.version}</version>
                 <configuration>
-                    <tag>${version.tag.prefix}${project.version}</tag>
+                    <tag>${mvn.tag.prefix}${project.version}</tag>
                 </configuration>
             </plugin>
             <plugin>
@@ -962,7 +922,7 @@
                                     <version>3.3</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>${main.java.version}</version>
+                                    <version>[${main.java.version},12)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
@@ -981,7 +941,7 @@
             </activation>
             <!--
             <properties>
-                <bom.template.file.path>file:///${project.basedir}/src/config/bom.xml</bom.template.file.path>
+                <mvn.bom.template.filepath>file:///${project.basedir}/src/config/bom.xml</mvn.bom.template.filepath>
             </properties>
             -->
         </profile>
@@ -990,6 +950,24 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <!--
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.plugin.gpg.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-release-artifacts</id>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+            -->
             <repositories>
                 <repository>
                     <releases>
@@ -1045,27 +1023,49 @@
             <distributionManagement>
                 <repository>
                     <id>sonatype</id>
-                    <url>${nexus-staging-maven-plugin.nexusUrl}service/local/staging/deploy/maven2/</url>
+                    <url>${mvn.sonatype.url}service/local/staging/deploy/maven2/</url>
                 </repository>
                 <snapshotRepository>
                     <id>sonatype</id>
-                    <url>${nexus-staging-maven-plugin.nexusUrl}content/repositories/snapshots</url>
+                    <url>${mvn.sonatype.url}content/repositories/snapshots</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>
         <profile>
             <id>bintray</id>
+            <repositories>
+                <repository>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                </repository>
+            </repositories>
             <distributionManagement>
                 <repository>
                     <id>bintray</id>
                     <name>io.djanta</name>
-                    <url>https://api.bintray.com/maven/${bintray.subject}/${bintray.repo}/${bintray.packageName}/;publish=1</url>
+                    <url>https://api.bintray.com/maven/${mvn.bintray.subject}/${mvn.bintray.repo}/${mvn.bintray.package}/;publish=1</url>
                 </repository>
             </distributionManagement>
         </profile>
         <profile>
             <id>github</id>
             <repositories>
+                <repository>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                    <id>central</id>
+                    <url>https://repo1.maven.org/maven2</url>
+                </repository>
                 <repository>
                     <id>github</id>
                     <url>https://maven.pkg.github.com/djanta</url>
@@ -1085,10 +1085,10 @@
                     <plugin>
                         <groupId>com.marvinformatics.formatter</groupId>
                         <artifactId>formatter-maven-plugin</artifactId>
-                        <version>${com.marvinformatics.formatter.version}</version>
+                        <version>${maven.plugin.formatter.version}</version>
                         <configuration>
                             <lineEnding>LF</lineEnding>
-                            <configFile>${formatter-maven-plugin.configfile}</configFile>
+                            <configFile>${mvn.formatter.configfile}</configFile>
                         </configuration>
                         <executions>
                             <execution>
@@ -1111,7 +1111,7 @@
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-shade-plugin</artifactId>
-                            <version>${maven-shade-plugin.version}</version>
+                            <version>${maven.plugin.shade.version}</version>
                         </plugin>
                     </plugins>
                 </pluginManagement>
@@ -1184,7 +1184,7 @@
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>build-helper-maven-plugin</artifactId>
-                        <version>${build-helper-maven-plugin.version}</version>
+                        <version>${maven.plugin.build-helper.version}</version>
                         <executions>
                             <execution>
                                 <id>reserve-ports</id>
@@ -1213,7 +1213,7 @@
                             <dependency>
                                 <groupId>org.mock-server</groupId>
                                 <artifactId>mockserver-client-java</artifactId>
-                                <version>${mockserver.version}</version>
+                                <version>${org.mock-server.version}</version>
                             </dependency>
                         </dependencies>
                         <executions>
@@ -1262,12 +1262,12 @@
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-source-plugin</artifactId>
-                            <version>${maven-source-plugin.version}</version>
+                            <version>${maven.plugin.source.version}</version>
                         </plugin>
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-javadoc-plugin</artifactId>
-                            <version>${maven-javadoc-plugin.version}</version>
+                            <version>${maven.plugin.javadoc.version}</version>
                         </plugin>
                     </plugins>
                 </pluginManagement>
@@ -1290,6 +1290,7 @@
                         <artifactId>maven-javadoc-plugin</artifactId>
                         <configuration>
                             <failOnError>false</failOnError>
+                            <additionalparam>-Xdoclint:all</additionalparam>
                         </configuration>
                         <executions>
                             <execution>
@@ -1359,7 +1360,7 @@
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-gpg-plugin</artifactId>
-                            <version>${maven-gpg-plugin.version}</version>
+                            <version>${maven.plugin.gpg.version}</version>
                         </plugin>
                     </plugins>
                 </pluginManagement>
@@ -1399,7 +1400,7 @@
                         <plugin>
                             <groupId>io.snyk</groupId>
                             <artifactId>snyk-maven-plugin</artifactId>
-                            <version>${snyk-maven-plugin.version}</version>
+                            <version>${maven.plugin.snyk.version}</version>
                         </plugin>
                     </plugins>
                 </pluginManagement>
@@ -1463,6 +1464,502 @@
                                     <goal>site</goal>
                                 </goals>
                                 <phase>deploy</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- FrontEnd tools configuration -->
+        <profile>
+            <id>frontend:npm</id>
+            <activation>
+                <property>
+                    <name>mvn.frontend.npm.enable</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-dont-exist</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireFilesDontExist>
+                                            <files>
+                                                <file>${mvn.frontend.workingdirectory}/package.json</file>
+                                            </files>
+                                        </requireFilesDontExist>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <configuration>
+                            <nodeVersion>${mvn.node.version}</nodeVersion>
+                            <npmVersion>${mvn.npm.version}</npmVersion>
+                            <nodeDownloadRoot>${mvn.nodejs.dist}</nodeDownloadRoot>
+                            <npmDownloadRoot>${mvn.npm.dist}</npmDownloadRoot>
+                            <installDirectory>${mvn.frontend.installdirectory}</installDirectory>
+                            <workingDirectory>${mvn.frontend.workingdirectory}</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install-node-and-npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>npm-run</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <arguments>${mvn.frontend.npm.arugment}</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>frontend:yarn</id>
+            <activation>
+                <property>
+                    <name>mvn.frontend.yarn.enable</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-dont-exist</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireFilesDontExist>
+                                            <files>
+                                                <file>${mvn.frontend.workingdirectory}/package.json</file>
+                                            </files>
+                                        </requireFilesDontExist>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <configuration>
+                            <nodeVersion>${mvn.node.version}</nodeVersion>
+                            <yarnVersion>${mvn.yarn.version}</yarnVersion>
+
+                            <nodeDownloadRoot>${mvn.nodejs.dist}</nodeDownloadRoot>
+                            <yarnDownloadRoot>${mvn.yarn.dist}</yarnDownloadRoot>
+                            <installDirectory>${mvn.frontend.installdirectory}</installDirectory>
+                            <workingDirectory>${mvn.frontend.workingdirectory}</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install-node-and-yarn</id>
+                                <goals>
+                                    <goal>install-node-and-yarn</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>yarn-run</id>
+                                <goals>
+                                    <goal>yarn</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <arguments>${mvn.frontend.yarn.arugment}</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>frontend:bower</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-dont-exist</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireFilesDontExist>
+                                            <files>
+                                                <file>${mvn.frontend.workingdirectory}/bower.json</file>
+                                            </files>
+                                        </requireFilesDontExist>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <configuration>
+                            <nodeVersion>${mvn.node.version}</nodeVersion>
+                            <npmVersion>${mvn.npm.version}</npmVersion>
+                            <nodeDownloadRoot>${mvn.nodejs.dist}</nodeDownloadRoot>
+                            <npmDownloadRoot>${mvn.npm.dist}</npmDownloadRoot>
+                            <installDirectory>${mvn.frontend.installdirectory}</installDirectory>
+                            <workingDirectory>${mvn.frontend.workingdirectory}</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install-node-and-npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>bower-run</id>
+                                <goals>
+                                    <goal>bower</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <arguments>${mvn.frontend.bower.arugment}</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>frontend:grunt</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-dont-exist</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireFilesDontExist>
+                                            <files>
+                                                <file>${mvn.frontend.workingdirectory}/Gruntfile.js</file>
+                                            </files>
+                                        </requireFilesDontExist>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <configuration>
+                            <nodeVersion>${mvn.node.version}</nodeVersion>
+                            <npmVersion>${mvn.npm.version}</npmVersion>
+                            <nodeDownloadRoot>${mvn.nodejs.dist}</nodeDownloadRoot>
+                            <npmDownloadRoot>${mvn.npm.dist}</npmDownloadRoot>
+                            <installDirectory>${mvn.frontend.installdirectory}</installDirectory>
+                            <workingDirectory>${mvn.frontend.workingdirectory}</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install-node-and-npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>grunt-build</id>
+                                <goals>
+                                    <goal>grunt</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <arguments>${mvn.frontend.grunt.arugment}</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>frontend:gulp</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-dont-exist</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireFilesDontExist>
+                                            <files>
+                                                <file>${mvn.frontend.workingdirectory}/gulpfile.js</file>
+                                            </files>
+                                        </requireFilesDontExist>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <configuration>
+                            <nodeVersion>${mvn.node.version}</nodeVersion>
+                            <npmVersion>${mvn.npm.version}</npmVersion>
+                            <nodeDownloadRoot>${mvn.nodejs.dist}</nodeDownloadRoot>
+                            <npmDownloadRoot>${mvn.npm.dist}</npmDownloadRoot>
+                            <installDirectory>${mvn.frontend.installdirectory}</installDirectory>
+                            <workingDirectory>${mvn.frontend.workingdirectory}</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install-node-and-npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>gulp-build</id>
+                                <goals>
+                                    <goal>gulp</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <arguments>${mvn.frontend.gulp.arugment}</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>frontend:jspm</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-dont-exist</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireFilesDontExist>
+                                            <files>
+                                                <file>${mvn.frontend.workingdirectory}/gulpfile.js</file>
+                                            </files>
+                                        </requireFilesDontExist>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <configuration>
+                            <nodeVersion>${mvn.node.version}</nodeVersion>
+                            <npmVersion>${mvn.npm.version}</npmVersion>
+                            <nodeDownloadRoot>${mvn.nodejs.dist}</nodeDownloadRoot>
+                            <npmDownloadRoot>${mvn.npm.dist}</npmDownloadRoot>
+                            <installDirectory>${mvn.frontend.installdirectory}</installDirectory>
+                            <workingDirectory>${mvn.frontend.workingdirectory}</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install-node-and-npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>jspm-build</id>
+                                <goals>
+                                    <goal>jspm</goal>
+                                </goals>
+                                <!--<phase>generate-resources</phase>-->
+                                <configuration>
+                                    <arguments>${mvn.frontend.jspm.arugment}</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>frontend:karma</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-dont-exist</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireFilesDontExist>
+                                            <files>
+                                                <file>${mvn.frontend.workingdirectory}/gulpfile.js</file>
+                                            </files>
+                                        </requireFilesDontExist>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <configuration>
+                            <nodeVersion>${mvn.node.version}</nodeVersion>
+                            <npmVersion>${mvn.npm.version}</npmVersion>
+                            <nodeDownloadRoot>${mvn.nodejs.dist}</nodeDownloadRoot>
+                            <npmDownloadRoot>${mvn.npm.dist}</npmDownloadRoot>
+                            <installDirectory>${mvn.frontend.installdirectory}</installDirectory>
+                            <workingDirectory>${mvn.frontend.workingdirectory}</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install-node-and-npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>karma-build</id>
+                                <goals>
+                                    <goal>karma</goal>
+                                </goals>
+                                <phase>test</phase>
+                                <configuration>
+                                    <!-- <arguments>${mvn.frontend.karma.arugment}</arguments> -->
+                                    <karmaConfPath>src/test/javascript/karma.conf.ci.js</karmaConfPath>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>frontend:webpack</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>enforce-dont-exist</id>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireFilesDontExist>
+                                            <files>
+                                                <file>${mvn.frontend.workingdirectory}/webpack.config.js</file>
+                                            </files>
+                                        </requireFilesDontExist>
+                                    </rules>
+                                    <fail>true</fail>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <configuration>
+                            <nodeVersion>${mvn.node.version}</nodeVersion>
+                            <npmVersion>${mvn.npm.version}</npmVersion>
+                            <nodeDownloadRoot>${mvn.nodejs.dist}</nodeDownloadRoot>
+                            <npmDownloadRoot>${mvn.npm.dist}</npmDownloadRoot>
+                            <installDirectory>${mvn.frontend.installdirectory}</installDirectory>
+                            <workingDirectory>${mvn.frontend.workingdirectory}</workingDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install-node-and-npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                            </execution>
+                            <execution>
+                                <id>webpack-build</id>
+                                <goals>
+                                    <goal>webpack</goal>
+                                </goals>
+                                <phase>generate-resources</phase>
+                                <configuration>
+                                    <arguments>${mvn.frontend.webpack.arugment}</arguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>

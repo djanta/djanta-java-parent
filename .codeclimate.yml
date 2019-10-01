@@ -1,6 +1,5 @@
-#!/bin/sh
 #
-# Copyright 2015-2019 DJANTA, LLC (https://www.djanta.io)
+# Copyright 2019 DJANTA, LLC (https://www.djanta.io)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,16 +14,12 @@
 # limitations under the License.
 #
 
-is_git_submodule() {
-  project_version="$(print_project_version)"
-  if [[ "$project_version" =~ ^[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+$ ]]; then
-    echo "Build started by release commit $project_version. Will synchronize to maven central."
-    return 0
-  else
-    return 1
-  fi
-
-  git submodule update --init --recursive --remote --merge
-}
-
-#is_git_submodule
+plugins:
+  sonar-java:
+    enabled: true
+    config:
+      sonar.java.source: "8"
+      tests_patterns:
+        - src/test/**
+        - app/src/test/**
+      minimum_severity: critical

@@ -2,6 +2,10 @@ dist: xenial
 sudo: false
 language: java
 
+# Provided Travis-ci additional services
+services:
+  - docker
+
 cache:
   directories:
     - $HOME/.m2
@@ -17,12 +21,13 @@ branches:
     - master
     - develop
     - release
-    #- /^[0-9]/
     - /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/
 
 jdk:
   - openjdk8
   - openjdk9
+  - openjdk10
+  - openjdk11
 
 before_install:
   # Parameters used during release
@@ -51,25 +56,37 @@ after_success:
   - mvn versions:display-dependency-updates
   - mvn versions:display-plugin-updates
 
+matrix:
+  include:
+  - jdk: openjdk8
+  - jdk: openjdk9
+    before_install:
+      - rm "${JAVA_HOME}/lib/security/cacerts"
+      - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
+  - jdk: openjdk10
+    before_install:
+      - sudo rm "${JAVA_HOME}/lib/security/cacerts"
+      - sudo ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
+  - jdk: openjdk11
+
 stages:
   - name: develop
     if: (branch = develop AND type != pull_request) AND commit_message !~ /^(prepare release ([0-9\.]+))$/
   - name: snapshot
     if: branch = master AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+
   - name: release
-    #if: tag =~ /^[0-9\.]+$/
-    ## Validator: https://regex101.com/
+    if: branch = release AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+
+  - name: publish
     if: tag =~ /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/
   - name: sync
-    #if: tag =~ /^[0-9\.]+$/
-    ## Validator: https://regex101.com/
     if: tag =~ /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/
 
 jobs:
   include:
   - stage: develop
     name: "Build and Unit Testing the develop & PR branch"
-    #if: (branch = develop OR type = pull_request) AND commit_message !~ /^(prepare release ([0-9\.]+))$/
     jdk: openjdk8
     install: true
     script:
@@ -77,23 +94,24 @@ jobs:
 
   - stage: snapshot
     name: "Deploy Snapshot to Maven repo"
-    #if: branch = master AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
     jdk: openjdk8
     install: true
     script:
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P release -DskipTests=true deploy
+      # Deploy the snapshot to sonatype
+      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P sonatype -DskipTests=true deploy
+      # Deploy the snapshot to github registry
+      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P !sonatype,github -DskipTests=true deploy
 
-  - stage: release
+  - stage: publish
     name: "Release to OSS SonaType"
-    #if: ((tag =~ /^[0-9\.]+$/ OR $TRAVIS_TAG =~ /^[0-9\.]+$/) OR $TRAVIS_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ OR $TRAVIS_TAG =~ /^[0-9]+\.[0-9]+\.[0-9]+$/)
     jdk: openjdk8
     install: true
     script:
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P release -DskipTests=true deploy
+      #- ./mvnw -B -nsu -s ./.mvn/settings.xml -P release -DskipTests=true deploy
+      - echo "Just deploy the tagged version"
 
   - stage: sync
     name: "Sync with Maven Central"
-    #if: ((tag =~ /^[0-9\.]+$/ OR $TRAVIS_TAG =~ /^[0-9\.]+$/) OR $TRAVIS_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ OR $TRAVIS_TAG =~ /^[0-9]+\.[0-9]+\.[0-9]+$/)
     jdk: openjdk8
     install: true
     script:
@@ -103,6 +121,6 @@ jobs:
 notifications:
   email:
     recipients:
-      - "$GH_USER_EMAIL"
+      - $GH_USER_EMAIL
     on_success: change  # default: change
     on_failure: always  # default: always
