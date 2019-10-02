@@ -53,7 +53,7 @@
         <io.reactivex.version>1.3.8</io.reactivex.version>
         <org.slf4j.version>1.7.26</org.slf4j.version>
         <junit.version>4.12</junit.version>
-        <org.powermock.version>1.6.6</org.powermock.version>
+        <org.powermock.version>2.0.2</org.powermock.version>
         <org.mockito.version>2.7.5</org.mockito.version>
         <org.everit.json.version>1.4.1</org.everit.json.version>
         <org.jbehave.version>4.5.1</org.jbehave.version>
@@ -70,6 +70,14 @@
         <org.apache.cxf.version>3.3.3</org.apache.cxf.version>
         <javax.persistence.version>2.2</javax.persistence.version>
         <javax.resource.version>1.0</javax.resource.version>
+        <javax.ws.rs.version>2.1.1</javax.ws.rs.version>
+        <javax.xml.ws.version>2.3.1</javax.xml.ws.version>
+        <javax.xml.soap.version>1.4.0</javax.xml.soap.version>
+        <org.jmockit.version>1.48</org.jmockit.version>
+        <com.github.tomakehurst.version>2.25.0</com.github.tomakehurst.version>
+        <org.hamcrest.version>2.0.0.0</org.hamcrest.version>
+        <com.github.stefanbirkner.version>1.19.0</com.github.stefanbirkner.version>
+        <org.assertj.version>3.13.2</org.assertj.version>
 
         <!-- :: Maven plugin version configuration -->
         <maven.plugin.animal-sniffer.version>1.17</maven.plugin.animal-sniffer.version>
@@ -104,11 +112,19 @@
         <maven.plugin.takari.version>0.3.4</maven.plugin.takari.version>
         <maven.plugin.formatter.version>2.2.0</maven.plugin.formatter.version>
         <maven.plugin.assembly.version>3.1.1</maven.plugin.assembly.version>
+        <maven.plugin.cobertura.version>2.7</maven.plugin.cobertura.version>
+        <maven.plugin.coveralls.version>4.3.0</maven.plugin.coveralls.version>
+        <maven.plugin.sonar.version>3.7.0.1746</maven.plugin.sonar.version>
+        <maven.plugin.checkstyle.version>3.1.0</maven.plugin.checkstyle.version>
+        <maven.plugin.pmd.version>3.12.0</maven.plugin.pmd.version>
+        <maven.plugin.findbugs.version>3.0.5</maven.plugin.findbugs.version>
+        <maven.plugin.site.version>3.8.2</maven.plugin.site.version>
 
         <!-- Plugins configurations section -->
         <mvn.license.header>.mvn/licenses/apache-2.0-header</mvn.license.header>
         <mvn.formatter.configfile>.mvn/coding/eclipse-java-style.xml</mvn.formatter.configfile>
         <mvn.bom.template.filepath>file://${project.basedir}/.mvn/resources/bom.xml</mvn.bom.template.filepath>
+        <mvn.checkstyle.configfile>.mvn/coding/checkstyle.xml</mvn.checkstyle.configfile>
         <mvn.sortpom.file>.mvn/resources/pom-sorter.xml</mvn.sortpom.file>
         <mvn.sort.indent>4</mvn.sort.indent>
         <mvn.debuglevel>lines,vars,source</mvn.debuglevel>
@@ -126,6 +142,7 @@
         <mvn.nodejs.dist>https://nodejs.org/dist/</mvn.nodejs.dist>
         <mvn.yarn.dist>https://github.com/yarnpkg/yarn/releases/download/</mvn.yarn.dist>
         <mvn.npm.dist>https://registry.npmjs.org/npm/-/</mvn.npm.dist>
+        <mvn.coveralls.timestampFormat>EpochMillis</mvn.coveralls.timestampFormat>
 
         <!-- Maven front end configurtion -->
         <mvn.frontend.workingdirectory>src/main/javascript/frontend</mvn.frontend.workingdirectory>
@@ -142,6 +159,15 @@
         <mvn.frontend.karma.arugment></mvn.frontend.karma.arugment>
         <mvn.frontend.webpack.arugment>-p</mvn.frontend.webpack.arugment>
         <!-- Frontend config files -->
+
+        <!-- Default values for the jacoco-maven-plugin reports -->
+        <mvn.jacoco.classRatio>1.00</mvn.jacoco.classRatio>
+        <mvn.jacoco.instructionRatio>0.90</mvn.jacoco.instructionRatio>
+        <mvn.jacoco.methodRatio>0.95</mvn.jacoco.methodRatio>
+        <mvn.jacoco.branchRatio>0.85</mvn.jacoco.branchRatio>
+        <mvn.jacoco.complexityRatio>0.85</mvn.jacoco.complexityRatio>
+        <mvn.jacoco.lineRatio>0.90</mvn.jacoco.lineRatio>
+        <mvn.jacoco.haltOnFailure>false</mvn.jacoco.haltOnFailure>
     </properties>
 
     <url>https://github.com/djanta/djanta-java-parent</url>
@@ -216,165 +242,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <dependencies>
-        <!-- Testing unit dependencies -->
-        <!--<dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.fluttercode.datafactory</groupId>
-            <artifactId>datafactory</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.powermock</groupId>
-            <artifactId>powermock-module-junit4</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jbehave</groupId>
-            <artifactId>jbehave-core</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>jbehave-junit-runner</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mock-server</groupId>
-            <artifactId>mockserver-netty</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mock-server</groupId>
-            <artifactId>mockserver-client-java</artifactId>
-            <scope>test</scope>
-        </dependency>-->
-
-        <!-- Runtime dependencies -->
-        <!--<dependency>
-            <groupId>javax.json</groupId>
-            <artifactId>javax.json-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.everit.json</groupId>
-            <artifactId>org.everit.json.schema</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>-->
-
-        <!-- (com.fasterxml.jackson) - Core -->
-        <!--<dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>-->
-
-        <!-- (com.fasterxml.jackson) - Data Formats -->
-        <!--<dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-avro</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-cbor</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-csv</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-ion</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-properties</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-protobuf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-smile</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
-        </dependency>-->
-
-        <!-- (com.fasterxml.jackson) - Data Types -->
-        <!--<dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-hppc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jaxrs</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-joda</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jdk8</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-json-org</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr353</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-pcollections</artifactId>
-        </dependency>-->
-
-        <!--<dependency>
-            <groupId>io.reactivex</groupId>
-            <artifactId>rxjava</artifactId>
-        </dependency>-->
-
-    </dependencies>
-
     <build>
         <!-- <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName> -->
         <finalName>${project.artifactId}-${project.version}</finalName>
@@ -428,6 +295,11 @@
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>cobertura-maven-plugin</artifactId>
+                    <version>${maven.plugin.cobertura.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
                     <artifactId>buildnumber-maven-plugin</artifactId>
                     <version>${maven.plugin.buildnumber.version}</version>
                 </plugin>
@@ -465,6 +337,31 @@
                     <groupId>com.github.eirslett</groupId>
                     <artifactId>frontend-maven-plugin</artifactId>
                     <version>${com.github.eirslett.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>${maven.plugin.sonar.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.eluder.coveralls</groupId>
+                    <artifactId>coveralls-maven-plugin</artifactId>
+                    <version>${maven.plugin.coveralls.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven.plugin.checkstyle.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${maven.plugin.pmd.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>findbugs-maven-plugin</artifactId>
+                    <version>${maven.plugin.findbugs.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -864,6 +761,15 @@
                             <propertyName>surefireArgLine</propertyName>
                         </configuration>
                     </execution>
+                    <!--
+                    <execution>
+                        <id>prepare-agent</id>
+                        <phase>process-test-classes</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    -->
                     <execution>
                         <id>post-unit-test</id>
                         <phase>test</phase>
@@ -897,11 +803,19 @@
                             <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+                <inherited>false</inherited>
                 <executions>
                     <execution>
                         <id>enforce-versions</id>
@@ -927,23 +841,138 @@
                             </rules>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>profile-enforce</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <fail>true</fail>
+                            <rules>
+                                <requireActiveProfile>
+                                    <profiles>check</profiles>
+                                </requireActiveProfile>
+                            </rules>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
     <profiles>
         <profile>
-            <id>windows</id>
+            <id>check</id>
             <activation>
-                <os>
-                    <family>Windows</family>
-                </os>
+                <activeByDefault>true</activeByDefault>
             </activation>
-            <!--
-            <properties>
-                <mvn.bom.template.filepath>file:///${project.basedir}/src/config/bom.xml</mvn.bom.template.filepath>
-            </properties>
-            -->
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <configuration>
+                            <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>jacoco-check</id>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <rule>
+                                            <element>BUNDLE</element>
+                                            <limits>
+                                                <limit>
+                                                    <counter>CLASS</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>${mvn.jacoco.classRatio}</minimum>
+                                                </limit>
+                                                <limit>
+                                                    <counter>INSTRUCTION</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>${mvn.jacoco.instructionRatio}</minimum>
+                                                </limit>
+                                                <limit>
+                                                    <counter>METHOD</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>${mvn.jacoco.methodRatio}</minimum>
+                                                </limit>
+                                                <limit>
+                                                    <counter>BRANCH</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>${mvn.jacoco.branchRatio}</minimum>
+                                                </limit>
+                                                <limit>
+                                                    <counter>LINE</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>${mvn.jacoco.lineRatio}</minimum>
+                                                </limit>
+                                                <limit>
+                                                    <counter>COMPLEXITY</counter>
+                                                    <value>COVEREDRATIO</value>
+                                                    <minimum>${mvn.jacoco.complexityRatio}</minimum>
+                                                </limit>
+                                            </limits>
+                                        </rule>
+                                    </rules>
+                                    <haltOnFailure>${mvn.jacoco.haltOnFailure}</haltOnFailure>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-checkstyle-plugin</artifactId>
+                        <configuration>
+                            <configLocation>${mvn.checkstyle.configfile}</configLocation>
+                            <headerLocation>${mvn.license.header}</headerLocation>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <phase>compile</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-pmd-plugin</artifactId>
+                        <configuration>
+                            <minimumTokens>120</minimumTokens>
+                            <targetJdk>${maven.compiler.target}</targetJdk>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>cpd-check</goal>
+                                </goals>
+                                <phase>compile</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>findbugs-maven-plugin</artifactId>
+                        <configuration>
+                            <effort>Max</effort>
+                            <threshold>Low</threshold>
+                            <xmlOutput>true</xmlOutput>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>sonatype</id>
@@ -1364,7 +1393,6 @@
                         </plugin>
                     </plugins>
                 </pluginManagement>
-
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -1434,6 +1462,130 @@
             </build>
         </profile>
 
+        <profile>
+            <id>jacoco</id>
+            <activation>
+                <!--
+                  N.B. in spite of what the Maven docs may say,
+                  activation conditions are ORed together, see:
+                  http://jira.codehaus.org/browse/MNG-4565
+                  Fairly useless, but that's what was done in
+                  http://jira.codehaus.org/browse/MNG-3106
+
+                  So we cannot also check for Java 1.5+
+                  This should not be a problem now as the profile is optional.
+                  Components that still target Java 1.4 or earlier
+                  just need to ensure they don't use JaCoCo by default.
+                -->
+                <file>
+                    <exists>src/site/resources/profile.jacoco</exists>
+                </file>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+        <profile>
+            <id>cobertura</id>
+            <activation>
+                <file>
+                    <exists>src/site/resources/profile.cobertura</exists>
+                </file>
+            </activation>
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>cobertura-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
+        <profile>
+            <id>travis:cobertura</id>
+            <activation>
+                <property>
+                    <name>TRAVIS</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>cobertura-maven-plugin</artifactId>
+                        <!--
+                        <configuration>
+                            <formats>
+                                <format>xml</format>
+                            </formats>
+                        </configuration>
+                        -->
+                    </plugin>
+                    <plugin>
+                        <groupId>org.eluder.coveralls</groupId>
+                        <artifactId>coveralls-maven-plugin</artifactId>
+                        <version>${maven.plugin.coveralls.version}</version>
+                        <configuration>
+                            <timestampFormat>${mvn.coveralls.timestampFormat}</timestampFormat>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>travis:jacoco</id>
+            <activation>
+                <property>
+                    <name>TRAVIS</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.eluder.coveralls</groupId>
+                        <artifactId>coveralls-maven-plugin</artifactId>
+                        <version>${maven.plugin.coveralls.version}</version>
+                        <configuration>
+                            <timestampFormat>${mvn.coveralls.timestampFormat}</timestampFormat>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>sonar</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>${maven.plugin.sonar.version}</version>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!-- Site Publication -->
         <profile>
             <id>site</id>
@@ -1442,7 +1594,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-site-plugin</artifactId>
-                        <version>3.3</version>
+                        <version>${maven.plugin.site.version}</version>
                         <executions>
                             <execution>
                                 <goals>

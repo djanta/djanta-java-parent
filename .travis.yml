@@ -51,6 +51,21 @@ install:
   # Override default travis to use the maven wrapper
   - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
+before_script:
+  ##
+  # Install codeclimate tools. Credit: https://github.com/Milfist/Configure-TravisCI-CodeClimate-Maven-Java
+  ##
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  ##
+  # Install codeclimate tools. Credit: https://github.com/Milfist/Configure-TravisCI-CodeClimate-Maven-Java
+  ##
+  - ./cc-test-reporter format-coverage -d -t jacoco ./target/jacoco-ut/jacoco.xml
+  - ./cc-test-reporter upload-coverage -d
+
 after_success:
 #  - mvn jacoco:report coveralls:report
   - mvn versions:display-dependency-updates
@@ -90,7 +105,8 @@ jobs:
     jdk: openjdk8
     install: true
     script:
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false deploy
+      #- ./mvnw -B -nsu -s ./.mvn/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false deploy
+      - echo "NYI"
 
   - stage: snapshot
     name: "Deploy Snapshot to Maven repo"
@@ -99,6 +115,7 @@ jobs:
     script:
       # Deploy the snapshot to sonatype
       - ./mvnw -B -nsu -s ./.mvn/settings.xml -P sonatype -DskipTests=true deploy
+
       # Deploy the snapshot to github registry
       - ./mvnw -B -nsu -s ./.mvn/settings.xml -P !sonatype,github -DskipTests=true deploy
 
