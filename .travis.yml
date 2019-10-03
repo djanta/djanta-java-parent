@@ -41,6 +41,7 @@ before_install:
   # Update all git submodule (No need this manual submodule update ...)
   ## Uncomment the line below if the auto update submodule has not been activated by travis
   #- git submodule init && git submodule update --init --recursive --remote --merge
+  - git submodule update --init --recursive --remote --force # Force update the project submodule if existed
 
   ## Running this comment is mandatory to resolve the follwing issue: "No plugin found for prefix 'help' in the current project"
   ## Otherwise this command will fail: "./mvnw -o help:evaluate -N -Dexpression=project.version | sed -n '/^[0-9]/p'"
