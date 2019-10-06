@@ -140,7 +140,7 @@
         <mvn.sort.indent>4</mvn.sort.indent>
         <mvn.debuglevel>lines,vars,source</mvn.debuglevel>
         <mvn.license.holder>DJANTA, LLC (https://www.djanta.io)</mvn.license.holder>
-        <mvn.tag.prefix>v</mvn.tag.prefix>
+        <mvn.tag.prefix>release-</mvn.tag.prefix>
         <mvn.sonatype.id>sonatype</mvn.sonatype.id>
         <mvn.sonatype.url>https://oss.sonatype.org/</mvn.sonatype.url>
         <mvn.bintray.subject>djanta</mvn.bintray.subject>
