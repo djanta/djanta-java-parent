@@ -51,7 +51,7 @@
         <org.mock-server.version>5.5.4</org.mock-server.version>
         <javax.json.version>1.1.4</javax.json.version>
         <io.reactivex.version>1.3.8</io.reactivex.version>
-        <org.slf4j.version>1.7.26</org.slf4j.version>
+        <org.slf4j.version>1.7.28</org.slf4j.version>
         <junit.version>4.12</junit.version>
         <org.powermock.version>2.0.2</org.powermock.version>
         <org.mockito.version>2.7.5</org.mockito.version>
@@ -78,6 +78,17 @@
         <org.hamcrest.version>2.0.0.0</org.hamcrest.version>
         <com.github.stefanbirkner.version>1.19.0</com.github.stefanbirkner.version>
         <org.assertj.version>3.13.2</org.assertj.version>
+        <net.sourceforge.htmlcleaner.version>2.23</net.sourceforge.htmlcleaner.version>
+        <com.google.code.gson.version>2.8.5</com.google.code.gson.version>
+        <javax.json.version>1.1.4</javax.json.version>
+        <org.json.version>20190722</org.json.version>
+        <commons-collections.version>3.2.2</commons-collections.version>
+        <org.apache.commons.version>4.4</org.apache.commons.version>
+        <commons-io.version>2.6</commons-io.version>
+        <commons-codec.version>1.13</commons-codec.version>
+        <commons-logging.version>1.2</commons-logging.version>
+        <org.apache.httpcomponents.verion>4.5.10</org.apache.httpcomponents.verion>
+        <com.squareup.okhttp3.version>4.2.1</com.squareup.okhttp3.version>
 
         <!-- :: Maven plugin version configuration -->
         <maven.plugin.animal-sniffer.version>1.17</maven.plugin.animal-sniffer.version>
@@ -143,6 +154,7 @@
         <mvn.yarn.dist>https://github.com/yarnpkg/yarn/releases/download/</mvn.yarn.dist>
         <mvn.npm.dist>https://registry.npmjs.org/npm/-/</mvn.npm.dist>
         <mvn.coveralls.timestampFormat>EpochMillis</mvn.coveralls.timestampFormat>
+        <mvn.jacoco.report.dir>${project.build.directory}/coverage-reports</mvn.jacoco.report.dir>
 
         <!-- Maven front end configurtion -->
         <mvn.frontend.workingdirectory>src/main/javascript/frontend</mvn.frontend.workingdirectory>
@@ -558,16 +570,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>io.zipkin.centralsync-maven-plugin</groupId>
-                <artifactId>centralsync-maven-plugin</artifactId>
-                <version>${maven.plugin.centralsync.version}</version>
-                <configuration>
-                    <subject>${mvn.bintray.subject}</subject>
-                    <repo>${mvn.bintray.repo}</repo>
-                    <packageName>${mvn.bintray.package}</packageName>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <configuration>
@@ -653,6 +655,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <!--
             <plugin>
                 <groupId>com.marvinformatics.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
@@ -670,6 +673,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
@@ -691,7 +695,8 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>
+            <!--
+            <plugin>
                 <groupId>io.sundr</groupId>
                 <artifactId>sundr-maven-plugin</artifactId>
                 <version>${maven.plugin.sundr.version}</version>
@@ -733,7 +738,8 @@
                         </exclusions>
                     </dependency>
                 </dependencies>
-            </plugin>-->
+            </plugin>
+            -->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
@@ -746,71 +752,6 @@
                 <configuration>
                     <tag>${mvn.tag.prefix}${project.version}</tag>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>pre-unit-test</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</destFile>
-                            <propertyName>surefireArgLine</propertyName>
-                        </configuration>
-                    </execution>
-                    <!--
-                    <execution>
-                        <id>prepare-agent</id>
-                        <phase>process-test-classes</phase>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    -->
-                    <execution>
-                        <id>post-unit-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <dataFile>${project.build.directory}/coverage-reports/jacoco-ut.exec</dataFile>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>pre-integration-test</id>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                        <configuration>
-                            <destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
-                            <propertyName>failsafeArgLine</propertyName>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>post-integration-test</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>site</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -838,28 +779,95 @@
                                 <requireJavaVersion>
                                     <version>[${main.java.version},12)</version>
                                 </requireJavaVersion>
-                            </rules>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>profile-enforce</id>
-                        <goals>
-                            <goal>enforce</goal>
-                        </goals>
-                        <configuration>
-                            <fail>true</fail>
-                            <rules>
                                 <requireActiveProfile>
                                     <profiles>check</profiles>
+                                    <message>The following profiles: (check) cannot be deactivated</message>
                                 </requireActiveProfile>
                             </rules>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+            <!-- Jacoco Configuration -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${mvn.jacoco.report.dir}/jacoco-ut.exec</destFile>
+                            <propertyName>surefireArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${mvn.jacoco.report.dir}/jacoco-ut.exec</dataFile>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                        <configuration>
+                            <destFile>${mvn.jacoco.report.dir}/jacoco-it.exec</destFile>
+                            <propertyName>failsafeArgLine</propertyName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>post-integration-test</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>${mvn.jacoco.report.dir}/jacoco-it.exec</dataFile>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Format section -->
+            <plugin>
+                <groupId>com.marvinformatics.formatter</groupId>
+                <artifactId>formatter-maven-plugin</artifactId>
+                <version>${maven.plugin.formatter.version}</version>
+                <configuration>
+                    <lineEnding>LF</lineEnding>
+                    <configFile>${mvn.formatter.configfile}</configFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>validate-only</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>validate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <profiles>
+        <!-- Check all required control points -->
         <profile>
             <id>check</id>
             <activation>
@@ -871,7 +879,7 @@
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
                         <configuration>
-                            <dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+                            <dataFile>${mvn.jacoco.report.dir}/jacoco-it.exec</dataFile>
                         </configuration>
                         <executions>
                             <execution>
@@ -926,6 +934,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-checkstyle-plugin</artifactId>
                         <configuration>
+                            <encoding>${project.build.sourceEncoding}</encoding>
                             <configLocation>${mvn.checkstyle.configfile}</configLocation>
                             <headerLocation>${mvn.license.header}</headerLocation>
                         </configuration>
@@ -935,6 +944,32 @@
                                     <goal>check</goal>
                                 </goals>
                                 <phase>compile</phase>
+                            </execution>
+                            <execution>
+                                <id>validate-main</id>
+                                <goals>
+                                    <goal>checkstyle</goal>
+                                </goals>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <consoleOutput>true</consoleOutput>
+                                    <failsOnError>true</failsOnError>
+                                    <linkXRef>false</linkXRef>
+                                    <sourceDirectory>${basedir}/src/main</sourceDirectory>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>validate-test</id>
+                                <goals>
+                                    <goal>checkstyle</goal>
+                                </goals>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <consoleOutput>true</consoleOutput>
+                                    <failsOnError>true</failsOnError>
+                                    <linkXRef>false</linkXRef>
+                                    <sourceDirectory>${basedir}/src/test</sourceDirectory>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>
@@ -975,28 +1010,28 @@
             </build>
         </profile>
         <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <distributionManagement>
+                <repository>
+                    <id>central</id>
+                    <name>local-releases</name>
+                    <url>http://localhost:8081/artifactory/libs-release</url>
+                </repository>
+                <snapshotRepository>
+                    <id>snapshots</id>
+                    <name>local-snapshots</name>
+                    <url>http://localhost:8081/artifactory/libs-snapshot</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+        <profile>
             <id>sonatype</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
-            <!--
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${maven.plugin.gpg.version}</version>
-                        <executions>
-                            <execution>
-                                <id>sign-release-artifacts</id>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-            -->
             <repositories>
                 <repository>
                     <releases>
@@ -1062,6 +1097,31 @@
         </profile>
         <profile>
             <id>bintray</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>io.zipkin.centralsync-maven-plugin</groupId>
+                            <artifactId>centralsync-maven-plugin</artifactId>
+                            <version>${maven.plugin.centralsync.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>io.zipkin.centralsync-maven-plugin</groupId>
+                        <artifactId>centralsync-maven-plugin</artifactId>
+                        <configuration>
+                            <subject>${mvn.bintray.subject}</subject>
+                            <repo>${mvn.bintray.repo}</repo>
+                            <packageName>${mvn.bintray.package}</packageName>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
             <repositories>
                 <repository>
                     <releases>
@@ -1084,6 +1144,9 @@
         </profile>
         <profile>
             <id>github</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <repositories>
                 <repository>
                     <releases>
@@ -1108,32 +1171,10 @@
             </distributionManagement>
         </profile>
         <profile>
-            <id>format</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.marvinformatics.formatter</groupId>
-                        <artifactId>formatter-maven-plugin</artifactId>
-                        <version>${maven.plugin.formatter.version}</version>
-                        <configuration>
-                            <lineEnding>LF</lineEnding>
-                            <configFile>${mvn.formatter.configfile}</configFile>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>validate-only</id>
-                                <goals>
-                                    <goal>validate</goal>
-                                </goals>
-                                <phase>initialize</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>shade</id>
+            <id>fatjar</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -1356,7 +1397,6 @@
                             <failOnError>false</failOnError>
                         </configuration>
                     </plugin>
-
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>versions-maven-plugin</artifactId>
@@ -1463,42 +1503,6 @@
         </profile>
 
         <profile>
-            <id>jacoco</id>
-            <activation>
-                <!--
-                  N.B. in spite of what the Maven docs may say,
-                  activation conditions are ORed together, see:
-                  http://jira.codehaus.org/browse/MNG-4565
-                  Fairly useless, but that's what was done in
-                  http://jira.codehaus.org/browse/MNG-3106
-
-                  So we cannot also check for Java 1.5+
-                  This should not be a problem now as the profile is optional.
-                  Components that still target Java 1.4 or earlier
-                  just need to ensure they don't use JaCoCo by default.
-                -->
-                <file>
-                    <exists>src/site/resources/profile.jacoco</exists>
-                </file>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
-            <reporting>
-                <plugins>
-                    <plugin>
-                        <groupId>org.jacoco</groupId>
-                        <artifactId>jacoco-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </reporting>
-        </profile>
-        <profile>
             <id>cobertura</id>
             <activation>
                 <file>
@@ -1514,7 +1518,6 @@
                 </plugins>
             </reporting>
         </profile>
-
         <profile>
             <id>travis:cobertura</id>
             <activation>
@@ -1572,7 +1575,6 @@
                 </plugins>
             </build>
         </profile>
-
         <profile>
             <id>sonar</id>
             <build>
@@ -2153,7 +2155,6 @@
                 </plugins>
             </build>
         </profile>
-
         <!-- Framework & Feature Integration Test-->
         <profile>
             <id>fit</id>
@@ -2189,7 +2190,6 @@
                 </plugins>
             </build>
         </profile>
-
         <!-- Pre Developement Integration Test -->
         <profile>
             <id>predit</id>
@@ -2220,7 +2220,10 @@
                         </configuration>
                         <dependencies>
                             <dependency>
-                                <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
+                                <!--
+                                    surefire uses ASM to do some bytecode magic... need to bump version to be
+                                    java 11 compatible
+                                -->
                                 <groupId>org.ow2.asm</groupId>
                                 <artifactId>asm</artifactId>
                                 <version>7.0-beta</version>
@@ -2230,7 +2233,6 @@
                 </plugins>
             </build>
         </profile>
-
         <!-- User Acceptance Test-->
         <profile>
             <id>uat</id>
@@ -2257,7 +2259,8 @@
                         <dependencies>
                             <dependency>
                                 <!--
-                                surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible
+                                    surefire uses ASM to do some bytecode magic... need to bump version to be
+                                    java 11 compatible
                                 -->
                                 <groupId>org.ow2.asm</groupId>
                                 <artifactId>asm</artifactId>
@@ -2268,7 +2271,6 @@
                 </plugins>
             </build>
         </profile>
-
         <!-- QA Test -->
         <profile>
             <id>qa</id>
@@ -2292,7 +2294,8 @@
                         <dependencies>
                             <dependency>
                                 <!--
-                                surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible
+                                    surefire uses ASM to do some bytecode magic... need to bump version to be
+                                    java 11 compatible
                                 -->
                                 <groupId>org.ow2.asm</groupId>
                                 <artifactId>asm</artifactId>
@@ -2303,7 +2306,6 @@
                 </plugins>
             </build>
         </profile>
-
         <!-- Staging Test -->
         <profile>
             <id>staging</id>
@@ -2340,7 +2342,10 @@
                         </configuration>
                         <dependencies>
                             <dependency>
-                                <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
+                                <!--
+                                    surefire uses ASM to do some bytecode magic... need to bump version to be
+                                    java 11 compatible
+                                -->
                                 <groupId>org.ow2.asm</groupId>
                                 <artifactId>asm</artifactId>
                                 <version>7.0-beta</version>
@@ -2350,7 +2355,6 @@
                 </plugins>
             </build>
         </profile>
-
         <!-- Infrastructure automatiion Test -->
         <profile>
             <id>iat</id>
@@ -2373,7 +2377,10 @@
                         </configuration>
                         <dependencies>
                             <dependency>
-                                <!-- surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible -->
+                                <!--
+                                    surefire uses ASM to do some bytecode magic... need to bump version to be
+                                    java 11 compatible
+                                -->
                                 <groupId>org.ow2.asm</groupId>
                                 <artifactId>asm</artifactId>
                                 <version>7.0-beta</version>

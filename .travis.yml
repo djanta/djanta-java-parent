@@ -115,10 +115,10 @@ jobs:
     install: true
     script:
       # Deploy the snapshot to sonatype
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P sonatype -DskipTests=true deploy
+      - ./mvnw -B -nsu -s ./.mvn/settings.xml -Psonatype -DskipTests=true deploy
 
       # Deploy the snapshot to github registry
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P !sonatype,github -DskipTests=true deploy
+      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P!sonatype,github -DskipTests=true deploy
 
   - stage: publish
     name: "Release to OSS SonaType"
