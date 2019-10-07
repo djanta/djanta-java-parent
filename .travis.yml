@@ -64,7 +64,7 @@ after_script:
   ##
   # Install codeclimate tools. Credit: https://github.com/Milfist/Configure-TravisCI-CodeClimate-Maven-Java
   ##
-  - ./cc-test-reporter format-coverage -d -t jacoco ./target/jacoco-ut/jacoco.xml
+  - ./cc-test-reporter format-coverage -d -t jacoco ./target/coverage-reports/jacoco.xml
   - ./cc-test-reporter upload-coverage -d
 
 after_success:
@@ -107,7 +107,7 @@ jobs:
     install: true
     script:
       #- ./mvnw -B -nsu -s ./.mvn/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false deploy
-      - echo "NYI"
+      - ./mvnw -B -X -nsu -s ./.mvn/settings.xml -N -Psite site:site -Dsync.dryRun -DskipTests=false
 
   - stage: snapshot
     name: "Deploy Snapshot to Maven repo"
