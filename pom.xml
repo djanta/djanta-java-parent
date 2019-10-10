@@ -75,7 +75,7 @@
         <javax.xml.soap.version>1.4.0</javax.xml.soap.version>
         <org.jmockit.version>1.48</org.jmockit.version>
         <com.github.tomakehurst.version>2.25.0</com.github.tomakehurst.version>
-        <org.hamcrest.version>2.0.0.0</org.hamcrest.version>
+        <org.hamcrest.version>2.1</org.hamcrest.version>
         <com.github.stefanbirkner.version>1.19.0</com.github.stefanbirkner.version>
         <org.assertj.version>3.13.2</org.assertj.version>
         <net.sourceforge.htmlcleaner.version>2.23</net.sourceforge.htmlcleaner.version>
@@ -89,9 +89,10 @@
         <commons-logging.version>1.2</commons-logging.version>
         <org.apache.httpcomponents.verion>4.5.10</org.apache.httpcomponents.verion>
         <com.squareup.okhttp3.version>4.2.1</com.squareup.okhttp3.version>
+        <com.jayway.jsonpath.version>2.4.0</com.jayway.jsonpath.version>
 
         <!-- :: Maven plugin version configuration -->
-        <maven.plugin.animal-sniffer.version>1.17</maven.plugin.animal-sniffer.version>
+        <maven.plugin.animal-sniffer.version>1.18</maven.plugin.animal-sniffer.version>
         <maven.plugin.compiler.version>3.8.0</maven.plugin.compiler.version>
         <maven.plugin.install.version>2.5.2</maven.plugin.install.version>
         <maven.plugin.source.version>3.0.1</maven.plugin.source.version>
@@ -132,6 +133,9 @@
         <maven.plugin.site.version>3.8.2</maven.plugin.site.version>
         <maven.plugin.project-info-reports.version>3.0.0</maven.plugin.project-info-reports.version>
         <github.plugin.site.version>0.12</github.plugin.site.version>
+        <github.plugin.proguard.version>2.1.1</github.plugin.proguard.version>
+        <maven.plugin.antrun.version>1.8</maven.plugin.antrun.version>
+        <maven.plugin.versioneye.version>3.11.4</maven.plugin.versioneye.version>
 
         <!-- Plugins configurations section -->
         <mvn.license.header>.mvn/licenses/apache-2.0-header</mvn.license.header>
@@ -288,10 +292,12 @@
                     <version>${maven.plugin.takari.version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${maven.plugin.compiler.version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>${maven.plugin.jar.version}</version>
                 </plugin>
@@ -345,7 +351,7 @@
                 <plugin>
                     <groupId>com.github.github</groupId>
                     <artifactId>site-maven-plugin</artifactId>
-                    <version>${maven.plugin.site.version}</version>
+                    <version>${github.plugin.site.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -381,6 +387,36 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>findbugs-maven-plugin</artifactId>
                     <version>${maven.plugin.findbugs.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.wvengen</groupId>
+                    <artifactId>proguard-maven-plugin</artifactId>
+                    <version>${github.plugin.proguard.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${maven.plugin.antrun.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven.plugin.javadoc.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven.plugin.source.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>animal-sniffer-maven-plugin</artifactId>
+                    <version>${maven.plugin.animal-sniffer.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.versioneye</groupId>
+                    <artifactId>versioneye-maven-plugin</artifactId>
+                    <version>${maven.plugin.versioneye.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -428,7 +464,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
-                <version>${maven.plugin.animal-sniffer.version}</version>
                 <configuration>
                     <signature>
                         <groupId>org.codehaus.mojo.signature</groupId>
@@ -622,6 +657,7 @@
                         <exclude>**/*.md</exclude>
                         <exclude>**/bnd.bnd</exclude>
                         <exclude>**/.MF</exclude>
+                        <exclude>**/META-INF/services/**/*</exclude>
                         <exclude>**/.variables</exclude>
                         <exclude>**/resources/license/header.txt</exclude>
                         <exclude>**/pom-old.xml</exclude>
@@ -629,6 +665,9 @@
                         <exclude>**/README.txt</exclude>
                         <exclude>**/*/*.jsp</exclude>
                         <exclude>**/*/*.jsf</exclude>
+                        <exclude>**/*/*.conf</exclude>
+                        <exclude>**/*/*.pro</exclude>
+                        <exclude>**/*/*.iml</exclude>
                     </excludes>
                     <strictCheck>true</strictCheck>
                 </configuration>
@@ -647,7 +686,7 @@
                             <goal>format</goal>
                         </goals>
                         <configuration>
-                            <failIfUnknown>true</failIfUnknown>
+                            <!--<failIfUnknown>${mvn.license.holder}</failIfUnknown>-->
                             <properties>
                                 <company>${mvn.license.holder}</company>
                             </properties>
@@ -662,25 +701,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <!--
-            <plugin>
-                <groupId>com.marvinformatics.formatter</groupId>
-                <artifactId>formatter-maven-plugin</artifactId>
-                <version>${maven.plugin.formatter.version}</version>
-                <configuration>
-                    <lineEnding>LF</lineEnding>
-                    <configFile>${mvn.formatter.configfile}</configFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
@@ -866,7 +886,7 @@
                         <id>validate-only</id>
                         <phase>initialize</phase>
                         <goals>
-                            <goal>validate</goal>
+                            <goal>format</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -962,7 +982,9 @@
                                     <consoleOutput>true</consoleOutput>
                                     <failsOnError>true</failsOnError>
                                     <linkXRef>false</linkXRef>
-                                    <sourceDirectory>${basedir}/src/main</sourceDirectory>
+                                    <sourceDirectories>
+                                        <sourceDirectory>${basedir}/src/main</sourceDirectory>
+                                    </sourceDirectories>
                                 </configuration>
                             </execution>
                             <execution>
@@ -975,7 +997,9 @@
                                     <consoleOutput>true</consoleOutput>
                                     <failsOnError>true</failsOnError>
                                     <linkXRef>false</linkXRef>
-                                    <sourceDirectory>${basedir}/src/test</sourceDirectory>
+                                    <sourceDirectories>
+                                        <sourceDirectory>${basedir}/src/test</sourceDirectory>
+                                    </sourceDirectories>
                                 </configuration>
                             </execution>
                         </executions>
@@ -1424,6 +1448,61 @@
             </reporting>
         </profile>
 
+        <profile>
+            <id>versioneye</id>
+            <activation>
+                <property>
+                    <name>VERSIONEYE_APIKEY</name>
+                </property>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.versioneye</groupId>
+                            <artifactId>versioneye-maven-plugin</artifactId>
+                            <version>${maven.plugin.versioneye.version}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>com.versioneye</groupId>
+                        <artifactId>versioneye-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>update</goal>
+                                    <goal>securityAndLicenseCheck</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>sonar</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonarsource.scanner.maven</groupId>
+                        <artifactId>sonar-maven-plugin</artifactId>
+                        <version>${maven.plugin.sonar.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sonar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
         <!-- GPG Signature on release -->
         <profile>
             <id>gpg</id>
@@ -1581,18 +1660,6 @@
                         <configuration>
                             <timestampFormat>${mvn.coveralls.timestampFormat}</timestampFormat>
                         </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>sonar</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.sonarsource.scanner.maven</groupId>
-                        <artifactId>sonar-maven-plugin</artifactId>
-                        <version>${maven.plugin.sonar.version}</version>
                     </plugin>
                 </plugins>
             </build>

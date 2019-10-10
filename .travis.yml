@@ -94,7 +94,7 @@ stages:
   - name: release
     if: branch = release AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
 
-  - name: publish
+  - name: deploy
     if: tag =~ /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/
   - name: sync
     if: tag =~ /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/
@@ -120,7 +120,7 @@ jobs:
       # Deploy the snapshot to github registry
       - ./mvnw -B -nsu -s ./.mvn/settings.xml -P!sonatype,github -DskipTests=true deploy
 
-  - stage: publish
+  - stage: deploy
     name: "Release to OSS SonaType"
     jdk: openjdk8
     install: true
