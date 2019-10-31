@@ -48,7 +48,7 @@
 
         <com.fasterxml.jackson.version>2.9.8</com.fasterxml.jackson.version>
         <org.fluttercode.datafactory.version>0.8</org.fluttercode.datafactory.version>
-        <org.mock-server.version>5.5.4</org.mock-server.version>
+        <org.mock-server.version>5.6.1</org.mock-server.version>
         <javax.json.version>1.1.4</javax.json.version>
         <io.reactivex.version>1.3.8</io.reactivex.version>
         <org.slf4j.version>1.7.28</org.slf4j.version>
@@ -83,11 +83,14 @@
         <javax.json.version>1.1.4</javax.json.version>
         <org.json.version>20190722</org.json.version>
         <commons-collections.version>3.2.2</commons-collections.version>
-        <org.apache.commons.version>4.4</org.apache.commons.version>
+        <org.apache.commons.version>3.9</org.apache.commons.version>
+        <org.apache.collections4.version>4.4</org.apache.collections4.version>
+        <org.apache.text.version>1.8</org.apache.text.version>
         <commons-io.version>2.6</commons-io.version>
         <commons-codec.version>1.13</commons-codec.version>
         <commons-logging.version>1.2</commons-logging.version>
         <org.apache.httpcomponents.verion>4.5.10</org.apache.httpcomponents.verion>
+        <org.apache.httpclient.verion>4.4.12</org.apache.httpclient.verion>
         <com.squareup.okhttp3.version>4.2.1</com.squareup.okhttp3.version>
         <com.jayway.jsonpath.version>2.4.0</com.jayway.jsonpath.version>
 
@@ -136,6 +139,7 @@
         <github.plugin.proguard.version>2.1.1</github.plugin.proguard.version>
         <maven.plugin.antrun.version>1.8</maven.plugin.antrun.version>
         <maven.plugin.versioneye.version>3.11.4</maven.plugin.versioneye.version>
+        <maven.plugin.mock-server.version>${org.mock-server.version}</maven.plugin.mock-server.version>
 
         <!-- Plugins configurations section -->
         <mvn.license.header>.mvn/licenses/apache-2.0-header</mvn.license.header>
@@ -1267,7 +1271,6 @@
                 </property>
             </activation>
             <properties>
-                <mockserver-maven-plugin.version>5.5.1</mockserver-maven-plugin.version>
                 <minPortNumber>1099</minPortNumber>
                 <maxPortNumber>5000</maxPortNumber>
             </properties>
@@ -1277,7 +1280,7 @@
                         <plugin>
                             <groupId>org.mock-server</groupId>
                             <artifactId>mockserver-maven-plugin</artifactId>
-                            <version>${mockserver-maven-plugin.version}</version>
+                            <version>${maven.plugin.mock-server.version}</version>
                         </plugin>
                     </plugins>
                 </pluginManagement>
@@ -1314,6 +1317,11 @@
                             <dependency>
                                 <groupId>org.mock-server</groupId>
                                 <artifactId>mockserver-client-java</artifactId>
+                                <version>${org.mock-server.version}</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.mock-server</groupId>
+                                <artifactId>mockserver-netty</artifactId>
                                 <version>${org.mock-server.version}</version>
                             </dependency>
                         </dependencies>
@@ -1492,10 +1500,10 @@
                         <version>${maven.plugin.sonar.version}</version>
                         <executions>
                             <execution>
-                                <phase>verify</phase>
                                 <goals>
                                     <goal>sonar</goal>
                                 </goals>
+                                <phase>verify</phase>
                             </execution>
                         </executions>
                     </plugin>

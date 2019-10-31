@@ -152,6 +152,17 @@
                 <version>${org.mock-server.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.mock-server</groupId>
+                <artifactId>mockserver-integration-testing</artifactId>
+                <version>${org.mock-server.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mock-server</groupId>
+                <artifactId>mockserver-core</artifactId>
+                <version>${org.mock-server.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>com.github.stefanbirkner</groupId>
                 <artifactId>system-rules</artifactId>
                 <version>${com.github.stefanbirkner.version}</version>
@@ -280,12 +291,12 @@
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-text</artifactId>
-                <version>${org.apache.commons.version}</version>
+                <version>${org.apache.text.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
-                <version>${org.apache.commons.version}</version>
+                <version>${org.apache.collections4.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -360,7 +371,7 @@
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
                 <artifactId>httpcore</artifactId>
-                <version>${org.apache.httpcomponents.verion}</version>
+                <version>${org.apache.httpclient.verion}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -377,7 +388,6 @@
                 <artifactId>httpcore-nio</artifactId>
                 <version>${org.apache.httpcomponents.verion}</version>
             </dependency>
-
             <dependency>
                 <groupId>com.squareup.okhttp3</groupId>
                 <artifactId>mockwebserver</artifactId>
