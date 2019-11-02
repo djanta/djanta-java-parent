@@ -74,20 +74,21 @@ after_success:
 
 matrix:
   include:
-  - jdk: openjdk8
-  - jdk: openjdk9
-    before_install:
-      - rm "${JAVA_HOME}/lib/security/cacerts"
-      - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
-  - jdk: openjdk10
-    before_install:
-      - sudo rm "${JAVA_HOME}/lib/security/cacerts"
-      - sudo ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
-  - jdk: openjdk11
+    - jdk: openjdk8
+    - jdk: openjdk9
+      before_install:
+        - rm "${JAVA_HOME}/lib/security/cacerts"
+        - ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
+    - jdk: openjdk10
+      before_install:
+        - sudo rm "${JAVA_HOME}/lib/security/cacerts"
+        - sudo ln -s /etc/ssl/certs/java/cacerts "${JAVA_HOME}/lib/security/cacerts"
+    - jdk: openjdk11
 
 stages:
   - name: develop
     if: (branch = develop AND type != pull_request) AND commit_message !~ /^(prepare release ([0-9\.]+))$/
+
   - name: snapshot
     if: branch = master AND type != pull_request AND commit_message !~ /^(prepare release ([0-9\.]+))$/
 
@@ -96,45 +97,53 @@ stages:
 
   - name: deploy
     if: tag =~ /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/
+
   - name: sync
     if: tag =~ /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/
 
 jobs:
   include:
-  - stage: develop
-    name: "Build and Unit Testing the develop & PR branch"
-    jdk: openjdk8
-    install: true
-    script:
-      #- ./mvnw -B -nsu -s ./.mvn/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false deploy
-      - ./mvnw -B -X -nsu -s ./.mvn/settings.xml -N -Psite site:site -Dsync.dryRun -DskipTests=false
+    - stage: develop
+      name: "Build, Unit Testing the develop & PR branch"
+      jdk: openjdk8
+      install: true
+      script:
+        #- ./mvnw -B -nsu -s ./.mvn/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false deploy
+        - ./mvnw -B -X -nsu -s ./.mvn/settings.xml -N -Psonatype -Dsync.dryRun -DskipTests=false #-Psite site:site
 
-  - stage: snapshot
-    name: "Deploy Snapshot to Maven repo"
-    jdk: openjdk8
-    install: true
-    script:
-      # Deploy the snapshot to sonatype
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -Psonatype -DskipTests=true deploy
+    - stage: snapshot
+      name: "Build, Unittesting & Deploy Snapshot to Maven Central"
+      jdk: openjdk8
+      install: true
+      script:
+        - ./mvnw -B -nsu -s ./.mvn/settings.xml -Psonatype -DskipTests=true deploy
+        - ./mvnw -B -nsu -s ./.mvn/settings.xml -P!sonatype,github -DskipTests=true deploy
 
-      # Deploy the snapshot to github registry
-      - ./mvnw -B -nsu -s ./.mvn/settings.xml -P!sonatype,github -DskipTests=true deploy
+    - stage: release
+      name: "Build, Verify & Tag the version"
+      jdk: openjdk8
+      install: true
+      script:
+        # this step can take an inordinate amount of time, so the wait should push it to 30 minutes
+        ##- travis_wait 30 ./mvnw -B -nsu -s ./.mvn/settings.xml -P sonatype -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync
+        - echo "===="
 
-  - stage: deploy
-    name: "Release to OSS SonaType"
-    jdk: openjdk8
-    install: true
-    script:
-      #- ./mvnw -B -nsu -s ./.mvn/settings.xml -P release -DskipTests=true deploy
-      - echo "Just deploy the tagged version"
+    - stage: deploy
+      name: "Release to OSS SonaType"
+      jdk: openjdk8
+      install: true
+      script:
+        - travis_wait 30 ./mvnw -B -nsu -s ./.mvn/settings.xml -P release -DskipTests=true deploy
+        # this step can take an inordinate amount of time, so the wait should push it to 30 minutes
+        ##- travis_wait 30 ./mvnw -B -nsu -s ./.mvn/settings.xml -P sonatype -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync
 
-  - stage: sync
-    name: "Sync with Maven Central"
-    jdk: openjdk8
-    install: true
-    script:
-      # this step can take an inordinate amount of time, so the wait should push it to 30 minutes
-      - travis_wait 30 ./mvnw -B -nsu -s ./.mvn/settings.xml -P sonatype -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync
+    - stage: sync
+      name: "Sync with Maven Central"
+      jdk: openjdk8
+      install: true
+      script:
+        # this step can take an inordinate amount of time, so the wait should push it to 30 minutes
+        - travis_wait 30 ./mvnw -B -nsu -s ./.mvn/settings.xml -P sonatype -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync
 
 notifications:
   email:
