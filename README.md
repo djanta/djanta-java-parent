@@ -1,5 +1,3 @@
-# djanta-java-parent
-
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/djanta/djanta-java-parent)
 ![GitHub All Releases](https://img.shields.io/github/downloads/djanta/djanta-java-parent/total)
 [![Maven Central](https://img.shields.io/maven-central/v/io.djanta/djanta-parent.svg?maxAge=2592000)](http://search.maven.org/#artifactdetails%7Cio.djanta%7Cdjanta-java-parent)
@@ -40,14 +38,12 @@ Simply define the following `<parent>` in your `pom.xml`:
 
 # Documentation
 
-***
-## TOC
+## Table Of Content
 * [Using the BOM dependencies](#using-the-bom-dependencies)
 * [Using the parent POM](#using-the-parent-pom)
 * [How to update](#how-to-update)
 
-### Using the BOM dependencies
-([TOC](#toc))
+### Using the BOM dependencies ([TOC](#table-of-content))
 
 This BOM provides version and scope for all  3rd-party dependencies required we use for our own `community` and `enterprise` libraries, components and services.
 
@@ -69,15 +65,14 @@ To be able to use the 3rd-party managed version dependencies in your project, yo
 </dependencyManagement>
 ```
 
-### Using the parent POM
-([TOC](#toc))
+### Using the parent POM ([TOC](#table-of-content))
 
 As we also pre-bundle some sort of plugins configuration to perferm some minimum requirement such as: `jaccoco`, `Code stylecheck`, `Code formatting`, `Header licensing` and much more,
 we strongly recommend that you take avantage on this by directly your main project `POM` as child of our root level `POM`.
 
 Inhieriting from `io.djanta:parent:[VERSION]` give you the following capabilities for your maven build:
 
-* Java `version` compiler. As today, the current verson of our parent `POM` provide a support for *java* (_8_) compiler. This will be update as peer of the `POM` versioning.
+* Java `version` compiler. As today, the current verson of our parent `POM` provide a support for *java* (_8_) compiler. This will be updated as peer of the `djanta-java-parent` versioning.
 * Enterprise *DevOps* compliant Maven reslease plugin setup
 * Code analysis `prereqs` (Junit test running, Covertura coverage generation)
 * Create a *-source* `JAR` and a *-javadoc* `JAR` as the component.
