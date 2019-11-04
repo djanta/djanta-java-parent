@@ -2,7 +2,6 @@
 ![GitHub All Releases](https://img.shields.io/github/downloads/djanta/djanta-java-parent/total)
 [![Maven Central](https://img.shields.io/maven-central/v/io.djanta/djanta-parent.svg?maxAge=2592000)](http://search.maven.org/#artifactdetails%7Cio.djanta%7Cdjanta-java-parent)
 [![Build Status](https://travis-ci.org/djanta/djanta-java-parent.svg?branch=master)](https://travis-ci.org/djanta/djanta-java-parent)
-[![Coverage Status](https://coveralls.io/repos/github/djanta/djanta-java-parent/badge.svg?branch=master)](https://coveralls.io/github/djanta/djanta-java-parent?branch=master)
 
 # Our 3rd party Bill Of Materials (BOM)
 This project houses either our community & enterprise Maven Bill Of Materials for third party usage.
@@ -42,6 +41,7 @@ Simply define the following `<parent>` in your `pom.xml`:
 * [Using the BOM dependencies](#using-the-bom-dependencies)
 * [Using the parent POM](#using-the-parent-pom)
 * [How to update](#how-to-update)
+* [Coding Style](#conding-styule)
 
 ### Using the BOM dependencies ([TOC](#table-of-content))
 
@@ -55,13 +55,13 @@ To be able to use the 3rd-party managed version dependencies in your project, yo
 
 ```xml
 <dependencyManagement>
-    <dependencies>
-        <scope>import</scope>
-        <groupId>io.djanta</groupId>
-        <artifactId>djanta-java-bom</artifactId>
-        <version>${io.djanta.version}</version>
-        <type>pom</type>
-    </dependencies>
+  <dependencies>
+    <scope>import</scope>
+    <groupId>io.djanta</groupId>
+    <artifactId>djanta-java-bom</artifactId>
+    <version>${io.djanta.version}</version>
+    <type>pom</type>
+  </dependencies>
 </dependencyManagement>
 ```
 
@@ -81,8 +81,43 @@ To inherit form `djanta-java-parent`, edit or create the parent element in your 
 
 ```xml
 <parent>
-    <groupId>io.djanta</groupId>
-    <artifactId>parent</artifactId>
-    <version>${io.djanta.version}</version>
+  <groupId>io.djanta</groupId>
+  <artifactId>parent</artifactId>
+  <version>${io.djanta.version}</version>
 </parent>
 ```
+
+### How to update ([TOC](#table-of-content))
+
+When we update our `io.djanta:parent` or `io.djanta:djanta-java-bom` then we should follow the release process provided in `./travis/release.sh`.
+
+Once we have release the artifacts, we also update their entries in all our `community` and/or `enterprise` subadjacent dependencies.
+
+### Coding Stype ([TOC](#table-of-content))
+
+As we've strongly organize and normalized the project structure, if you occasionally need to either manually upgrade or downgrade a dependency or a plugin version, you can then do so. 
+
+To specify which version of a dependency or plugin you'd like to use, simply place the following fragment within the property tag of your project `POM` configuration as global property or at 
+at any `profile` property level.
+
+```xml
+<maven.plugin.[PLUGIN_NAME].version>ANY EXPECTED VERSION</maven.plugin.[PLUGIN_NAME].version>
+```
+
+### Naming Convention
+
+To ensure a better comprehension, better stability and easy maintainable either pluging version, dependency version or any specific configuration, we've established a simple naming convention as follow.
+
+Doing so, we strongly recommend while declaring your:
+
+#### Plugin version:
+
+To prefix the property with: `maven.plugin.` then suffixed with `.version`. Therefore, the final result will look somewhat like this: *_<`maven.plugin.`[PLUGIN_NAME].`version`>MY VERSION</`maven.plugin.`[PLUGIN_NAME]`.version`>_*
+
+#### Dependency version:
+
+To prefix with the dependency groupId: `org.slf4j.` then suffixed with `.version`. Therefore, the final result will look somewhat like this: *_<`org.slf4j.`[DEPENDENCY_NAME].`version`>MY VERSION</`org.slf4j.`[DEPENDENCY_NAME]`.version`>_*
+
+#### Confguration:
+
+Also to generalize your plugin configuration properties, we strongly recommend that you define that you define those properties as follow:  *_<`mvn.`[PLUGIN_NAME].[PROPERTY_NAME]>MY VALUE</`mvn.`[PLUGIN_NAME].[PROPERTY_NAME]>_*

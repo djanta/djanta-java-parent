@@ -1446,7 +1446,6 @@
                 </plugins>
             </reporting>
         </profile>
-
         <profile>
             <id>versioneye</id>
             <activation>
@@ -1501,7 +1500,6 @@
                 </plugins>
             </build>
         </profile>
-
         <!-- GPG Signature on release -->
         <profile>
             <id>gpg</id>
@@ -1538,7 +1536,6 @@
                 </plugins>
             </build>
         </profile>
-
         <!-- Snyk vulnerability check -->
         <profile>
             <id>snyk</id>
@@ -1589,7 +1586,6 @@
                 </plugins>
             </build>
         </profile>
-
         <profile>
             <id>cobertura</id>
             <activation>
