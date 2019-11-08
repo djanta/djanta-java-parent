@@ -93,7 +93,7 @@ When we update our `io.djanta:parent` or `io.djanta:djanta-java-bom` then we sho
 
 Once we have release the artifacts, we also update their entries in all our `community` and/or `enterprise` subadjacent dependencies.
 
-### Coding Stype ([TOC](#table-of-content))
+### Coding Style ([TOC](#table-of-content))
 
 As we've strongly organize and normalized the project structure, if you occasionally need to either manually upgrade or downgrade a dependency or a plugin version, you can then do so. 
 
@@ -114,9 +114,21 @@ Doing so, we strongly recommend while declaring your:
 
 To prefix the property with: `maven.plugin.` then suffixed with `.version`. Therefore, the final result will look somewhat like this: *_<`maven.plugin.`[PLUGIN_NAME].`version`>MY VERSION</`maven.plugin.`[PLUGIN_NAME]`.version`>_*
 
+Example:
+
+```xml
+<maven.plugin.resource.version>OVERRIDE VERSION</maven.plugin.resource.version>
+```
+
 #### Dependency version:
 
-To prefix with the dependency groupId: `org.slf4j.` then suffixed with `.version`. Therefore, the final result will look somewhat like this: *_<`org.slf4j.`[DEPENDENCY_NAME].`version`>MY VERSION</`org.slf4j.`[DEPENDENCY_NAME]`.version`>_*
+To prefix with the dependency groupId: `org.slf4j.` then suffixed with `.version`. Therefore, the final result will look somewhat like this: *_<`org.`[slf4j].`version`>MY VERSION</`org.slf4j.`[slf4j]`.version`>_*
+
+Example:
+
+```xml
+<org.slf4j.version>OVERRIDE VERSION</org.slf4j.version>
+```
 
 #### Confguration:
 
