@@ -116,8 +116,8 @@ jobs:
       jdk: openjdk8
       install: true
       script:
-        - ./mvnw -B -nsu -s ./.mvn/settings.xml -Psonatype -DskipTests=true deploy
-        - ./mvnw -B -nsu -s ./.mvn/settings.xml -P!sonatype,github -DskipTests=true deploy
+        - travis_wait 30 ./mvnw -B -nsu -s ./.mvn/settings.xml -Psonatype -DskipTests=true deploy
+        - travis_wait 30 ./mvnw -B -nsu -s ./.mvn/settings.xml -P!sonatype,github -DskipTests=true deploy
 
     - stage: release
       name: "Build, Verify & Tag the version"
