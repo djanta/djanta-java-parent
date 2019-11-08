@@ -117,7 +117,27 @@ To prefix the property with: `maven.plugin.` then suffixed with `.version`. Ther
 Example:
 
 ```xml
-<maven.plugin.resource.version>OVERRIDE VERSION</maven.plugin.resource.version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    ...
+
+    <properties>
+        <maven.plugin.resource.version>OVERRIDED_VERSION</maven.plugin.resource.version>
+        ...
+    </properties>
+    ... or
+    <profiles>
+        <profile>
+            <id>...</id>
+            <properties>
+                <maven.plugin.resource.version>OVERRIDED_VERSION</maven.plugin.resource.version>
+                ...
+            </properties>
+        </profile>
+    </profiles>
+</project>
 ```
 
 #### Dependency version:
@@ -127,7 +147,27 @@ To prefix with the dependency groupId: `org.slf4j.` then suffixed with `.version
 Example:
 
 ```xml
-<org.slf4j.version>OVERRIDE VERSION</org.slf4j.version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
+    ...
+
+    <properties>
+        <org.slf4j.version>OVERRIDED_VERSION</org.slf4j.version>
+        ...
+    </properties>
+    ... or
+    <profiles>
+        <profile>
+            <id>...</id>
+            <properties>
+                <org.slf4j.version>OVERRIDED_VERSION</org.slf4j.version>
+                ...
+            </properties>
+        </profile>
+    </profiles>
+</project>
 ```
 
 #### Confguration:
