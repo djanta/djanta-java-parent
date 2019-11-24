@@ -156,6 +156,7 @@
         <mvn.bintray.subject>djanta</mvn.bintray.subject>
         <mvn.bintray.repo>io.djanta</mvn.bintray.repo>
         <mvn.bintray.package>community</mvn.bintray.package>
+        <mvn.local.artifactory.url>http://localhost:8081</mvn.local.artifactory.url>
         <mvn.release.goals>deploy</mvn.release.goals>
         <mvn.node.version>v6.17.1</mvn.node.version>
         <mvn.npm.version>2.15.9</mvn.npm.version>
@@ -1044,12 +1045,12 @@
                 <repository>
                     <id>central</id>
                     <name>local-releases</name>
-                    <url>http://localhost:8081/artifactory/libs-release</url>
+                    <url>${mvn.local.artifactory.url}/artifactory/libs-release</url>
                 </repository>
                 <snapshotRepository>
                     <id>snapshots</id>
                     <name>local-snapshots</name>
-                    <url>http://localhost:8081/artifactory/libs-snapshot</url>
+                    <url>${mvn.local.artifactory.url}/artifactory/libs-snapshot</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>
@@ -1350,12 +1351,19 @@
         </profile>
         <profile>
             <id>release</id>
+            <!--
             <activation>
                 <property>
                     <name>performRelease</name>
                     <value>true</value>
                 </property>
             </activation>
+            -->
+            <properties>
+                <gpg.keyname>${env.GPG_KEYNAME}</gpg.keyname>
+                <!-- <gpg.executable>${env.GPG_EXECUTABLE}</gpg.executable> -->
+                <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
+            </properties>
             <build>
                 <pluginManagement>
                     <plugins>
@@ -1373,6 +1381,12 @@
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-project-info-reports-plugin</artifactId>
                             <version>${maven.plugin.project-info-reports.version}</version>
+                        </plugin>
+                        <plugin>
+                            <!-- GPG Signature on release -->
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-gpg-plugin</artifactId>
+                            <version>${maven.plugin.gpg.version}</version>
                         </plugin>
                     </plugins>
                 </pluginManagement>
@@ -1403,6 +1417,27 @@
                                     <goal>jar</goal>
                                 </goals>
                                 <phase>package</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <!-- GPG Signature on release -->
+                        <!--
+                            Device error fixing:
+                            ==> https://tutorials.technology/solved_errors/21-gpg-signing-failed-Inappropriate-ioctl-for-device.html
+                        -->
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <configuration>
+                            <passphrase>${gpg.passphrase}</passphrase>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <phase>verify</phase>
                             </execution>
                         </executions>
                     </plugin>
@@ -1492,42 +1527,6 @@
                             <execution>
                                 <goals>
                                     <goal>sonar</goal>
-                                </goals>
-                                <phase>verify</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <!-- GPG Signature on release -->
-        <profile>
-            <id>gpg</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-gpg-plugin</artifactId>
-                            <version>${maven.plugin.gpg.version}</version>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <goals>
-                                    <goal>sign</goal>
                                 </goals>
                                 <phase>verify</phase>
                             </execution>
