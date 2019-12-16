@@ -9,7 +9,6 @@ jobs:
       matrix:
         version: [ '1.8' ]
         os:
-          - windows-latest
           - ubuntu-latest
           - ubuntu-16.04
           - ubuntu-18.04
