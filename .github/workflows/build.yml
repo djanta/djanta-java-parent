@@ -24,5 +24,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.version }}
-      - name: Build with Maven
-        run: mvn -X -B clean verify --settings .mvn/settings.xml
+      - name: Build with Maven (Clean & verify)
+        run: |
+#          mvn -X -B clean verify --settings .mvn/settings.xml
+          ./mvnw -B -nsu -s .mvn/settings.xml -N -Psonatype -Dsync.dryRun -DskipTests=false clean test verify
+
