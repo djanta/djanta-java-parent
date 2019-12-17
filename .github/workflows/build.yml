@@ -26,6 +26,5 @@ jobs:
           java-version: ${{ matrix.version }}
       - name: Build with Maven (Clean & verify)
         run: |
-#          mvn -X -B clean verify --settings .mvn/settings.xml
           ./mvnw -B -nsu -s .mvn/settings.xml -N -Psonatype -Dsync.dryRun -DskipTests=false clean test verify
 
