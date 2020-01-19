@@ -53,7 +53,7 @@ jobs:
           java-version: ${{ matrix.version }}
       - name: Maven Build (Clean & verify) on ${{ matrix.os }} with version ${{ matrix.version }}
         run: |
-          ./mvnw -B -nsu -s .mvn/settings.xml -N -Psonatype -Dsync.dryRun -DskipTests=false clean test verify
+          ./mvnw -B -X -nsu -s .mvn/settings.xml -N -Psonatype -Dsync.dryRun -DskipTests=false clean test verify
 
   # Deploy the current snapshot and install it
   snapshot:
@@ -67,5 +67,5 @@ jobs:
       - name: Create & Publish the snapshot TO (Sonatype & Github)
         if: github.branch == 'master' && github.event_name == 'push'
         run: |
-          ./mvnw -B -nsu -s .mvn/settings.xml -N -Psonatype -DskipTests=true clean deploy
-          ./mvnw -B -nsu -s .mvn/settings.xml -N -P!sonatype,github -DskipTests=true clean deploy
+          ./mvnw -B -X -nsu -s .mvn/settings.xml -N -Psonatype -DskipTests=true clean deploy
+          ./mvnw -B -X -nsu -s .mvn/settings.xml -N -P!sonatype,github -DskipTests=true clean deploy
