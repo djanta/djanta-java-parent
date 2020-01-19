@@ -64,6 +64,17 @@ jobs:
         os:
           - ubuntu-latest
     steps:
+      - name: Checking branch
+        uses: actions/checkout@v2
+      - name: Checkout submodules
+        shell: bash
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive --remote --merge --force --depth=1
+      - name: Set up JDK ${{ matrix.version }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.version }}
       - name: Create & Publish the snapshot TO (Sonatype & Github)
         #if: github.branch == 'master' && github.event_name == 'push'
         run: |
