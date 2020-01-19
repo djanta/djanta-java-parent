@@ -606,12 +606,14 @@
         <configuration>
           <!-- session.executionRootDirectory resolves properly even with nested modules -->
           <header>${mvn.license.header}</header>
+          <failIfUnknown>true</failIfUnknown>
           <excludes>
             <exclude>**/.travis.yml</exclude>
             <exclude>**/.editorconfig</exclude>
             <exclude>**/.gitattributes</exclude>
             <exclude>**/.gitignore</exclude>
             <exclude>**/.mvn/**</exclude>
+            <exclude>**/.maven/**</exclude>
             <exclude>**/travis/**</exclude>
             <exclude>**/mvnw*</exclude>
             <exclude>**/.idea/**</exclude>
