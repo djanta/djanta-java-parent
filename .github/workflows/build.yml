@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-name: Java Build
+name: Build
 
 # On push event ...
 on:
@@ -80,5 +80,6 @@ jobs:
       - name: Create & Publish the snapshot TO (Sonatype & Github)
         #if: github.branch == 'master' && github.event_name == 'push'
         run: |
+          echo "SONATYPE_USER=$SONATYPE_USER GH_USER=$GH_USER GPG_KEYNAME=$GPG_KEYNAME"
           ./mvnw -B -X -nsu -s .mvn/settings.xml -N -Psonatype -DskipTests=true -Dlicense.skip=true clean deploy
           ./mvnw -B -X -nsu -s .mvn/settings.xml -N -P!sonatype,github -DskipTests=true -Dlicense.skip=true clean deploy
