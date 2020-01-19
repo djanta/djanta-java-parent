@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2019 DJANTA, LLC (https://www.djanta.io)
+    Copyright 2019-2020 DJANTA, LLC (https://www.djanta.io)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@
   <description>djanta.io makes writing java microservice easier for everyone</description>
 
   <modules>
-    <module>djanta-java-bom</module>
+    <module>bom</module>
   </modules>
 
   <properties>
@@ -46,15 +46,16 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <main.basedir>${project.basedir}</main.basedir>
 
-    <com.fasterxml.jackson.version>2.9.8</com.fasterxml.jackson.version>
+    <com.fasterxml.jackson.version>2.10.1</com.fasterxml.jackson.version>
     <org.fluttercode.datafactory.version>0.8</org.fluttercode.datafactory.version>
-    <org.mock-server.version>5.6.1</org.mock-server.version>
+    <org.mock-server.version>5.8.1</org.mock-server.version>
     <javax.json.version>1.1.4</javax.json.version>
     <io.reactivex.version>1.3.8</io.reactivex.version>
     <org.slf4j.version>1.7.28</org.slf4j.version>
     <junit.version>4.12</junit.version>
     <org.powermock.version>2.0.2</org.powermock.version>
     <org.mockito.version>2.7.5</org.mockito.version>
+    <org.mockito.all.version>2.0.2-beta</org.mockito.all.version>
     <org.everit.json.version>1.4.1</org.everit.json.version>
     <org.jbehave.version>4.5.1</org.jbehave.version>
     <de.codecentric.version>1.2.0</de.codecentric.version>
@@ -89,10 +90,37 @@
     <commons-io.version>2.6</commons-io.version>
     <commons-codec.version>1.13</commons-codec.version>
     <commons-logging.version>1.2</commons-logging.version>
+    <commons-crypto.version>1.0.0</commons-crypto.version>
+    <commons-beanutils.version>1.9.4</commons-beanutils.version>
+    <org.apache.commons.compress.version>1.19</org.apache.commons.compress.version>
+    <org.apache.commons.csv.version>1.7</org.apache.commons.csv.version>
+    <org.apache.commons.io.version>1.3.2</org.apache.commons.io.version>
+    <org.apache.commons.exec.version>1.3</org.apache.commons.exec.version>
+    <org.apache.commons.jexl.version>2.1.1</org.apache.commons.jexl.version>
+    <org.apache.commons.jexl3.version>3.1</org.apache.commons.jexl3.version>
+    <org.apache.commons.math3.version>3.6.1</org.apache.commons.math3.version>
+    <org.apache.commons.pool2.version>2.8.0</org.apache.commons.pool2.version>
+    <org.apache.commons.vfs2.version>2.5.0</org.apache.commons.vfs2.version>
+    <org.apache.commons.configuration2.version>2.6</org.apache.commons.configuration2.version>
+    <org.apache.commons.digester3.version>3.2</org.apache.commons.digester3.version>
+    <org.apache.commons.crypto.version>1.0.0</org.apache.commons.crypto.version>
+    <commons-text.version>1.8</commons-text.version>
+    <org.apache.commons.lang3.version>3.9</org.apache.commons.lang3.version>
     <org.apache.httpcomponents.verion>4.5.10</org.apache.httpcomponents.verion>
     <org.apache.httpclient.verion>4.4.12</org.apache.httpclient.verion>
-    <com.squareup.okhttp3.version>4.2.1</com.squareup.okhttp3.version>
+    <!--<com.squareup.okhttp3.version>4.2.1</com.squareup.okhttp3.version> -->
     <com.jayway.jsonpath.version>2.4.0</com.jayway.jsonpath.version>
+    <com.squareup.retrofit.version>2.7.0</com.squareup.retrofit.version>
+    <io.opentracing.version>0.33.0</io.opentracing.version>
+    <io.swagger.version>1.6.0</io.swagger.version>
+    <io.netty.version>4.1.44.Final</io.netty.version>
+    <io.nats.version>1.13</io.nats.version>
+    <org.ow2.asm.version>6.0</org.ow2.asm.version>
+    <org.apache.ws.commons.axiom.version>1.2.14</org.apache.ws.commons.axiom.version>
+    <org.hsqldb.version>2.5.0</org.hsqldb.version>
+    <org.javassist.version>3.26.0-GA</org.javassist.version>
+    <io.cucumber.version>2.0.2</io.cucumber.version>
+    <org.seedstack.version>19.11</org.seedstack.version>
 
     <!-- :: Maven plugin version configuration -->
     <maven.plugin.animal-sniffer.version>1.18</maven.plugin.animal-sniffer.version>
@@ -149,7 +177,7 @@
     <mvn.sortpom.file>.mvn/resources/pom-sorter.xml</mvn.sortpom.file>
     <mvn.sort.indent>2</mvn.sort.indent>
     <mvn.debuglevel>lines,vars,source</mvn.debuglevel>
-    <mvn.license.holder>DJANTA, LLC (https://www.djanta.io)</mvn.license.holder>
+    <mvn.license.holder>${mvn.organization.name} (https://www.djanta.io)</mvn.license.holder>
     <mvn.tag.prefix>release-</mvn.tag.prefix>
     <mvn.sonatype.id>sonatype</mvn.sonatype.id>
     <mvn.sonatype.url>https://oss.sonatype.org/</mvn.sonatype.url>
@@ -166,6 +194,7 @@
     <mvn.npm.dist>https://registry.npmjs.org/npm/-/</mvn.npm.dist>
     <mvn.coveralls.timestampFormat>EpochMillis</mvn.coveralls.timestampFormat>
     <mvn.jacoco.report.dir>${project.build.directory}/coverage-reports</mvn.jacoco.report.dir>
+    <mvn.organization.name>DJANTA, LLC</mvn.organization.name>
 
     <!-- Maven front end configurtion -->
     <mvn.frontend.workingdirectory>src/main/javascript/frontend</mvn.frontend.workingdirectory>
@@ -203,6 +232,7 @@
     <skip.integration.tests>true</skip.integration.tests>
     <skip.unit.tests>false</skip.unit.tests>
     <maven.source.attach>false</maven.source.attach>
+    <sort.createBackupFile>false</sort.createBackupFile>
   </properties>
 
   <url>https://github.com/djanta/djanta-java-parent</url>
@@ -537,90 +567,6 @@
           </dependency>
         </dependencies>
       </plugin>
-
-      <!--
-            <plugin>
-                <artifactId>maven-shade-plugin</artifactId>
-                <configuration>
-                    <transformers>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <manifestEntries>
-                                <SCM-Revision>${buildNumber}</SCM-Revision>
-                                <Bundle-Version>${project.version}-t${buildNumber}</Bundle-Version>
-                                <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
-                                <Bundle-Vendor>DJANTA, LLC</Bundle-Vendor>
-                            </manifestEntries>
-                        </transformer>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer">
-                            &lt;!&ndash; No comment yet&ndash;&gt;
-                        </transformer>
-                    </transformers>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-      <!--
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <forceCreation>true</forceCreation>
-                    <archive>
-                        <manifestEntries>
-                            <SCM-Revision>${buildNumber}</SCM-Revision>
-                            <Bundle-Version>${project.version}-t${buildNumber}</Bundle-Version>
-                            <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
-                            <Bundle-Vendor>DJANTA, LLC</Bundle-Vendor>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-jar</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>buildnumber-maven-plugin</artifactId>
-        <configuration>
-          <doCheck>false</doCheck>
-          <doUpdate>false</doUpdate>
-          <timestampFormat>{0,date,yyyy-MM-dd-HH:mm:ss}</timestampFormat>
-          <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
-          <revisionOnScmFailure>true</revisionOnScmFailure>
-          <buildNumberPropertyName>buildNumber</buildNumberPropertyName>
-          <timestampPropertyName>timestamp</timestampPropertyName>
-          <scmBranchPropertyName>scmBranch</scmBranchPropertyName>
-        </configuration>
-        <executions>
-          <execution>
-            <phase>validate</phase>
-            <goals>
-              <goal>create</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
@@ -729,7 +675,6 @@
           <keepBlankLines>true</keepBlankLines>
           <lineSeparator>\n</lineSeparator>
           <sortOrderFile>${mvn.sortpom.file}</sortOrderFile>
-          <createBackupFile>true</createBackupFile>
           <nrOfIndentSpace>${mvn.sort.indent}</nrOfIndentSpace>
         </configuration>
         <executions>
@@ -815,8 +760,8 @@
                 <bannedPlugins>
                   <level>WARN</level>
                   <!--excludes>
-                                      <exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>
-                                    </excludes-->
+                    <exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>
+                  </excludes-->
                   <message>Please consider using the maven-invoker-plugin
                                         (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
                 </bannedPlugins>
@@ -827,11 +772,11 @@
                   <version>[${main.java.version},12)</version>
                 </requireJavaVersion>
                 <!--
-                                <requireActiveProfile>
-                                    <profiles>check</profiles>
-                                    <message>The following profiles: (check) cannot be deactivated</message>
-                                </requireActiveProfile>
-                                -->
+                  <requireActiveProfile>
+                      <profiles>check</profiles>
+                      <message>The following profiles: (check) cannot be deactivated</message>
+                  </requireActiveProfile>
+                -->
               </rules>
             </configuration>
           </execution>
@@ -1225,18 +1170,15 @@
                 <phase>package</phase>
                 <configuration>
                   <!--
-                                    <transformers>
-                                        <transformer
-                                            implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                            <manifestEntries>
-                                                <Main-Class></Main-Class>
-                                            </manifestEntries>
-                                        </transformer>
-                                    </transformers>
-                                    -->
-                  <!--
-                                    <artifactSet></artifactSet>
-                                    -->
+                    <transformers>
+                        <transformer
+                            implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <manifestEntries>
+                                <Main-Class></Main-Class>
+                            </manifestEntries>
+                        </transformer>
+                    </transformers>
+                  -->
                   <outputFile>${project.build.directory}/${project.artifactId}-fat.jar</outputFile>
                   <filters>
                     <filter>
@@ -1615,12 +1557,12 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>cobertura-maven-plugin</artifactId>
             <!--
-                        <configuration>
-                            <formats>
-                                <format>xml</format>
-                            </formats>
-                        </configuration>
-                        -->
+              <configuration>
+                  <formats>
+                      <format>xml</format>
+                  </formats>
+              </configuration>
+            -->
           </plugin>
           <plugin>
             <groupId>org.eluder.coveralls</groupId>
@@ -2214,6 +2156,101 @@
       </build>
     </profile>
 
+    <profile>
+      <id>manifest</id>
+      <activation>
+        <file>
+          <exists>src/main/resources/META-INF/MANIFEST.MF</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>buildnumber-maven-plugin</artifactId>
+            <configuration>
+              <doCheck>false</doCheck>
+              <doUpdate>false</doUpdate>
+              <timestampFormat>{0,date,yyyy-MM-dd-HH:mm:ss}</timestampFormat>
+              <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
+              <revisionOnScmFailure>true</revisionOnScmFailure>
+              <buildNumberPropertyName>buildNumber</buildNumberPropertyName>
+              <timestampPropertyName>timestamp</timestampPropertyName>
+              <scmBranchPropertyName>scmBranch</scmBranchPropertyName>
+            </configuration>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>create</goal>
+                </goals>
+                <phase>validate</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <!--
+          <plugin>
+              <artifactId>maven-shade-plugin</artifactId>
+              <configuration>
+                  <transformers>
+                      <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                          <manifestEntries>
+                              <SCM-Revision>${buildNumber}</SCM-Revision>
+                              <Bundle-Version>${project.version}-t${buildNumber}</Bundle-Version>
+                              <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+                              <Bundle-Vendor>DJANTA, LLC</Bundle-Vendor>
+                          </manifestEntries>
+                      </transformer>
+                      <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer">
+                          &lt;!&ndash; No comment yet&ndash;&gt;
+                      </transformer>
+                  </transformers>
+              </configuration>
+              <executions>
+                  <execution>
+                      <phase>package</phase>
+                      <goals>
+                          <goal>shade</goal>
+                      </goals>
+                  </execution>
+              </executions>
+          </plugin>
+        -->
+          <!--
+          <plugin>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+              <forceCreation>true</forceCreation>
+              <archive>
+                <manifestEntries>
+                  <SCM-Revision>${buildNumber}</SCM-Revision>
+                  <Bundle-Version>${project.version}-t${buildNumber}</Bundle-Version>
+                  <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+                  <Bundle-Vendor>${mvn.organization.name}</Bundle-Vendor>
+                </manifestEntries>
+              </archive>
+            </configuration>
+            <executions>
+              <execution>
+                <id>jar</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+              <execution>
+                <id>test-jar</id>
+                <goals>
+                  <goal>test-jar</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
+          -->
+        </plugins>
+      </build>
+    </profile>
+
     <!-- Development Integration Test-->
     <profile>
       <id>dit</id>
@@ -2271,9 +2308,9 @@
             <dependencies>
               <dependency>
                 <!--
-                                    surefire uses ASM to do some bytecode magic... need to bump version to be java
-                                    11 compatible
-                                -->
+                    surefire uses ASM to do some bytecode magic... need to bump version to be java
+                    11 compatible
+                -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
                 <version>7.0-beta</version>
@@ -2314,9 +2351,9 @@
             <dependencies>
               <dependency>
                 <!--
-                                    surefire uses ASM to do some bytecode magic... need to bump version to be
-                                    java 11 compatible
-                                -->
+                    surefire uses ASM to do some bytecode magic... need to bump version to be
+                    java 11 compatible
+                -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
                 <version>7.0-beta</version>
@@ -2343,8 +2380,8 @@
               <argLine>${jvm.options}</argLine>
               <includes>
                 <!--
-                                    Include all User Acceptance testing
-                                -->
+                    Include all User Acceptance testing
+                -->
                 <include>**/*UatTest</include>
                 <include>**/*UATTest</include>
               </includes>
@@ -2352,9 +2389,9 @@
             <dependencies>
               <dependency>
                 <!--
-                                    surefire uses ASM to do some bytecode magic... need to bump version to be
-                                    java 11 compatible
-                                -->
+                    surefire uses ASM to do some bytecode magic... need to bump version to be
+                    java 11 compatible
+                -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
                 <version>7.0-beta</version>
@@ -2387,9 +2424,9 @@
             <dependencies>
               <dependency>
                 <!--
-                                    surefire uses ASM to do some bytecode magic... need to bump version to be
-                                    java 11 compatible
-                                -->
+                    surefire uses ASM to do some bytecode magic... need to bump version to be
+                    java 11 compatible
+                -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
                 <version>7.0-beta</version>
@@ -2416,29 +2453,29 @@
               <argLine>${jvm.options}</argLine>
               <includes>
                 <!--
-                                    Include all User Acceptance testing
-                                -->
+                    Include all User Acceptance testing
+                -->
                 <include>**/*UatTest</include>
                 <include>**/*UATTest</include>
 
                 <!--
-                                    Include all Quality (assurance) Acceptance testing
-                                -->
+                    Include all Quality (assurance) Acceptance testing
+                -->
                 <include>**/*QaTest</include>
                 <include>**/*QATest</include>
 
                 <!--
-                                    Include any other Staging Integration testing
-                                -->
+                    Include any other Staging Integration testing
+                -->
                 <include>**/*StagingTest</include>
               </includes>
             </configuration>
             <dependencies>
               <dependency>
                 <!--
-                                    surefire uses ASM to do some bytecode magic... need to bump version to be
-                                    java 11 compatible
-                                -->
+                    surefire uses ASM to do some bytecode magic... need to bump version to be
+                    java 11 compatible
+                -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
                 <version>7.0-beta</version>
@@ -2471,9 +2508,9 @@
             <dependencies>
               <dependency>
                 <!--
-                                    surefire uses ASM to do some bytecode magic... need to bump version to be
-                                    java 11 compatible
-                                -->
+                    surefire uses ASM to do some bytecode magic... need to bump version to be
+                    java 11 compatible
+                -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
                 <version>7.0-beta</version>

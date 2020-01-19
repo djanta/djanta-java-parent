@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2019 DJANTA, LLC (https://www.djanta.io)
+    Copyright 2019-2020 DJANTA, LLC (https://www.djanta.io)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -120,6 +120,11 @@
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
         <version>${org.mockito.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>${org.mockito.all.version}</version>
       </dependency>
       <dependency>
         <groupId>org.hamcrest</groupId>
@@ -291,7 +296,7 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-text</artifactId>
-        <version>${org.apache.text.version}</version>
+        <version>${commons-text.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
@@ -301,47 +306,72 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
-        <version>${org.apache.commons.version}</version>
+        <version>${org.apache.commons.lang3.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-compress</artifactId>
-        <version>${org.apache.commons.version}</version>
+        <version>${org.apache.commons.compress.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-csv</artifactId>
-        <version>${org.apache.commons.version}</version>
+        <version>${org.apache.commons.csv.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-io</artifactId>
-        <version>${org.apache.commons.version}</version>
+        <version>${org.apache.commons.io.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-exec</artifactId>
-        <version>${org.apache.commons.version}</version>
+        <version>${org.apache.commons.exec.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-jexl</artifactId>
-        <version>${org.apache.commons.version}</version>
+        <version>${org.apache.commons.jexl.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-jexl3</artifactId>
+        <version>${org.apache.commons.jexl3.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-math3</artifactId>
-        <version>${org.apache.commons.version}</version>
+        <version>${org.apache.commons.math3.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-pool2</artifactId>
-        <version>${org.apache.commons.version}</version>
+        <version>${org.apache.commons.pool2.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-vfs2</artifactId>
-        <version>${org.apache.commons.version}</version>
+        <version>${org.apache.commons.vfs2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-configuration2</artifactId>
+        <version>${org.apache.commons.configuration2.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-digester3</artifactId>
+        <version>${org.apache.commons.digester3.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-crypto</artifactId>
+        <version>${org.apache.commons.crypto.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-beanutils</groupId>
+        <artifactId>commons-beanutils</artifactId>
+        <version>${commons-beanutils.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
@@ -389,31 +419,15 @@
         <version>${org.apache.httpcomponents.verion}</version>
       </dependency>
       <dependency>
-        <groupId>com.squareup.okhttp3</groupId>
-        <artifactId>mockwebserver</artifactId>
-        <version>${com.squareup.okhttp3.version}</version>
+        <groupId>org.hsqldb</groupId>
+        <artifactId>hsqldb</artifactId>
+        <version>${org.hsqldb.version}</version>
       </dependency>
       <dependency>
-        <groupId>com.squareup.okhttp3</groupId>
-        <artifactId>okhttp</artifactId>
-        <version>${com.squareup.okhttp3.version}</version>
+        <groupId>org.javassist</groupId>
+        <artifactId>javassist</artifactId>
+        <version>${org.javassist.version}</version>
       </dependency>
-      <dependency>
-        <groupId>com.squareup.okhttp3</groupId>
-        <artifactId>okhttp-lts</artifactId>
-        <version>${com.squareup.okhttp3.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.squareup.okhttp3</groupId>
-        <artifactId>okhttp-urlconnection</artifactId>
-        <version>${com.squareup.okhttp3.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.squareup.okhttp3</groupId>
-        <artifactId>okhttp-ws</artifactId>
-        <version>${com.squareup.okhttp3.version}</version>
-      </dependency>
-
       <!-- cucumber JVM testing tools dependencies -->
 
       <!-- Maven BOM import section -->
@@ -421,6 +435,13 @@
         <groupId>com.fasterxml.jackson</groupId>
         <artifactId>jackson-bom</artifactId>
         <version>${com.fasterxml.jackson.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.squareup.retrofit2</groupId>
+        <artifactId>parent</artifactId>
+        <version>${com.squareup.retrofit.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -467,6 +488,78 @@
         <groupId>org.apache.cxf</groupId>
         <artifactId>apache-cxf</artifactId>
         <version>${org.apache.cxf.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Open tracing import -->
+      <dependency>
+        <groupId>io.opentracing</groupId>
+        <artifactId>parent</artifactId>
+        <version>${io.opentracing.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Swagger import -->
+      <dependency>
+        <groupId>io.swagger</groupId>
+        <artifactId>swagger-project</artifactId>
+        <version>${io.swagger.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Netty import -->
+      <dependency>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-bom</artifactId>
+        <version>${io.netty.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Nats import -->
+      <dependency>
+        <groupId>io.nats</groupId>
+        <artifactId>nats-parent</artifactId>
+        <version>${io.nats.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- ASM import -->
+      <dependency>
+        <groupId>org.ow2.asm</groupId>
+        <artifactId>asm-parent</artifactId>
+        <version>${org.ow2.asm.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- AXIOM import -->
+      <dependency>
+        <groupId>org.apache.ws.commons.axiom</groupId>
+        <artifactId>axiom-parent</artifactId>
+        <version>${org.apache.ws.commons.axiom.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Cucumber import -->
+      <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-parent</artifactId>
+        <version>${io.cucumber.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Mock Server import -->
+      <dependency>
+        <groupId>org.mock-server</groupId>
+        <artifactId>mockserver</artifactId>
+        <version>${org.mock-server.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Seedstack import -->
+      <dependency>
+        <groupId>org.seedstack</groupId>
+        <artifactId>seedstack-bom</artifactId>
+        <version>${org.seedstack.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
