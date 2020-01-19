@@ -101,7 +101,7 @@ To specify which version of a dependency or plugin you'd like to use, simply pla
 at any `profile` property level.
 
 ```xml
-<maven.plugin.[PLUGIN_NAME].version>ANY EXPECTED VERSION</maven.plugin.[PLUGIN_NAME].version>
+<maven.plugin.{PLUGIN_NAME}.version>any expected version</maven.plugin.{PLUGIN_NAME}.version>
 ```
 
 ### Naming Convention
@@ -112,7 +112,7 @@ Doing so, we strongly recommend while declaring your:
 
 #### Plugin version:
 
-To prefix the property with: `maven.plugin.` then suffixed with `.version`. Therefore, the final result will look somewhat like this: *_<`maven.plugin.`[PLUGIN_NAME].`version`>MY VERSION</`maven.plugin.`[PLUGIN_NAME]`.version`>_*
+To prefix the property with: `maven.plugin.` then suffixed with `.version`. Therefore, the final result will look somewhat like this: *_<`maven.plugin.`{PLUGIN_NAME}.`version`>MY VERSION</`maven.plugin.`{PLUGIN_NAME}`.version`>_*
 
 Example:
 
@@ -142,7 +142,7 @@ Example:
 
 #### Dependency version:
 
-To prefix with the dependency groupId: `org.slf4j.` then suffixed with `.version`. Therefore, the final result will look somewhat like this: *_<`org.`[slf4j].`version`>MY VERSION</`org.slf4j.`[slf4j]`.version`>_*
+To prefix with the dependency groupId: `org.slf4j.` then suffixed with `.version`. Therefore, the final result will look somewhat like this: *_<`org.`[slf4j].`version`>MY VERSION</`org.`[slf4j]`.version`>_*
 
 Example:
 
@@ -172,4 +172,4 @@ Example:
 
 #### Confguration:
 
-Also to generalize your plugin configuration properties, we strongly recommend that you define that you define those properties as follow:  *_<`mvn.`[PLUGIN_NAME].[PROPERTY_NAME]>MY VALUE</`mvn.`[PLUGIN_NAME].[PROPERTY_NAME]>_*
+Also to generalize your plugin configuration properties, we strongly recommend that you define that you define those properties as follow:  *_<`mvn.`{PLUGIN_NAME}.{PROPERTY_NAME}>MY VALUE</`mvn.`{PLUGIN_NAME}.{PROPERTY_NAME}>_*

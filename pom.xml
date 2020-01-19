@@ -607,6 +607,7 @@
           <!-- session.executionRootDirectory resolves properly even with nested modules -->
           <header>${mvn.license.header}</header>
           <failIfUnknown>true</failIfUnknown>
+          <failIfMissing>false</failIfMissing>
           <excludes>
             <exclude>**/.travis.yml</exclude>
             <exclude>**/.editorconfig</exclude>
