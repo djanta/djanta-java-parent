@@ -87,6 +87,5 @@ jobs:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
         run: |
-          echo "SONATYPE_USER=$SONATYPE_USER GH_USER=$GH_USER GPG_KEYNAME=$GPG_KEYNAME"
-          ./mvnw -B -X -nsu -s .mvn/settings.xml -N -Psonatype -DskipTests=true -Dlicense.skip=true clean deploy
-          ./mvnw -B -X -nsu -s .mvn/settings.xml -N -P!sonatype,github -DskipTests=true -Dlicense.skip=true clean deploy
+          ./mvnw -B -X -nsu --errors -s ./.mvn/settings.xml -Psonatype -DskipTests=true -Dlicense.skip=true clean deploy
+          ./mvnw -B -X -nsu --errors -s ./.mvn/settings.xml -Pgithub -DskipTests=true -Dlicense.skip=true clean deploy
