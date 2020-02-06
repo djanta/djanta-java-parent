@@ -168,6 +168,8 @@
     <maven.plugin.antrun.version>1.8</maven.plugin.antrun.version>
     <maven.plugin.versioneye.version>3.11.4</maven.plugin.versioneye.version>
     <maven.plugin.mock-server.version>${org.mock-server.version}</maven.plugin.mock-server.version>
+    <maven.io.fabric8.version>4.3.1</maven.io.fabric8.version>
+    <maven.plugin.help.version>3.2.0</maven.plugin.help.version>
 
     <!-- Plugins configurations section -->
     <mvn.license.header>.mvn/licenses/apache-2.0-header</mvn.license.header>
@@ -195,6 +197,7 @@
     <mvn.coveralls.timestampFormat>EpochMillis</mvn.coveralls.timestampFormat>
     <mvn.jacoco.report.dir>${project.build.directory}/coverage-reports</mvn.jacoco.report.dir>
     <mvn.organization.name>DJANTA, LLC</mvn.organization.name>
+    <mvn.help.version.file>.snapshot</mvn.help.version.file>
 
     <!-- Maven front end configurtion -->
     <mvn.frontend.workingdirectory>src/main/javascript/frontend</mvn.frontend.workingdirectory>
@@ -331,6 +334,11 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>${maven.plugin.project-info-reports.version}</version>
         </plugin>
+        <plugin>
+          <groupId>io.fabric8</groupId>
+          <artifactId>fabric8-maven-plugin</artifactId>
+          <version>${maven.io.fabric8.version}</version>
+        </plugin>
 
         <!-- mvn -N io.takari:maven:wrapper -Dmaven=3.5.0 -->
         <plugin>
@@ -456,6 +464,11 @@
           <version>${maven.plugin.source.version}</version>
         </plugin>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-help-plugin</artifactId>
+          <version>${maven.plugin.help.version}</version>
+        </plugin>
+        <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>animal-sniffer-maven-plugin</artifactId>
           <version>${maven.plugin.animal-sniffer.version}</version>
@@ -484,6 +497,23 @@
             <goals>
               <goal>deploy</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-help-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <id>version</id>
+            <goals>
+              <goal>evaluate</goal>
+            </goals>
+            <configuration>
+              <output>${mvn.help.version.file}</output>
+              <expression>project.version</expression>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -589,6 +619,7 @@
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
         <version>${maven.plugin.bundle.version}</version>
+        <!--
         <executions>
           <execution>
             <id>bundle-manifest</id>
@@ -598,6 +629,7 @@
             </goals>
           </execution>
         </executions>
+        -->
       </plugin>
       <plugin>
         <groupId>com.mycila</groupId>
@@ -625,6 +657,7 @@
             <exclude>**/.MF</exclude>
             <exclude>**/META-INF/services/**/*</exclude>
             <exclude>**/.variables</exclude>
+            <exclude>**/.version</exclude>
             <exclude>**/resources/license/header.txt</exclude>
             <exclude>**/pom-old.xml</exclude>
             <exclude>**/README</exclude>
@@ -637,6 +670,7 @@
             <exclude>**/images/**/*</exclude>
             <exclude>**/img/**/*</exclude>
             <exclude>**/**/*.bak</exclude>
+            <exclude>${mvn.help.version.file}</exclude>
           </excludes>
           <strictCheck>true</strictCheck>
         </configuration>
@@ -1768,7 +1802,6 @@
             <configuration>
               <nodeVersion>${mvn.node.version}</nodeVersion>
               <yarnVersion>${mvn.yarn.version}</yarnVersion>
-
               <nodeDownloadRoot>${mvn.nodejs.dist}</nodeDownloadRoot>
               <yarnDownloadRoot>${mvn.yarn.dist}</yarnDownloadRoot>
               <installDirectory>${mvn.frontend.installdirectory}</installDirectory>
@@ -2158,13 +2191,15 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>manifest</id>
       <activation>
+        <!--
         <file>
           <exists>src/main/resources/META-INF/MANIFEST.MF</exists>
         </file>
+        -->
+        <activeByDefault>false</activeByDefault>
       </activation>
       <build>
         <plugins>
@@ -2174,12 +2209,12 @@
             <configuration>
               <doCheck>false</doCheck>
               <doUpdate>false</doUpdate>
-              <timestampFormat>{0,date,yyyy-MM-dd-HH:mm:ss}</timestampFormat>
               <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
               <revisionOnScmFailure>true</revisionOnScmFailure>
               <buildNumberPropertyName>buildNumber</buildNumberPropertyName>
               <timestampPropertyName>timestamp</timestampPropertyName>
               <scmBranchPropertyName>scmBranch</scmBranchPropertyName>
+              <timestampFormat>{0,date,yyyy-MM-dd-HH:mm:ss}</timestampFormat>
             </configuration>
             <executions>
               <execution>
@@ -2187,6 +2222,42 @@
                   <goal>create</goal>
                 </goals>
                 <phase>validate</phase>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <artifactId>maven-jar-plugin</artifactId>
+            <configuration>
+              <useDefaultManifestFile>true</useDefaultManifestFile>
+              <!--
+              <forceCreation>true</forceCreation>
+              <archive>
+                <manifestEntries>
+                  <SCM-Revision>${buildNumber}</SCM-Revision>
+                  <Bundle-Version>${project.version}-t${buildNumber}</Bundle-Version>
+                  <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
+                  <Bundle-Vendor>${mvn.organization.name}</Bundle-Vendor>
+                </manifestEntries>
+              </archive>
+              -->
+            </configuration>
+            <executions>
+              <execution>
+                <id>jar</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+              <execution>
+                <id>test-jar</id>
+                <goals>
+                  <goal>test-jar</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <skipIfEmpty>true</skipIfEmpty>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -2218,38 +2289,6 @@
               </executions>
           </plugin>
         -->
-          <!--
-          <plugin>
-            <artifactId>maven-jar-plugin</artifactId>
-            <configuration>
-              <forceCreation>true</forceCreation>
-              <archive>
-                <manifestEntries>
-                  <SCM-Revision>${buildNumber}</SCM-Revision>
-                  <Bundle-Version>${project.version}-t${buildNumber}</Bundle-Version>
-                  <Bundle-ManifestVersion>2</Bundle-ManifestVersion>
-                  <Bundle-Vendor>${mvn.organization.name}</Bundle-Vendor>
-                </manifestEntries>
-              </archive>
-            </configuration>
-            <executions>
-              <execution>
-                <id>jar</id>
-                <goals>
-                  <goal>jar</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-              <execution>
-                <id>test-jar</id>
-                <goals>
-                  <goal>test-jar</goal>
-                </goals>
-                <phase>package</phase>
-              </execution>
-            </executions>
-          </plugin>
-          -->
         </plugins>
       </build>
     </profile>

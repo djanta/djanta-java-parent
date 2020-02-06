@@ -109,7 +109,7 @@ jobs:
       install: true
       script:
         #- ./mvnw -B -nsu -s ./.mvn/settings.xml -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync -Dsync.dryRun -DskipTests=false deploy
-        - ./mvnw -B -nsu -s ./.mvn/settings.xml -N -Psonatype -Dsync.dryRun -DskipTests=false clean test verify #-Psite site:site
+        - ./mvnw -B -nsu -s ./.mvn/settings.xml -Psonatype -Dsync.dryRun -DskipTests=false clean test verify #-Psite site:site
 
     - stage: snapshot
       name: "Build, Unittesting & Deploy Snapshot to Maven Central"
@@ -146,7 +146,7 @@ jobs:
       install: true
       script:
         # this step can take an inordinate amount of time, so the wait should push it to 30 minutes
-        - travis_wait 30 ./mvnw -B -nsu -s ./.mvn/settings.xml -Psonatype -N io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync
+        - travis_wait 30 ./mvnw -B -nsu -s ./.mvn/settings.xml -Psonatype io.zipkin.centralsync-maven-plugin:centralsync-maven-plugin:sync
 
 notifications:
   email:

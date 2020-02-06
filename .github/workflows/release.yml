@@ -14,43 +14,51 @@
 # limitations under the License.
 #
 
-name: Build (Verify & Test)
+
+name: Release
 
 # On push event ...
 on:
   # Trigger the workflow on push or pull request, but only for the master branch
   push:
     branches:
-      - master
-      - develop
-  pull_request:
-    branches:
-      - master
-      - develop
+      - release
 jobs:
-  build:
+  # Deploy the current snapshot and install it
+  release:
+    needs: [build]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        version: ['1.8']
-        os: [ubuntu-latest]
+        version:
+          - '1.8'
+        os:
+          - ubuntu-latest
     steps:
       - name: Checking branch
         uses: actions/checkout@v2
-      - name: Checkout submodules - (${{ matrix.os }})
+      - name: Checkout submodules
         shell: bash
         run: |
           git submodule sync --recursive
-          git submodule update --init --recursive --remote --merge --force --depth=3
+          git submodule update --init --recursive --remote --merge --force --depth=1
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.version }}
-      - name: Maven Build (Clean & verify) on ${{ matrix.os }} with version ${{ matrix.version }}
+      - name: Create & Publish the snapshot TO (Sonatype & Github)
+        if: github.branch == 'release' && github.event_name == 'push'
+        env:
+          SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          GH_USER: ${{ secrets.GH_USER }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
+          BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
         run: |
           git config user.name "${{ secrets.GH_USER }}"
           git config user.email "${{ secrets.GH_USER_EMAIL }}"
           git config credential.helper "store --file=.git/credentials"
           echo "https://${{ secrets.GH_TOKEN }}:@github.com" > .git/credentials
-          mvn -X help:effective-pom
-          ./mvnw -B -X -nsu -s .mvn/settings.xml -N -Dsync.dryRun -DskipTests=false clean verify
+#          #./mvnw -B -X -nsu --errors -s ./.mvn/settings.xml -Psonatype -DskipTests=true -Dlicense.skip=true clean deploy
+#          #./mvnw -B -X -nsu --errors -s ./.mvn/settings.xml -Pgithub -DskipTests=true -Dlicense.skip=true clean deploy

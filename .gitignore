@@ -57,3 +57,6 @@ Thumbs.db
 
 # Exclude unnecessary files
 resources
+
+# Exclude a snapshot version file
+.snapshot
