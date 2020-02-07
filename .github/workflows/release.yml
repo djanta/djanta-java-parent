@@ -15,7 +15,7 @@
 #
 
 
-name: Release (Verify, Tag & Deploy)
+name: Release (Tag & Deploy)
 
 # On push event ...
 on:
