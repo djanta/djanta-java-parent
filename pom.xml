@@ -21,7 +21,7 @@
 
   <groupId>io.djanta</groupId>
   <artifactId>djanta-java-parent</artifactId>
-  <version>1.0.7</version>
+  <version>1.0.8</version>
   <packaging>pom</packaging>
 
   <description>djanta.io makes writing java microservice easier for everyone</description>
@@ -906,17 +906,17 @@
             </configuration>
             <executions>
               <execution>
-                <phase>compile</phase>
                 <goals>
                   <goal>check</goal>
                 </goals>
+                <phase>compile</phase>
               </execution>
               <execution>
                 <id>validate-main</id>
-                <phase>validate</phase>
                 <goals>
                   <goal>checkstyle</goal>
                 </goals>
+                <phase>validate</phase>
                 <configuration>
                   <consoleOutput>true</consoleOutput>
                   <failsOnError>true</failsOnError>
@@ -928,10 +928,10 @@
               </execution>
               <execution>
                 <id>validate-test</id>
-                <phase>validate</phase>
                 <goals>
                   <goal>checkstyle</goal>
                 </goals>
+                <phase>validate</phase>
                 <configuration>
                   <consoleOutput>true</consoleOutput>
                   <failsOnError>true</failsOnError>
@@ -952,10 +952,10 @@
             </configuration>
             <executions>
               <execution>
-                <phase>compile</phase>
                 <goals>
                   <goal>cpd-check</goal>
                 </goals>
+                <phase>compile</phase>
               </execution>
             </executions>
           </plugin>
@@ -969,10 +969,10 @@
             </configuration>
             <executions>
               <execution>
-                <phase>verify</phase>
                 <goals>
                   <goal>check</goal>
                 </goals>
+                <phase>verify</phase>
               </execution>
             </executions>
           </plugin>
@@ -994,10 +994,10 @@
               </execution>
               <execution>
                 <id>post-unit-test</id>
-                <phase>test</phase>
                 <goals>
                   <goal>report</goal>
                 </goals>
+                <phase>test</phase>
                 <configuration>
                   <dataFile>${mvn.jacoco.report.dir}/jacoco-ut.exec</dataFile>
                   <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
@@ -1005,10 +1005,10 @@
               </execution>
               <execution>
                 <id>pre-integration-test</id>
-                <phase>pre-integration-test</phase>
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
+                <phase>pre-integration-test</phase>
                 <configuration>
                   <dumpOnExit>true</dumpOnExit>
                   <destFile>${mvn.jacoco.report.dir}/jacoco-it.exec</destFile>
@@ -1017,10 +1017,10 @@
               </execution>
               <execution>
                 <id>post-integration-test</id>
-                <phase>post-integration-test</phase>
                 <goals>
                   <goal>report</goal>
                 </goals>
+                <phase>post-integration-test</phase>
                 <configuration>
                   <dataFile>${mvn.jacoco.report.dir}/jacoco-it.exec</dataFile>
                   <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
@@ -1096,10 +1096,10 @@
             <executions>
               <execution>
                 <id>validate-only</id>
-                <phase>initialize</phase>
                 <goals>
                   <goal>format</goal>
                 </goals>
+                <phase>initialize</phase>
               </execution>
             </executions>
           </plugin>
@@ -1117,10 +1117,10 @@
             <executions>
               <execution>
                 <id>format</id>
-                <phase>verify</phase>
                 <goals>
                   <goal>sort</goal>
                 </goals>
+                <phase>verify</phase>
               </execution>
             </executions>
           </plugin>
@@ -1177,20 +1177,27 @@
               </excludes>
               <strictCheck>true</strictCheck>
             </configuration>
+            <dependencies>
+              <dependency>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin-git</artifactId>
+                <version>${maven.plugin.license.version}</version>
+              </dependency>
+            </dependencies>
             <executions>
               <execution>
                 <id>compile-resources</id>
-                <phase>compile</phase>
                 <goals>
                   <goal>check</goal>
                 </goals>
+                <phase>compile</phase>
               </execution>
               <execution>
                 <id>format-resources</id>
-                <phase>process-resources</phase>
                 <goals>
                   <goal>format</goal>
                 </goals>
+                <phase>process-resources</phase>
                 <configuration>
                   <!--<failIfUnknown>${mvn.license.holder}</failIfUnknown>-->
                   <properties>
@@ -1199,13 +1206,6 @@
                 </configuration>
               </execution>
             </executions>
-            <dependencies>
-              <dependency>
-                <groupId>com.mycila</groupId>
-                <artifactId>license-maven-plugin-git</artifactId>
-                <version>${maven.plugin.license.version}</version>
-              </dependency>
-            </dependencies>
           </plugin>
         </plugins>
       </build>
