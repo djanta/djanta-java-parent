@@ -57,4 +57,4 @@ jobs:
           git config user.email "${{ secrets.GH_USER_EMAIL }}"
           git config credential.helper "store --file=.git/credentials"
           echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
-          ./travis/release.sh --api --release-branch=release --profile=sonatype;github
+          ./travis/release.sh --api --release-branch=release --profile=sonatype;github ----setting-file=$(pwd)/.mvn/settings.xml

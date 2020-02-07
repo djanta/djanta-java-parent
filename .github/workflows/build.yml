@@ -53,4 +53,4 @@ jobs:
           git config credential.helper "store --file=.git/credentials"
           echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
           mvn -X help:effective-pom
-          ./mvnw -B -X -nsu -s .mvn/settings.xml -N -Dsync.dryRun -DskipTests=false clean verify
+          ./mvnw -B -X -nsu -s $(pwd)/.mvn/settings.xml -N -Dsync.dryRun -DskipTests=false clean verify
