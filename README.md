@@ -1,7 +1,8 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/djanta/djanta-java-parent)
 ![GitHub All Releases](https://img.shields.io/github/downloads/djanta/djanta-java-parent/total)
-[![Maven Central](https://img.shields.io/maven-central/v/io.djanta/djanta-parent.svg?maxAge=2592000)](http://search.maven.org/#artifactdetails%7Cio.djanta%7Cdjanta-java-parent)
-[![Build Status](https://travis-ci.org/djanta/djanta-java-parent.svg?branch=master)](https://travis-ci.org/djanta/djanta-java-parent)
+[![Maven Central](https://img.shields.io/maven-central/v/io.djanta/djanta-java-parent.svg?maxAge=2592000)](http://search.maven.org/#artifactdetails%7Cio.djanta%7Cdjanta-java-parent)
+![Build (Snapshot)](https://github.com/djanta/djanta-java-parent/workflows/Build%20(Verify%20&%20Deploy)/badge.svg?branch=master)
+![Build (Develop)](https://github.com/djanta/djanta-java-parent/workflows/Build%20(Verify%20&%20Test)/badge.svg?branch=develop)
 
 # Our 3rd party Bill Of Materials (BOM)
 This project houses either our community & enterprise Maven Bill Of Materials for third party usage.
