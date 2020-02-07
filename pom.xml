@@ -21,7 +21,7 @@
 
   <groupId>io.djanta</groupId>
   <artifactId>djanta-java-parent</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <description>djanta.io makes writing java microservice easier for everyone</description>
@@ -505,8 +505,8 @@
         <artifactId>maven-help-plugin</artifactId>
         <executions>
           <execution>
-            <phase>validate</phase>
             <id>version</id>
+            <phase>validate</phase>
             <goals>
               <goal>evaluate</goal>
             </goals>
