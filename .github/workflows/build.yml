@@ -47,6 +47,10 @@ jobs:
         with:
           java-version: ${{ matrix.version }}
       - name: Maven Build (Clean & verify) on ${{ matrix.os }} with version ${{ matrix.version }}
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          GH_USER: ${{ secrets.GH_USER }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config user.name "${{ secrets.GH_USER }}"
           git config user.email "${{ secrets.GH_USER_EMAIL }}"
