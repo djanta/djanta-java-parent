@@ -15,7 +15,7 @@
 #
 
 
-name: Release
+name: Release (Verify, Tag & Deploy)
 
 # On push event ...
 on:
@@ -26,14 +26,11 @@ on:
 jobs:
   # Deploy the current snapshot and install it
   release:
-    needs: [build]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        version:
-          - '1.8'
-        os:
-          - ubuntu-latest
+        version: ['1.8']
+        os: [ubuntu-latest]
     steps:
       - name: Checking branch
         uses: actions/checkout@v2
@@ -46,8 +43,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.version }}
-      - name: Create & Publish the snapshot TO (Sonatype & Github)
-        if: github.branch == 'release' && github.event_name == 'push'
+      - name: Create & Release TO (Sonatype & Github)
+#        if: github.branch == 'release' && github.event_name == 'push'
         env:
           SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
@@ -59,6 +56,5 @@ jobs:
           git config user.name "${{ secrets.GH_USER }}"
           git config user.email "${{ secrets.GH_USER_EMAIL }}"
           git config credential.helper "store --file=.git/credentials"
-          echo "https://${{ secrets.GH_TOKEN }}:@github.com" > .git/credentials
-#          #./mvnw -B -X -nsu --errors -s ./.mvn/settings.xml -Psonatype -DskipTests=true -Dlicense.skip=true clean deploy
-#          #./mvnw -B -X -nsu --errors -s ./.mvn/settings.xml -Pgithub -DskipTests=true -Dlicense.skip=true clean deploy
+          echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
+          ./travis/release.sh --api --release-branch=release --profile=sonatype;github
