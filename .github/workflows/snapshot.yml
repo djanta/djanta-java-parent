@@ -53,6 +53,8 @@ jobs:
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
           BINTRAY_KEY: ${{ secrets.BINTRAY_KEY }}
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
           git config user.name "${{ secrets.GH_USER }}"
           git config user.email "${{ secrets.GH_USER_EMAIL }}"

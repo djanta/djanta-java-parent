@@ -197,7 +197,7 @@
     <mvn.coveralls.timestampFormat>EpochMillis</mvn.coveralls.timestampFormat>
     <mvn.jacoco.report.dir>${project.build.directory}/coverage-reports</mvn.jacoco.report.dir>
     <mvn.organization.name>DJANTA, LLC</mvn.organization.name>
-    <mvn.help.version.file>.snapshot</mvn.help.version.file>
+    <mvn.help.evaluate>.snapshot</mvn.help.evaluate>
 
     <!-- Maven front end configurtion -->
     <mvn.frontend.workingdirectory>src/main/javascript/frontend</mvn.frontend.workingdirectory>
@@ -235,6 +235,7 @@
     <skip.integration.tests>true</skip.integration.tests>
     <skip.unit.tests>false</skip.unit.tests>
     <maven.source.attach>false</maven.source.attach>
+    <maven.source.skip>false</maven.source.skip>
     <sort.createBackupFile>false</sort.createBackupFile>
   </properties>
 
@@ -482,25 +483,6 @@
     </pluginManagement>
     <plugins>
       <plugin>
-        <groupId>org.sonatype.plugins</groupId>
-        <artifactId>nexus-staging-maven-plugin</artifactId>
-        <extensions>true</extensions>
-        <configuration>
-          <serverId>${mvn.sonatype.id}</serverId>
-          <nexusUrl>${mvn.sonatype.url}</nexusUrl>
-          <autoReleaseAfterClose>true</autoReleaseAfterClose>
-        </configuration>
-        <executions>
-          <execution>
-            <id>default-deploy</id>
-            <phase>deploy</phase>
-            <goals>
-              <goal>deploy</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-help-plugin</artifactId>
         <executions>
@@ -511,7 +493,7 @@
               <goal>evaluate</goal>
             </goals>
             <configuration>
-              <output>${mvn.help.version.file}</output>
+              <output>${mvn.help.evaluate}</output>
               <expression>project.version</expression>
             </configuration>
           </execution>
@@ -751,6 +733,29 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <configuration>
+              <serverId>${mvn.sonatype.id}</serverId>
+              <nexusUrl>${mvn.sonatype.url}</nexusUrl>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+            </configuration>
+            <executions>
+              <execution>
+                <id>default-deploy</id>
+                <goals>
+                  <goal>deploy</goal>
+                </goals>
+                <phase>deploy</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
       <repositories>
         <repository>
           <releases>
@@ -1139,9 +1144,8 @@
             <artifactId>license-maven-plugin</artifactId>
             <version>${maven.plugin.license.version}</version>
             <configuration>
-              <!-- session.executionRootDirectory resolves properly even with nested modules -->
               <header>${mvn.license.header}</header>
-              <failIfUnknown>true</failIfUnknown>
+              <failIfUnknown>false</failIfUnknown>
               <failIfMissing>false</failIfMissing>
               <excludes>
                 <exclude>**/.travis.yml</exclude>
@@ -1173,7 +1177,7 @@
                 <exclude>**/images/**/*</exclude>
                 <exclude>**/img/**/*</exclude>
                 <exclude>**/**/*.bak</exclude>
-                <exclude>${mvn.help.version.file}</exclude>
+                <exclude>**/*/*${mvn.help.evaluate}</exclude>
               </excludes>
               <strictCheck>true</strictCheck>
             </configuration>
@@ -1357,14 +1361,12 @@
     </profile>
     <profile>
       <id>release</id>
-      <!--
       <activation>
         <property>
           <name>performRelease</name>
           <value>true</value>
         </property>
       </activation>
-      -->
       <properties>
         <!-- <gpg.executable>${env.GPG_EXECUTABLE}</gpg.executable> -->
         <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
@@ -1400,6 +1402,9 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
+            <configuration>
+              <skipSource>true</skipSource>
+            </configuration>
             <executions>
               <execution>
                 <id>attach-sources</id>
@@ -1417,7 +1422,6 @@
               <!-- <additionalparam>-Xdoclint:all</additionalparam> -->
               <author>true</author>
               <additionalJOption>-Xdoclint:all</additionalJOption>
-              <verbose>true</verbose>
             </configuration>
             <executions>
               <execution>
@@ -2267,14 +2271,14 @@
           <plugin>
             <artifactId>maven-jar-plugin</artifactId>
             <configuration>
+              <skipIfEmpty>true</skipIfEmpty>
+
               <!--
                  You are using 'useDefaultManifestFile' which has been removed from the maven-jar-plugin.
-                 Please see the >>Major Version Upgrade to version 3.0.0<< on the plugin site
+                 Please see the >>Major Version Upgrade to version 3.0.0<< on the plugin site.
+               <useDefaultManifestFile>true</useDefaultManifestFile>
               -->
-              <!-- <useDefaultManifestFile>true</useDefaultManifestFile> -->
-
               <forceCreation>true</forceCreation>
-              <!--
               <archive>
                 <manifestEntries>
                   <SCM-Revision>${buildNumber}</SCM-Revision>
@@ -2283,11 +2287,10 @@
                   <Bundle-Vendor>${mvn.organization.name}</Bundle-Vendor>
                 </manifestEntries>
               </archive>
-              -->
             </configuration>
             <executions>
               <execution>
-                <id>jar</id>
+                <id>default-jar</id>
                 <goals>
                   <goal>jar</goal>
                 </goals>
@@ -2299,9 +2302,6 @@
                   <goal>test-jar</goal>
                 </goals>
                 <phase>package</phase>
-                <configuration>
-                  <skipIfEmpty>true</skipIfEmpty>
-                </configuration>
               </execution>
             </executions>
           </plugin>
