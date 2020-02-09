@@ -62,5 +62,5 @@ jobs:
           echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
           mvn -X help:effective-pom
           ./mvnw -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,github -DskipTests=true \
-            -Dlicense.skip=true clean deploy
+            -Dlicense.skip=true -Dgpg.executable=gpg clean deploy
 #          ./mvnw -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,sonatype -DskipTests=true -Dlicense.skip=true clean deploy
