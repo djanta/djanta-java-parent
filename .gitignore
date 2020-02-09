@@ -59,4 +59,4 @@ Thumbs.db
 resources
 
 # Exclude a snapshot version file
-**/*/*.snapshot
+**/*/.snapshot
