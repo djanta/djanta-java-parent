@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-name: Build (Verify & Deploy)
+name: Master
 
 # On push event ...
 on:

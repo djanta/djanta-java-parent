@@ -14,8 +14,7 @@
 # limitations under the License.
 #
 
-
-name: Release (Tag & Deploy)
+name: Release
 
 # On push event ...
 on:

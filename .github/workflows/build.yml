@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-name: Build (Verify & Test)
+name: Build
 
 # On push event ...
 on:
