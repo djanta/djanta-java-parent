@@ -37,7 +37,7 @@ jobs:
         shell: bash
         run: |
           git submodule sync --recursive
-          git submodule update --init --recursive --remote --merge --force --depth=1
+          git submodule update --init --recursive --remote --merge --force --depth=3
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
