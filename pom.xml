@@ -1725,7 +1725,6 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-site-plugin</artifactId>
-            <version>${maven.plugin.site.version}</version>
             <executions>
               <execution>
                 <goals>
