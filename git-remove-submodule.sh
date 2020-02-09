@@ -22,7 +22,10 @@ exit_err() {
 
 if git submodule status "$submodule_name" >/dev/null 2>&1; then
   git submodule deinit -f "$submodule_name"
+  git rm --cached $submodule_name
+  rm -rf .git/modules/$submodule_name
   git rm -f "$submodule_name"
+  git reset HEAD .gitmodules
 
   git config -f .gitmodules --remove-section "submodule.$submodule_name"
   if [ -z "$(cat .gitmodules)" ]; then
