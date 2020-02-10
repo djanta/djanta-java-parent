@@ -62,6 +62,8 @@ jobs:
           echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
           export GPG_TTY=$(tty)
           gpg --list-secret-keys
+          echo "Importing keys from the server" && gpg --keyserver pool.sks-keyservers.net --list-keys $GPG_KEYNAME
+          echo "Listing the server key after import" && gpg --list-secret-keys
           mvn -X help:effective-pom
           ./mvnw -X -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype -Dgpg.executable=gpg clean deploy
 #          ./mvnw -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean deploy
