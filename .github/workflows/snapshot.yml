@@ -63,7 +63,7 @@ jobs:
           export GPG_TTY=$(tty)
           gpg --list-secret-keys
           echo "Importing keys from the server" && gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
-          echo ${{ secrets.PGP_PRIVATE_KEY }} | gpg --verbose --import --batch
+#          echo ${{ secrets.PGP_PRIVATE_KEY }} | gpg --verbose --import --batch
           mvn -X help:effective-pom
           ./mvnw -X -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype -Dgpg.executable=gpg clean deploy
 #          ./mvnw -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean deploy
