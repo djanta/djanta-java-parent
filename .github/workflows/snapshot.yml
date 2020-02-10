@@ -65,7 +65,7 @@ jobs:
           echo "Importing keys from the server" && gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
           echo "Exporting the received key" && gpg --verbose -a --export-secret-keys ${{ secrets.GPG_KEYID }}
           echo "Listing the server key after import" && gpg --list-keys
-          cat "${{ secrets.PGP_PRIVATE_KEY }}" >> $(pwd)/private-key.asc && gpg --verbose --import --batch $(pwd)/private-key.asc
+          echo ${{ secrets.PGP_PRIVATE_KEY }} >> $(pwd)/private-key.asc && gpg --verbose --import --batch $(pwd)/private-key.asc
           mvn -X help:effective-pom
           ./mvnw -X -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype -Dgpg.executable=gpg clean deploy
 #          ./mvnw -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean deploy
