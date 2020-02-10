@@ -61,5 +61,5 @@ jobs:
           git config credential.helper "store --file=.git/credentials"
           echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
           mvn -X help:effective-pom
-          ./mvnw -X -B --errors -s $(pwd)/.mvn/settings.xml -Pgithub,-sonatype -Dgpg.executable=gpg clean deploy
+          ./mvnw -X -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype -Dgpg.executable=gpg clean deploy
 #          ./mvnw -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,sonatype -DskipTests=true -Dlicense.skip=true clean deploy
