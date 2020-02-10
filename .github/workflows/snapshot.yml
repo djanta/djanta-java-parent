@@ -67,7 +67,6 @@ jobs:
 #          echo "Listing the server key after import" && gpg --list-keys
 #          echo ${{ secrets.PGP_PRIVATE_KEY }} > $(pwd)/private-key.asc && gpg --import --batch $(pwd)/private-key.asc
           echo ${{ secrets.PGP_PRIVATE_KEY }} | gpg --verbose --import --batch
-          ls -als
           mvn -X help:effective-pom
           ./mvnw -X -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype -Dgpg.executable=gpg clean deploy
 #          ./mvnw -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean deploy
