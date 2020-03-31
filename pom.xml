@@ -119,8 +119,19 @@
     <org.apache.ws.commons.axiom.version>1.2.14</org.apache.ws.commons.axiom.version>
     <org.hsqldb.version>2.5.0</org.hsqldb.version>
     <org.javassist.version>3.26.0-GA</org.javassist.version>
-    <io.cucumber.version>2.0.2</io.cucumber.version>
+    <io.cucumber.version>5.5.0</io.cucumber.version>
     <org.seedstack.version>19.11</org.seedstack.version>
+    <io.vertx.version>3.8.5</io.vertx.version>
+    <org.eclipse.jetty.version>9.4.26.v20200117</org.eclipse.jetty.version>
+    <io.fabric8.dep.version>3.0.12</io.fabric8.dep.version>
+    <io.kubernetes.version>8.0.0</io.kubernetes.version>
+    <org.jboss.arquillian.testng.version>1.6.0.Final</org.jboss.arquillian.testng.version>
+    <org.testng.version>7.1.0</org.testng.version>
+    <org.easymock.version>4.2</org.easymock.version>
+    <com.datastax.oss.version>4.5.0</com.datastax.oss.version>
+    <com.graphql-java.version>14.0</com.graphql-java.version>
+    <io.fares.junit.mongodb.version>1.1.0</io.fares.junit.mongodb.version>
+    <redis.clients.version>2.8.1</redis.clients.version>
 
     <!-- :: Maven plugin version configuration -->
     <maven.plugin.animal-sniffer.version>1.18</maven.plugin.animal-sniffer.version>
@@ -162,13 +173,15 @@
     <maven.plugin.findbugs.version>3.0.5</maven.plugin.findbugs.version>
     <maven.plugin.site.version>3.8.2</maven.plugin.site.version>
     <maven.plugin.project-info-reports.version>3.0.0</maven.plugin.project-info-reports.version>
-    <github.plugin.site.version>0.12</github.plugin.site.version>
-    <github.plugin.proguard.version>2.1.1</github.plugin.proguard.version>
     <maven.plugin.antrun.version>1.8</maven.plugin.antrun.version>
     <maven.plugin.versioneye.version>3.11.4</maven.plugin.versioneye.version>
     <maven.plugin.mock-server.version>${org.mock-server.version}</maven.plugin.mock-server.version>
-    <maven.io.fabric8.version>4.3.1</maven.io.fabric8.version>
     <maven.plugin.help.version>3.2.0</maven.plugin.help.version>
+    <maven.plugin.fabric8.version>4.4.0</maven.plugin.fabric8.version>
+
+    <!-- Github plugin version declaration -->
+    <github.plugin.proguard.version>2.1.1</github.plugin.proguard.version>
+    <github.plugin.site.version>0.12</github.plugin.site.version>
 
     <!-- Plugins configurations section -->
     <mvn.license.header>.mvn/licenses/apache-2.0-header</mvn.license.header>
@@ -337,7 +350,7 @@
         <plugin>
           <groupId>io.fabric8</groupId>
           <artifactId>fabric8-maven-plugin</artifactId>
-          <version>${maven.io.fabric8.version}</version>
+          <version>${maven.plugin.fabric8.version}</version>
         </plugin>
 
         <!-- mvn -N io.takari:maven:wrapper -Dmaven=3.5.0 -->
@@ -369,7 +382,7 @@
             <dependency>
               <groupId>org.ow2.asm</groupId>
               <artifactId>asm</artifactId>
-              <version>7.0-beta</version>
+              <version>7.3.1</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -523,10 +536,38 @@
           <dependency>
             <groupId>org.ow2.asm</groupId>
             <artifactId>asm</artifactId>
-            <version>7.0-beta</version>
+            <version>7.3.1</version>
           </dependency>
         </dependencies>
       </plugin>
+      <!-- Ensures unit tesing to be run -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <redirectTestOutputToFile>true</redirectTestOutputToFile>
+          <trimStackTrace>false</trimStackTrace>
+          <argLine>${jvm.options}</argLine>
+          <includes>
+            <include>**/*Test</include>
+            <include>**/*UnitTesting</include>
+            <include>**/*Testing</include>
+            <include>**/*TestUnit</include>
+          </includes>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <!--
+                surefire uses ASM to do some bytecode magic... need to bump version to be
+                java 11 compatible
+            -->
+            <version>7.3.1</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
       <!-- Ensures checksums are added to published jars -->
       <plugin>
         <artifactId>maven-install-plugin</artifactId>
@@ -595,50 +636,50 @@
         -->
       </plugin>
       <!--
-            <plugin>
-                <groupId>io.sundr</groupId>
-                <artifactId>sundr-maven-plugin</artifactId>
-                <version>${maven.plugin.sundr.version}</version>
-                <inherited>false</inherited>
-                <configuration>
-                    <bomTemplateUrl>${mvn.bom.template.filepath}</bomTemplateUrl>
-                    <boms>
-                        <bom>
-                            <artifactId>djanta-bom</artifactId>
-                            <name>DJANTA (Bill Of Materials)</name>
-                            <properties>
-                                <license.skip>true</license.skip>
-                            </properties>
-                            <modules>
-                                <includes>
-                                    <include>io.djanta:*</include>
-                                </includes>
-                            </modules>
-                        </bom>
-                    </boms>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate-bom</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>io.sundr</groupId>
-                        <artifactId>sundr-codegen</artifactId>
-                        <version>${maven.plugin.sundr.version}</version>
-                        <exclusions>
-                            <exclusion>
-                                <groupId>com.sun</groupId>
-                                <artifactId>tools</artifactId>
-                            </exclusion>
-                        </exclusions>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            -->
+        <plugin>
+            <groupId>io.sundr</groupId>
+            <artifactId>sundr-maven-plugin</artifactId>
+            <version>${maven.plugin.sundr.version}</version>
+            <inherited>false</inherited>
+            <configuration>
+                <bomTemplateUrl>${mvn.bom.template.filepath}</bomTemplateUrl>
+                <boms>
+                    <bom>
+                        <artifactId>djanta-bom</artifactId>
+                        <name>DJANTA (Bill Of Materials)</name>
+                        <properties>
+                            <license.skip>true</license.skip>
+                        </properties>
+                        <modules>
+                            <includes>
+                                <include>io.djanta:*</include>
+                            </includes>
+                        </modules>
+                    </bom>
+                </boms>
+            </configuration>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>generate-bom</goal>
+                    </goals>
+                </execution>
+            </executions>
+            <dependencies>
+                <dependency>
+                    <groupId>io.sundr</groupId>
+                    <artifactId>sundr-codegen</artifactId>
+                    <version>${maven.plugin.sundr.version}</version>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>com.sun</groupId>
+                            <artifactId>tools</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+            </dependencies>
+        </plugin>
+      -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
@@ -900,10 +941,10 @@
             <executions>
               <execution>
                 <id>version</id>
-                <phase>validate</phase>
                 <goals>
                   <goal>evaluate</goal>
                 </goals>
+                <phase>validate</phase>
                 <configuration>
                   <output>${mvn.help.evaluate}</output>
                   <expression>project.version</expression>
@@ -914,7 +955,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>check</id>
       <activation>
@@ -1390,6 +1430,7 @@
       </activation>
       <properties>
         <!-- <gpg.executable>${env.GPG_EXECUTABLE}</gpg.executable> -->
+        <gpg.executable>gpg2</gpg.executable>
         <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
         <gpg.keyname>${env.GPG_KEYNAME}</gpg.keyname>
       </properties>
@@ -1757,7 +1798,6 @@
         </plugins>
       </build>
     </profile>
-
     <!-- FrontEnd tools configuration -->
     <profile>
       <id>frontend:npm</id>
@@ -2363,7 +2403,6 @@
         </plugins>
       </build>
     </profile>
-
     <!-- Development Integration Test-->
     <profile>
       <id>dit</id>
@@ -2380,8 +2419,8 @@
               <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
-                <include>**/*DitTest</include>
-                <include>**/*DITTest</include>
+                <include>**/*TestDit</include>
+                <include>**/*TestDIT</include>
               </includes>
             </configuration>
             <dependencies>
@@ -2391,7 +2430,7 @@
                                 -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
-                <version>7.0-beta</version>
+                <version>7.3.1</version>
               </dependency>
             </dependencies>
           </plugin>
@@ -2414,19 +2453,18 @@
               <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
-                <include>**/*FitTest</include>
-                <include>**/*FITTest</include>
+                <include>**/*TestFit</include>
+                <include>**/*TestFIT</include>
               </includes>
             </configuration>
             <dependencies>
               <dependency>
                 <!--
-                    surefire uses ASM to do some bytecode magic... need to bump version to be java
-                    11 compatible
+                  surefire uses ASM to do some bytecode magic... need to bump version to be java 11 compatible
                 -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
-                <version>7.0-beta</version>
+                <version>7.3.1</version>
               </dependency>
             </dependencies>
           </plugin>
@@ -2450,15 +2488,15 @@
               <argLine>${jvm.options}</argLine>
               <includes>
                 <!-- Include all development Integration testing -->
-                <include>**/*DitTest</include>
-                <include>**/*DITTest</include>
+                <include>**/*TestDit</include>
+                <include>**/*TestDIT</include>
 
                 <!-- Include all (Functional, Framework & Feature) Integration testing -->
-                <include>**/*FitTest</include>
-                <include>**/*FITTest</include>
+                <include>**/*TestFit</include>
+                <include>**/*TestFIT</include>
 
                 <!-- Include any other Pre Integration testing -->
-                <include>**/*PreditTest</include>
+                <include>**/*TestPredit</include>
               </includes>
             </configuration>
             <dependencies>
@@ -2469,7 +2507,7 @@
                 -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
-                <version>7.0-beta</version>
+                <version>7.3.1</version>
               </dependency>
             </dependencies>
           </plugin>
@@ -2495,8 +2533,8 @@
                 <!--
                     Include all User Acceptance testing
                 -->
-                <include>**/*UatTest</include>
-                <include>**/*UATTest</include>
+                <include>**/*TestUat</include>
+                <include>**/*TestUAT</include>
               </includes>
             </configuration>
             <dependencies>
@@ -2507,7 +2545,7 @@
                 -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
-                <version>7.0-beta</version>
+                <version>7.3.1</version>
               </dependency>
             </dependencies>
           </plugin>
@@ -2530,8 +2568,8 @@
               <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
-                <include>**/*QaTest</include>
-                <include>**/*QATest</include>
+                <include>**/*TestQa</include>
+                <include>**/*TestQA</include>
               </includes>
             </configuration>
             <dependencies>
@@ -2542,7 +2580,7 @@
                 -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
-                <version>7.0-beta</version>
+                <version>7.3.1</version>
               </dependency>
             </dependencies>
           </plugin>
@@ -2568,19 +2606,19 @@
                 <!--
                     Include all User Acceptance testing
                 -->
-                <include>**/*UatTest</include>
-                <include>**/*UATTest</include>
+                <include>**/*TestUat</include>
+                <include>**/*TestUAT</include>
 
                 <!--
                     Include all Quality (assurance) Acceptance testing
                 -->
-                <include>**/*QaTest</include>
-                <include>**/*QATest</include>
+                <include>**/*TestQa</include>
+                <include>**/*TestQA</include>
 
                 <!--
                     Include any other Staging Integration testing
                 -->
-                <include>**/*StagingTest</include>
+                <include>**/*TestStaging</include>
               </includes>
             </configuration>
             <dependencies>
@@ -2591,7 +2629,7 @@
                 -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
-                <version>7.0-beta</version>
+                <version>7.3.1</version>
               </dependency>
             </dependencies>
           </plugin>
@@ -2614,8 +2652,8 @@
               <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
-                <include>**/*IatTest</include>
-                <include>**/*IATTest</include>
+                <include>**/*TestIat</include>
+                <include>**/*TestIAT</include>
               </includes>
             </configuration>
             <dependencies>
@@ -2626,7 +2664,7 @@
                 -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
-                <version>7.0-beta</version>
+                <version>7.3.1</version>
               </dependency>
             </dependencies>
           </plugin>

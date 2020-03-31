@@ -80,6 +80,67 @@
         <groupId>org.jbehave</groupId>
         <artifactId>jbehave-core</artifactId>
         <version>${org.jbehave.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.testng</groupId>
+        <artifactId>arquillian-testng-core</artifactId>
+        <version>${org.jboss.arquillian.testng.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.testng</groupId>
+        <artifactId>arquillian-testng-container</artifactId>
+        <version>${org.jboss.arquillian.testng.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.arquillian.testng</groupId>
+        <artifactId>arquillian-testng-standalone</artifactId>
+        <version>${org.jboss.arquillian.testng.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>${org.testng.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.easymock</groupId>
+        <artifactId>easymock</artifactId>
+        <version>${org.easymock.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-java8</artifactId>
+        <version>${io.cucumber.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-java</artifactId>
+        <version>${io.cucumber.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-junit</artifactId>
+        <version>${io.cucumber.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-testng</artifactId>
+        <version>${io.cucumber.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.fares.junit.mongodb</groupId>
+        <artifactId>mongodb-junit-test</artifactId>
+        <version>${io.fares.junit.mongodb.version}</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>
@@ -428,7 +489,39 @@
         <artifactId>javassist</artifactId>
         <version>${org.javassist.version}</version>
       </dependency>
-      <!-- cucumber JVM testing tools dependencies -->
+      <!-- kubernetes dependency managment -->
+      <dependency>
+        <groupId>io.kubernetes</groupId>
+        <artifactId>client-java-api</artifactId>
+        <version>${io.kubernetes.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.kubernetes</groupId>
+        <artifactId>client-java</artifactId>
+        <version>${io.kubernetes.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.kubernetes</groupId>
+        <artifactId>client-java-extended</artifactId>
+        <version>${io.kubernetes.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.kubernetes</groupId>
+        <artifactId>client-java-proto</artifactId>
+        <version>${io.kubernetes.version}</version>
+      </dependency>
+      <!-- Java GraphQL -->
+      <dependency>
+        <groupId>com.graphql-java</groupId>
+        <artifactId>graphql-java</artifactId>
+        <version>${com.graphql-java.version}</version>
+      </dependency>
+      <!-- Redis Dependency -->
+      <dependency>
+        <groupId>redis.clients</groupId>
+        <artifactId>jedis</artifactId>
+        <version>${redis.clients.version}</version>
+      </dependency>
 
       <!-- Maven BOM import section -->
       <dependency>
@@ -542,7 +635,7 @@
       <!-- Cucumber import -->
       <dependency>
         <groupId>io.cucumber</groupId>
-        <artifactId>cucumber-parent</artifactId>
+        <artifactId>cucumber-jvm</artifactId>
         <version>${io.cucumber.version}</version>
         <type>pom</type>
         <scope>import</scope>
@@ -560,6 +653,38 @@
         <groupId>org.seedstack</groupId>
         <artifactId>seedstack-bom</artifactId>
         <version>${org.seedstack.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Vertx.IO import -->
+      <dependency>
+        <groupId>io.vertx</groupId>
+        <artifactId>vertx-dependencies</artifactId>
+        <version>${io.vertx.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Jetty import -->
+      <dependency>
+        <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-bom</artifactId>
+        <version>${org.eclipse.jetty.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Fabric8.IO import -->
+      <dependency>
+        <groupId>io.fabric8</groupId>
+        <artifactId>fabric8-project-bom-with-platform-deps</artifactId>
+        <version>${io.fabric8.dep.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Cassandra (BOM) import -->
+      <dependency>
+        <groupId>com.datastax.oss</groupId>
+        <artifactId>java-driver-bom</artifactId>
+        <version>${com.datastax.oss.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
