@@ -76,4 +76,4 @@ jobs:
             clean verify test
 
           ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype clean verify
-          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean verify
+#          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean verify
