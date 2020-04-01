@@ -63,6 +63,7 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
+          echo "Testing ..."
 #         Openssl configuration
 #          openssl aes-256-cbc -salt -k $GPG_MASTER_PASSWORD -in $(pwd)/.gnupg/deploy/secring.gpg -out $tmp/deploy/secring.gpg.enc
 #          openssl aes-256-cbc -k $GPG_MASTER_PASSWORD -in $(pwd)/.gnupg/deploy/pubring.gpg -out $tmp/deploy/pubring.gpg.enc
@@ -71,7 +72,7 @@ jobs:
 #          export GPG_TTY=$(tty)
 
 #          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
-          mvn -X -B clean
+#          mvn -X -B clean
 #          ls -als $(pwd)/target/
 #          echo ${{ secrets.PGP_PRIVATE_KEY }} | gpg --import
 #          mvn -X help:effective-pom
