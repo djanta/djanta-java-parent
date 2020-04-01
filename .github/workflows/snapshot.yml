@@ -25,13 +25,19 @@ on:
 jobs:
   # Deploy the current snapshot and install it
   snapshot:
-#    needs: [build]
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         version: ['1.8']
         os: [ubuntu-latest]
     steps:
+      - name: GitHub credentials configuration
+        shell: bash
+        run: |
+          git config user.name "${{ secrets.GH_USER }}"
+          git config user.email "${{ secrets.GH_USER_EMAIL }}"
+          git config credential.helper "store --file=.git/credentials"
+          echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
       - name: Checking branch
         uses: actions/checkout@v2
       - name: Checkout submodules
@@ -57,11 +63,6 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
-          git config user.name "${{ secrets.GH_USER }}"
-          git config user.email "${{ secrets.GH_USER_EMAIL }}"
-          git config credential.helper "store --file=.git/credentials"
-          echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
-
 #         Openssl configuration
 #          openssl aes-256-cbc -salt -k $GPG_MASTER_PASSWORD -in $(pwd)/.gnupg/deploy/secring.gpg -out $tmp/deploy/secring.gpg.enc
 #          openssl aes-256-cbc -k $GPG_MASTER_PASSWORD -in $(pwd)/.gnupg/deploy/pubring.gpg -out $tmp/deploy/pubring.gpg.enc
