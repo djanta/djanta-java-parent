@@ -69,9 +69,9 @@ jobs:
 #         Exporting gpg configuration
 #          export GPG_TTY=$(tty)
 
-          echo "Importing server key" && gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
+          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
           mvn -X -B clean install -Prelease
-          ls -als $(pwd)/target/
+#          ls -als $(pwd)/target/
 #          echo ${{ secrets.PGP_PRIVATE_KEY }} | gpg --import
 #          mvn -X help:effective-pom
 #          ./mvnw -X -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype -Dgpg.executable=gpg clean deploy
