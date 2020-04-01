@@ -36,9 +36,9 @@ jobs:
       - name: Project checking out
         uses: actions/checkout@v2
       - name: GitHub credentials configuration
-        env:
-          GH_USER: ${{ secrets.GH_USER }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#        env:
+#          GH_USER: ${{ secrets.GH_USER }}
+#          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         shell: bash
         run: |
           git config user.name "${{ secrets.GH_USER }}"
@@ -50,6 +50,13 @@ jobs:
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive --remote --merge --force --depth=3
+
+      - name: Gpg initialization - (${{ matrix.os }})
+        shell: bash
+        run: |
+          echo "GnuGpg initialization step ..."
+          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
+
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
