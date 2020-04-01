@@ -50,6 +50,14 @@ jobs:
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive --remote --merge --force --depth=3
+      - name: Gpg initialization
+        shell: bash
+        run: |
+          echo "GnuGpg initialization step ..."
+          gpg --version
+          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
+#          openssl aes-256-cbc -salt -a -d -in "$outputdir"/secring.gpg -out "$outputdir"/secring.gpg.enc -k "$inpassword"
+#          openssl aes-256-cbc -salt -a -d -in "$outputdir"/pubring.gpg -out "$outputdir"/pubring.gpg.enc -k "$inpassword"
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
@@ -67,7 +75,6 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
-          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
           mvn -X -B clean
           ls -als $(pwd)/target/
           mvn -X help:effective-pom
