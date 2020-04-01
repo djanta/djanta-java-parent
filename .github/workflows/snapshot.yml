@@ -69,7 +69,7 @@ jobs:
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
           mvn -X help:effective-pom
-        # Deploying the snapshot to github registry
+# Deploying the snapshot to github registry
           ./mvnw -X -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,github,!sonatype clean deploy
-        # Deploying the snapshot to ossrh registry
+# Deploying the snapshot to ossrh registry
           ./mvnw -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean deploy
