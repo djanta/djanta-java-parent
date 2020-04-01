@@ -69,6 +69,6 @@ jobs:
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
           echo "......."
-#          mvn -X help:effective-pom
-          ./mvnw -X -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,github,!sonatype clean deploy
+          mvn -X help:effective-pom
+#          ./mvnw -X -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,github,!sonatype clean deploy
 #          ./mvnw -B --errors -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean deploy
