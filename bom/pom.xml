@@ -522,6 +522,12 @@
         <artifactId>jedis</artifactId>
         <version>${redis.clients.version}</version>
       </dependency>
+      <!-- jmustache -->
+      <dependency>
+        <groupId>com.samskivert</groupId>
+        <artifactId>jmustache</artifactId>
+        <version>${com.samskivert.version}</version>
+      </dependency>
 
       <!-- Maven BOM import section -->
       <dependency>
