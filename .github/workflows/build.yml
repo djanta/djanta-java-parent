@@ -71,9 +71,8 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
-          gpg --list-keys
           mvn -X help:effective-pom
-          ./mvnw -B -X -nsu -s $(pwd)/.mvn/settings.xml -Prelease -Dsync.dryRun -DskipTests=false \
+          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Prelease -Dsync.dryRun -DskipTests=false \
             clean verify test
 
 #          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype clean verify
