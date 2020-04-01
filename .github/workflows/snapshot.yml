@@ -34,9 +34,9 @@ jobs:
       - name: Project checking out
         uses: actions/checkout@v2
       - name: GitHub credentials configuration
-        env:
-          GH_USER: ${{ secrets.GH_USER }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+#        env:
+#          GH_USER: ${{ secrets.GH_USER }}
+#          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         shell: bash
         run: |
           git config user.name "${{ secrets.GH_USER }}"
