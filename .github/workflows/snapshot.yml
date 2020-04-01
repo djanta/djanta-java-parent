@@ -71,7 +71,6 @@ jobs:
 #          export GPG_TTY=$(tty)
 
 #          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
-          which gpg
           mvn -X -B clean
 #          ls -als $(pwd)/target/
 #          echo ${{ secrets.PGP_PRIVATE_KEY }} | gpg --import
