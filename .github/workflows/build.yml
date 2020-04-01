@@ -50,21 +50,12 @@ jobs:
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive --remote --merge --force --depth=3
-      - name: Gpg initialization
-        shell: bash
-        run: |
-          echo "GnuGpg initialization step ..."
-          gpg --version
-          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
-#          openssl aes-256-cbc -salt -a -d -in "$outputdir"/secring.gpg -out "$outputdir"/secring.gpg.enc -k "$inpassword"
-#          openssl aes-256-cbc -salt -a -d -in "$outputdir"/pubring.gpg -out "$outputdir"/pubring.gpg.enc -k "$inpassword"
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.version }}
       - name: Maven Build (Clean & verify) on ${{ matrix.os }} with version ${{ matrix.version }}
         env:
-#          GPG_MASTER_PASSWORD: ${{ secrets.MASTER_PASSWORD }}
           SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           GH_USER: ${{ secrets.GH_USER }}
@@ -75,8 +66,6 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
-          mvn -X -B clean
-          ls -als $(pwd)/target/
           mvn -X help:effective-pom
           ./mvnw -B -X -nsu -s $(pwd)/.mvn/settings.xml -Dsync.dryRun -DskipTests=false \
             clean verify test
