@@ -73,8 +73,9 @@ jobs:
         run: |
           mvn -X help:effective-pom
           cat $(pwd)/.mvn/settings.xml
-          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Prelease -Dsync.dryRun -DskipTests=false \
-            clean verify test
+          which gpg
+#          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Prelease -Dsync.dryRun -DskipTests=false \
+#            clean verify test
 
 #          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype clean verify
 #          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean verify
