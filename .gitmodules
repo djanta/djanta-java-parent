@@ -6,7 +6,3 @@
 	path = travis
 	url = https://github.com/djanta/djanta-java-travisci.git
 	branch = master
-[submodule ".gnupg"]
-	path = .gnupg
-	url = https://github.com/djanta/djanta-deploy-gpg.git
-	branch = master

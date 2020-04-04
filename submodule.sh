@@ -36,8 +36,6 @@ exit_err() {
   exit 1
 }
 
-#https://github.com/djanta/djanta-java-travisci.git
-
 if git submodule status "$path" >/dev/null 2>&1; then
   git submodule deinit -f "$path"
   git rm --cached $path
