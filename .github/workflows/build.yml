@@ -56,7 +56,18 @@ jobs:
           echo "GnuGpg initialization step ..."
           echo "TEMP = $TEMP, TMP = $TMP"
           openssl --version
+
+#          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnupg/deploy"/secring.gpg \
+#            -out "$TEMP"/secring.gpg.enc -k "${{ secrets.MASTER_PGP_PASSWORD }}"
+
+#          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnupg/deploy/pubring.gpg \
+#            -out "$TEMP"/pubring.gpg.enc -k "${{ secrets.MASTER_PGP_PASSWORD }}"
+
+#          gpg --import "$TEMP"/secring.gpg.enc
+#          gpg --import "$TEMP"/pubring.gpg.enc
+
           gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
+
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
@@ -72,8 +83,6 @@ jobs:
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
           mvn -X help:effective-pom
-          cat $(pwd)/.mvn/settings.xml
-          which gpg
           ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Prelease -Dsync.dryRun -DskipTests=false clean verify
 #          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype clean verify
 #          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean verify
