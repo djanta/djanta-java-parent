@@ -36,6 +36,9 @@ exit_err() {
   exit 1
 }
 
+#[alias]
+#  rms = "!f(){ git rm --cached \"$1\";rm -r \"$1\";git config -f .gitmodules --remove-section \"submodule.$1\";git config -f .git/config --remove-section \"submodule.$1\";git add .gitmodules; }; f"
+
 if git submodule status "$path" >/dev/null 2>&1; then
   git submodule deinit -f "$path"
   git rm --cached $path
