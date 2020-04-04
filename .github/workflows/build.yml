@@ -54,9 +54,10 @@ jobs:
         shell: bash
         run: |
           echo "GnuGpg initialization step ..."
-          echo "TEMP = $TEMP, TMP = $TMP"
+          echo "TEMP = $TEMP, TMP = $TMP, TMPDIR= $TMPDIR"
           which openssl
           gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
+#          TMPDIR="{${TMPDIR:-$(dirname $(mktemp))/}"
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
