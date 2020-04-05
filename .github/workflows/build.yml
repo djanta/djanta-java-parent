@@ -38,17 +38,17 @@ jobs:
       - name: Checkout submodules - (${{ matrix.os }})
         shell: bash
         run: |
-          TMPDIR="${TMPDIR:-$(dirname $(mktemp))/}"
-          echo "TEMP = $TEMP, TMP = $TMP, TMPDIR= $TMPDIR, HOME: $HOME"
           git submodule sync --recursive
           git submodule update --init --recursive --remote --merge --force --depth=3
       - name: Gpg initialization - (${{ matrix.os }})
         shell: bash
+        env:
+          TMPDIR: ${TMPDIR:-$(dirname $(mktemp))/}
         run: |
           echo "GnuGpg initialization step ..."
           gpg --recv-keys ${{ secrets.GPG_KEYID }}
+          echo "TEMP = $TEMP, TMP = $TMP, TMPDIR= $TMPDIR, HOME: $HOME"
 #          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
-#          TMPDIR="${TMPDIR:-$(dirname $(mktemp))/}"
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
