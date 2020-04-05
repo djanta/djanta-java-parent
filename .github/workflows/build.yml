@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+#https://github.com/actions/virtual-environments/blob/master/images/linux/Ubuntu1804-README.md
+
 name: Build
 
 # On push event ...
@@ -32,6 +34,7 @@ jobs:
       matrix:
         version: ['1.8']
         os: [ubuntu-latest]
+#        fail-fast: false
     steps:
       - name: Project checking out - (${{ matrix.os }})
         uses: actions/checkout@v2
@@ -59,8 +62,8 @@ jobs:
           echo "GnuGpg initialization step ..."
           gpg --recv-keys ${{ secrets.GPG_KEYID }}
 
-          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnugp/deploy"/secring.gpg -out "$KEYSTORE"/secring.gpg.enc -k ${{ secrets.GPG_MASTER_PASSWORD }}
-          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnugp/deploy/pubring.gpg -out "$KEYSTORE"/pubring.gpg.enc -k ${{ secrets.GPG_MASTER_PASSWORD }}
+          openssl aes-256-cbc -a -d -in "$(pwd)/.gnugp/deploy"/secring.gpg -out "$KEYSTORE"/secring.gpg.enc -k ${{ secrets.GPG_MASTER_PASSWORD }}
+          openssl aes-256-cbc -a -d -in "$(pwd)/.gnugp/deploy/pubring.gpg -out "$KEYSTORE"/pubring.gpg.enc -k ${{ secrets.GPG_MASTER_PASSWORD }}
 
           gpg --import "$KEYSTORE"/secring.gpg.enc
           gpg --import "$KEYSTORE"/pubring.gpg.enc
