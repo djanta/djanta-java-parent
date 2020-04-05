@@ -46,8 +46,10 @@ jobs:
         shell: bash
         run: |
           echo "GnuGpg initialization step ..."
-          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
+#          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
 #          TMPDIR="${TMPDIR:-$(dirname $(mktemp))/}"
+#         Trying to retrieve the gpg key from any available server.
+          gpg --recv-keys ${{ secrets.GPG_KEYID }}
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
