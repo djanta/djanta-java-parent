@@ -46,9 +46,10 @@ jobs:
       - name: Gpg initialization - (${{ matrix.os }})
         shell: bash
         env:
-          TMPDIR: ${TMPDIR:-$(dirname $(mktemp))/}
-          KEYSTORE: ${KEYSTORE:-$(mkdir -p $TMPDIR/.keystore)/}
         run: |
+          TMPDIR=${TMPDIR:-$(dirname $(mktemp))/}
+          KEYSTORE=${KEYSTORE:-$(mkdir -p $TMPDIR/.keystore)/}
+
           echo "GnuGpg initialization step ..."
           gpg --recv-keys ${{ secrets.GPG_KEYID }}
           echo "TEMP = $TEMP, TMP = $TMP, TMPDIR= $TMPDIR, HOME: $HOME, KEYSTORE= $KEYSTORE"
