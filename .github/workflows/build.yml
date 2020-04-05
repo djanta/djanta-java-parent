@@ -33,16 +33,21 @@ jobs:
         version: ['1.8']
         os: [ubuntu-latest]
     steps:
-      - name: Project checking out
+      - name: Project checking out - (${{ matrix.os }})
         uses: actions/checkout@v2
-      - name: Checkout submodules - (${{ matrix.os }})
-        shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: |
-          which hub
-          git submodule sync --recursive
-          git submodule update --init --recursive --remote --merge --force --depth=3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          submodules: true
+#        run: |
+#          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
+#      - name: Checkout submodules - (${{ matrix.os }})
+#        shell: bash
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+#        run: |
+#          which hub
+#          git submodule sync --recursive
+#          git submodule update --init --recursive --remote --merge --force --depth=3
       - name: Gpg initialization - (${{ matrix.os }})
         shell: bash
         run: |
@@ -53,13 +58,9 @@ jobs:
 
           echo "GnuGpg initialization step ..."
           gpg --recv-keys ${{ secrets.GPG_KEYID }}
-          echo "TEMP = $TEMP, TMP = $TMP, TMPDIR= $TMPDIR, HOME: $HOME, KEYSTORE= $KEYSTORE"
 
-          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnugp/deploy"/secring.gpg \
-            -out "$KEYSTORE"/secring.gpg.enc -k "${{ secrets.PGP_MASTER_PASSWORD }}"
-
-          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnugp/deploy/pubring.gpg \
-            -out "$KEYSTORE"/pubring.gpg.enc -k "${{ secrets.PGP_MASTER_PASSWORD }}"
+          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnugp/deploy"/secring.gpg -out "$KEYSTORE"/secring.gpg.enc -k ${{ secrets.GPG_MASTER_PASSWORD }}
+          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnugp/deploy/pubring.gpg -out "$KEYSTORE"/pubring.gpg.enc -k ${{ secrets.GPG_MASTER_PASSWORD }}
 
           gpg --import "$KEYSTORE"/secring.gpg.enc
           gpg --import "$KEYSTORE"/pubring.gpg.enc
@@ -70,6 +71,7 @@ jobs:
           rm -rfv "$KEYSTORE"
 
 #          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
+#          echo "TEMP = $TEMP, TMP = $TMP, TMPDIR= $TMPDIR, HOME: $HOME, KEYSTORE= $KEYSTORE"
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
