@@ -45,7 +45,6 @@ jobs:
           git submodule update --init --recursive --remote --merge --force --depth=3
       - name: Gpg initialization - (${{ matrix.os }})
         shell: bash
-        env:
         run: |
           TMPDIR=${TMPDIR:-$(dirname $(mktemp))/}
           KEYSTORE=${KEYSTORE:-$(mkdir -p $TMPDIR/.keystore)/}
