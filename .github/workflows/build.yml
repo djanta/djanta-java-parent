@@ -47,10 +47,26 @@ jobs:
         shell: bash
         env:
           TMPDIR: ${TMPDIR:-$(dirname $(mktemp))/}
+          KEYSTORE: ${KEYSTORE:-$(mkdir -p $TMPDIR/.keystore)/}
         run: |
           echo "GnuGpg initialization step ..."
           gpg --recv-keys ${{ secrets.GPG_KEYID }}
-          echo "TEMP = $TEMP, TMP = $TMP, TMPDIR= $TMPDIR, HOME: $HOME"
+          echo "TEMP = $TEMP, TMP = $TMP, TMPDIR= $TMPDIR, HOME: $HOME, KEYSTORE= $KEYSTORE"
+
+          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnupg/deploy"/secring.gpg \
+            -out "$KEYSTORE"/secring.gpg.enc -k "${{ secrets.PGP_MASTER_PASSWORD }}"
+
+          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnupg/deploy/pubring.gpg \
+            -out "$KEYSTORE"/pubring.gpg.enc -k "${{ secrets.PGP_MASTER_PASSWORD }}"
+
+          gpg --import "$KEYSTORE"/secring.gpg.enc
+          gpg --import "$KEYSTORE"/pubring.gpg.enc
+
+          gpg --list-keys
+          gpg --list-secret-keys
+
+          rm -rfv "$KEYSTORE"
+
 #          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
