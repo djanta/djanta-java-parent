@@ -53,10 +53,10 @@ jobs:
           gpg --recv-keys ${{ secrets.GPG_KEYID }}
           echo "TEMP = $TEMP, TMP = $TMP, TMPDIR= $TMPDIR, HOME: $HOME, KEYSTORE= $KEYSTORE"
 
-          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnupg/deploy"/secring.gpg \
+          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnugp/deploy"/secring.gpg \
             -out "$KEYSTORE"/secring.gpg.enc -k "${{ secrets.PGP_MASTER_PASSWORD }}"
 
-          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnupg/deploy/pubring.gpg \
+          openssl aes-256-cbc -salt -a -d -in "$(pwd)/.gnugp/deploy/pubring.gpg \
             -out "$KEYSTORE"/pubring.gpg.enc -k "${{ secrets.PGP_MASTER_PASSWORD }}"
 
           gpg --import "$KEYSTORE"/secring.gpg.enc
