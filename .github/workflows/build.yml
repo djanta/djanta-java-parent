@@ -68,22 +68,11 @@ jobs:
           gpg --decrypt --yes --batch --passphrase=${{ secrets.GPG_MASTER_PASSWORD }} --output=$OUT_PUB $IN_PUB
           gpg --decrypt --yes --batch --passphrase=${{ secrets.GPG_MASTER_PASSWORD }} --output=$OUT_PRV $IN_PRV
 
-          gpg --yes --batch --import $OUT_PUB
-          gpg --yes --batch --import $OUT_PRV
+          gpg --yes --batch --import $OUT_PUB >/dev/null 2>&1;
+          gpg --yes --batch --import $OUT_PRV >/dev/null 2>&1;
 
-          gpg --list-keys
-          gpg --list-secret-keys
-
-          export GPG_PUBLIC_KEY=$OUT_PUB
-          export GPG_PRIVATE_KEY=$OUT_PRV
-
-#          export GPG_TTY=$(tty)
-#          rm -rfv "$KEYSTORE"
-#          gpg --recv-keys ${{ secrets.GPG_KEYID }}
-#          openssl aes-256-cbc -md sha256 -salt -iv ${{ secrets.GPG_MASTER_IV }} -a -d -in "$(pwd)/.gnugp/deploy"/secring.gpg -out "$KEYSTORE"/secring.gpg.enc -k ${{ secrets.GPG_MASTER_PASSWORD }}
-#          openssl aes-256-cbc -md sha256 -salt -iv ${{ secrets.GPG_MASTER_IV }} -a -d -in "$(pwd)/.gnugp/deploy/pubring.gpg -out "$KEYSTORE"/pubring.gpg.enc -k ${{ secrets.GPG_MASTER_PASSWORD }}
-#          gpg --keyserver pool.sks-keyservers.net --recv-keys ${{ secrets.GPG_KEYID }}
-#          echo "TEMP = $TEMP, TMP = $TMP, TMPDIR= $TMPDIR, HOME: $HOME, KEYSTORE= $KEYSTORE"
+#          gpg --list-keys
+#          gpg --list-secret-keys
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
@@ -108,10 +97,7 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
-          echo "GPG_PUBLIC_KEY = $GPG_PUBLIC_KEY"
-          echo "GPG_PRIVATE_KEY = $GPG_PRIVATE_KEY"
-
           mvn -X help:effective-pom
-          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Prelease -Dsync.dryRun -DskipTests=false clean verify
+#          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Prelease -Dsync.dryRun -DskipTests=false clean verify
 #          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype clean verify
-#          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean verify
+          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean deploy
