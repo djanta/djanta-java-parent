@@ -58,9 +58,9 @@ To be able to use the 3rd-party managed version dependencies in your project, yo
 <dependencyManagement>
   <dependencies>
     <scope>import</scope>
+    <version>${io.djanta.version}</version>
     <groupId>io.djanta</groupId>
     <artifactId>djanta-java-bom</artifactId>
-    <version>${io.djanta.version}</version>
     <type>pom</type>
   </dependencies>
 </dependencyManagement>
@@ -82,9 +82,9 @@ To inherit form `djanta-java-parent`, edit or create the parent element in your 
 
 ```xml
 <parent>
+  <version>${io.djanta.version}</version>
   <groupId>io.djanta</groupId>
   <artifactId>parent</artifactId>
-  <version>${io.djanta.version}</version>
 </parent>
 ```
 
@@ -123,7 +123,6 @@ Example:
     <modelVersion>4.0.0</modelVersion>
     
     ...
-
     <properties>
         <maven.plugin.resource.version>OVERRIDED_VERSION</maven.plugin.resource.version>
         ...
@@ -153,7 +152,6 @@ Example:
     <modelVersion>4.0.0</modelVersion>
     
     ...
-
     <properties>
         <org.slf4j.version>OVERRIDED_VERSION</org.slf4j.version>
         ...
