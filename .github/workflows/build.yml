@@ -98,6 +98,6 @@ jobs:
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
           mvn -X help:effective-pom
+          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean deploy
 #          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Prelease -Dsync.dryRun -DskipTests=false clean verify
 #          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype clean verify
-          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean deploy
