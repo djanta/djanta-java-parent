@@ -69,6 +69,8 @@ jobs:
       - name: Create & Snapshot to (Sonatype & Github) - (${{ matrix.os }}) with version ${{ matrix.version }}
 #        if: github.branch == 'master' && (github.event_name == 'push' || github.event_name == 'create')
         env:
+          GH_USER: ${{ secrets.GH_USER }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}

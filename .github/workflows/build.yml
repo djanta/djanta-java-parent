@@ -83,6 +83,8 @@ jobs:
           echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
       - name: Maven Build (Clean & verify) - ${{ matrix.os }} with version ${{ matrix.version }}
         env:
+          GH_USER: ${{ secrets.GH_USER }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}

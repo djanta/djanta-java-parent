@@ -67,6 +67,8 @@ jobs:
           echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
       - name: Create & Release TO (Sonatype & Github) - (${{ matrix.os }}) with version ${{ matrix.version }}
         env:
+          GH_USER: ${{ secrets.GH_USER }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
           BINTRAY_USER: ${{ secrets.BINTRAY_USER }}
