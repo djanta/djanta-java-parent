@@ -4,5 +4,9 @@
 	branch = master
 [submodule "travis"]
 	path = travis
-	url = git@github.com:djanta/djanta-java-travisci.git
+	url = https://github.com/djanta/djanta-java-travisci.git
+	branch = master
+[submodule ".gnugp"]
+	path = .gnugp
+	url = https://github.com/djanta/djanta-build-gpg.git
 	branch = master

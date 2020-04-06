@@ -1,8 +1,8 @@
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/djanta/djanta-java-parent)
 ![GitHub All Releases](https://img.shields.io/github/downloads/djanta/djanta-java-parent/total)
 [![Maven Central](https://img.shields.io/maven-central/v/io.djanta/djanta-java-parent.svg?maxAge=2592000)](http://search.maven.org/#artifactdetails%7Cio.djanta%7Cdjanta-java-parent)
-![Build (Snapshot)](https://github.com/djanta/djanta-java-parent/workflows/Build%20(Verify%20&%20Deploy)/badge.svg)
-![Build (Develop)](https://github.com/djanta/djanta-java-parent/workflows/Build%20(Verify%20&%20Test)/badge.svg?branch=develop)
+![Master](https://github.com/djanta/djanta-java-parent/workflows/Master/badge.svg)
+![Develop](https://github.com/djanta/djanta-java-parent/workflows/Build/badge.svg?branch=develop)
 
 # Our 3rd party Bill Of Materials (BOM)
 This project houses either our community & enterprise Maven Bill Of Materials for third party usage.
@@ -58,9 +58,9 @@ To be able to use the 3rd-party managed version dependencies in your project, yo
 <dependencyManagement>
   <dependencies>
     <scope>import</scope>
+    <version>${io.djanta.version}</version>
     <groupId>io.djanta</groupId>
     <artifactId>djanta-java-bom</artifactId>
-    <version>${io.djanta.version}</version>
     <type>pom</type>
   </dependencies>
 </dependencyManagement>
@@ -82,9 +82,9 @@ To inherit form `djanta-java-parent`, edit or create the parent element in your 
 
 ```xml
 <parent>
+  <version>${io.djanta.version}</version>
   <groupId>io.djanta</groupId>
   <artifactId>parent</artifactId>
-  <version>${io.djanta.version}</version>
 </parent>
 ```
 
@@ -123,7 +123,6 @@ Example:
     <modelVersion>4.0.0</modelVersion>
     
     ...
-
     <properties>
         <maven.plugin.resource.version>OVERRIDED_VERSION</maven.plugin.resource.version>
         ...
@@ -153,7 +152,6 @@ Example:
     <modelVersion>4.0.0</modelVersion>
     
     ...
-
     <properties>
         <org.slf4j.version>OVERRIDED_VERSION</org.slf4j.version>
         ...
