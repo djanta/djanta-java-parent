@@ -845,7 +845,7 @@
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
-        <mvn.pkg.github.repository>${project.artifactId}</mvn.pkg.github.repository>
+        <mvn.pkg.github.repository>djanta-java-parent</mvn.pkg.github.repository>
         <mvn.pkg.github.owner>djanta</mvn.pkg.github.owner>
       </properties>
       <repositories>
