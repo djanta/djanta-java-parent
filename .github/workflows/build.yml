@@ -41,11 +41,6 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           submodules: true
-        shell: bash
-        run: |
-          git submodule sync --recursive
-          git submodule update --init --recursive --remote --merge --force --depth=3
-
 #        run: |
 #          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
 #      - name: Checkout submodules - (${{ matrix.os }})
@@ -75,21 +70,18 @@ jobs:
 
           gpg --yes --batch --import $OUT_PUB >/dev/null 2>&1;
           gpg --yes --batch --import $OUT_PRV >/dev/null 2>&1;
-
-#          gpg --list-keys
-#          gpg --list-secret-keys
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.version }}
-      - name: GitHub credentials configuration
+      - name: GitHub credentials configuration - ${{ matrix.os }} with version ${{ matrix.version }}
         shell: bash
         run: |
           git config user.name "${{ secrets.GH_USER }}"
           git config user.email "${{ secrets.GH_USER_EMAIL }}"
           git config credential.helper "store --file=.git/credentials"
           echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
-      - name: Maven Build (Clean & verify) on ${{ matrix.os }} with version ${{ matrix.version }}
+      - name: Maven Build (Clean & verify) - ${{ matrix.os }} with version ${{ matrix.version }}
         env:
           SONATYPE_USER: ${{ secrets.SONATYPE_USER }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
@@ -99,7 +91,7 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
         run: |
-          mvn -X help:effective-pom
-          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype clean deploy
-#          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Prelease -Dsync.dryRun -DskipTests=false clean verify
-#          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype clean verify
+          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Dsync.dryRun -DskipTests=false clean verify
+          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype -DskipTests=true clean verify
+          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype -DskipTests=true clean deploy
+#          mvn -X help:effective-pom
