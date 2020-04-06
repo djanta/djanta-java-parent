@@ -41,16 +41,11 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           submodules: true
-#        run: |
-#          git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
-#      - name: Checkout submodules - (${{ matrix.os }})
-#        shell: bash
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-#        run: |
-#          which hub
-#          git submodule sync --recursive
-#          git submodule update --init --recursive --remote --merge --force --depth=3
+      - name: Submodules Sync - (${{ matrix.os }})
+        shell: bash
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive --remote --merge --force --depth=3
       - name: Gpg initialization - (${{ matrix.os }})
         shell: bash
         run: |
@@ -77,6 +72,7 @@ jobs:
       - name: GitHub credentials configuration - ${{ matrix.os }} with version ${{ matrix.version }}
         shell: bash
         run: |
+          echo "GITHUB_TOKEN = $GITHUB_TOKEN, GITHUB_TOKEN Secret: ${{ secrets.GITHUB_TOKEN }}"
           git config user.name "${{ secrets.GH_USER }}"
           git config user.email "${{ secrets.GH_USER_EMAIL }}"
           git config credential.helper "store --file=.git/credentials"
@@ -92,8 +88,10 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_USERNAME: ${{ secrets.GH_USER }}
         run: |
           ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Dsync.dryRun -DskipTests=false clean verify
           ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype -DskipTests=true clean deploy
-          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype,-sonatype -DskipTests=true clean deploy
+          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype -DskipTests=true clean deploy
 #          mvn -X help:effective-pom

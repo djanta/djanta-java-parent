@@ -35,6 +35,11 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           submodules: true
+      - name: Submodules Sync - (${{ matrix.os }})
+        shell: bash
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive --remote --merge --force --depth=3
       - name: Gpg initialization - (${{ matrix.os }})
         shell: bash
         run: |

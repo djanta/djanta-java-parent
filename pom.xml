@@ -844,6 +844,10 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <properties>
+        <mvn.pkg.github.repository>${project.artifactId}</mvn.pkg.github.repository>
+        <mvn.pkg.github.owner>djanta</mvn.pkg.github.owner>
+      </properties>
       <repositories>
         <repository>
           <releases>
@@ -857,13 +861,14 @@
         </repository>
         <repository>
           <id>github</id>
-          <url>https://maven.pkg.github.com/djanta</url>
+          <url>https://maven.pkg.github.com/${mvn.pkg.github.owner}</url>
         </repository>
       </repositories>
       <distributionManagement>
         <repository>
           <id>github</id>
-          <url>https://maven.pkg.github.com/djanta/djanta-java-parent</url>
+          <url>https://maven.pkg.github.com/${mvn.pkg.github.owner}/${mvn.pkg.github.repository}</url>
+          <name>GitHub OWNER Apache Maven Packages</name>
         </repository>
       </distributionManagement>
     </profile>
