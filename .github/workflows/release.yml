@@ -30,11 +30,16 @@ jobs:
         version: ['1.8']
         os: [ubuntu-latest]
     steps:
-      - name: Project checking out - (${{ matrix.os }})
+      - name: Checking out - (${{ matrix.os }})
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.GH_TOKEN }}
           submodules: true
+      - name: Submodules Sync - (${{ matrix.os }})
+        shell: bash
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive --remote --merge --force --depth=3
       - name: Submodules Sync - (${{ matrix.os }})
         shell: bash
         run: |
@@ -81,6 +86,8 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_USERNAME: ${{ secrets.GH_USER }}
         run: |
           ./travis/release.sh --api --profile="sonatype,release,-license;github,release,-sonatype,-license" \
             --setting-file=$(pwd)/.mvn/settings.xml --varg="-Dfindbugs.skip=true" \
