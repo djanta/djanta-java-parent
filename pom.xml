@@ -269,15 +269,9 @@
   </licenses>
 
   <scm>
-    <!--
-    <url>https://github.com/djanta/djanta-java-parent</url>
     <connection>scm:git:https://github.com/djanta/djanta-java-parent.git</connection>
+    <url>https://github.com/djanta/djanta-java-parent</url>
     <developerConnection>scm:git:https://github.com/djanta/djanta-java-parent.git</developerConnection>
-    -->
-    <url>${git.url}</url>
-    <connection>${git.connection}</connection>
-    <developerConnection>${git.developerConnection}</developerConnection>
-
     <tag>HEAD</tag>
   </scm>
 
@@ -289,9 +283,8 @@
       <organization>DJANTA, LLC</organization>
       <organizationUrl>http://djanta.io</organizationUrl>
       <roles>
-        <role>Architect</role>
-        <role>CTO</role>
-        <role>Founder</role>
+        <role>architect</role>
+        <role>developer</role>
       </roles>
       <timezone>+1</timezone>
     </developer>
@@ -706,6 +699,9 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <properties>
+        <autoReleaseAfterClose>true</autoReleaseAfterClose>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -715,7 +711,6 @@
             <configuration>
               <serverId>${mvn.sonatype.id}</serverId>
               <nexusUrl>${mvn.sonatype.url}</nexusUrl>
-              <!-- <autoReleaseAfterClose>true</autoReleaseAfterClose> -->
             </configuration>
             <executions>
               <execution>
