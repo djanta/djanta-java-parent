@@ -27,7 +27,8 @@ on:
 
 jobs:
   release:
-    if: !startsWith(github.event.head_commit.message, "prepare release")
+    if: (github.event.head_commit.message !~ /^(prepare release ([0-9\.]+))
+#    if: !startsWith(github.event.head_commit.message, "prepare release")
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
