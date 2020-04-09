@@ -31,16 +31,15 @@ jobs:
         version: ['1.8']
         os: [ubuntu-latest]
     steps:
+      - name : GITHUB CONTEXT
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
       - name: Checking out - (${{ matrix.os }})
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.GH_TOKEN }}
           submodules: true
-      - name: Submodules Sync - (${{ matrix.os }})
-        shell: bash
-        run: |
-          git submodule sync --recursive
-          git submodule update --init --recursive --remote --merge --force --depth=3
       - name: Submodules Sync - (${{ matrix.os }})
         shell: bash
         run: |
