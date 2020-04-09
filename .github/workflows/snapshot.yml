@@ -49,6 +49,8 @@ jobs:
       - name: Gpg initialization - (${{ matrix.os }})
         shell: bash
         run: |
+          echo "GnuGpg initialization step ..."
+
           TMPDIR=${TMPDIR:-$(dirname $(mktemp))}
           KEYSTORE=${KEYSTORE:-$TMPDIR/.keystore}
           IN_PUB=$(pwd)/.gnugp/deploy/pubring.gpg.asc
@@ -57,8 +59,6 @@ jobs:
           OUT_PRV=$KEYSTORE/secring.gpg.enc
 
           mkdir -pv $KEYSTORE
-
-          echo "GnuGpg initialization step ..."
 
           gpg --decrypt --yes --batch --passphrase=${{ secrets.GPG_MASTER_PASSWORD }} --output=$OUT_PUB $IN_PUB
           gpg --decrypt --yes --batch --passphrase=${{ secrets.GPG_MASTER_PASSWORD }} --output=$OUT_PRV $IN_PRV
