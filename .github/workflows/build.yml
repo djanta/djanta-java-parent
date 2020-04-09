@@ -94,6 +94,8 @@ jobs:
 
           gpg --yes --batch --import $OUT_PUB >/dev/null 2>&1;
           gpg --yes --batch --import $OUT_PRV >/dev/null 2>&1;
+
+          rm -rfv $KEYSTORE
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
