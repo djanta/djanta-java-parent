@@ -31,6 +31,10 @@ jobs:
         version: ['1.8']
         os: [ubuntu-latest]
     steps:
+      - name : GITHUB CONTEXT
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
       - name: Checking out - (${{ matrix.os }})
         uses: actions/checkout@v2
         with:
@@ -41,14 +45,11 @@ jobs:
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive --remote --merge --force --depth=3
-      - name: Submodules Sync - (${{ matrix.os }})
-        shell: bash
-        run: |
-          git submodule sync --recursive
-          git submodule update --init --recursive --remote --merge --force --depth=3
       - name: Gpg initialization - (${{ matrix.os }})
         shell: bash
         run: |
+          echo "GnuGpg initialization step ..."
+
           TMPDIR=${TMPDIR:-$(dirname $(mktemp))}
           KEYSTORE=${KEYSTORE:-$TMPDIR/.keystore}
           IN_PUB=$(pwd)/.gnugp/deploy/pubring.gpg.asc
@@ -58,13 +59,13 @@ jobs:
 
           mkdir -pv $KEYSTORE
 
-          echo "GnuGpg initialization step ..."
-
           gpg --decrypt --yes --batch --passphrase=${{ secrets.GPG_MASTER_PASSWORD }} --output=$OUT_PUB $IN_PUB
           gpg --decrypt --yes --batch --passphrase=${{ secrets.GPG_MASTER_PASSWORD }} --output=$OUT_PRV $IN_PRV
 
           gpg --yes --batch --import $OUT_PUB >/dev/null 2>&1;
           gpg --yes --batch --import $OUT_PRV >/dev/null 2>&1;
+
+          rm -rfv $KEYSTORE
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:

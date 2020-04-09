@@ -16,6 +16,11 @@
 
 #https://github.com/actions/virtual-environments/blob/master/images/linux/Ubuntu1804-README.md
 
+###
+# Github Workflow Help: https://help.github.com/en/actions/reference/events-that-trigger-workflows
+#   https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#onevent_nametypes
+###
+
 name: Build
 
 # On push event ...
@@ -35,7 +40,31 @@ jobs:
         version: ['1.8']
         os: [ubuntu-latest]
 #        fail-fast: false
+#    if: github.event_name == 'push' && startsWith(toJson(github.event.commits), '***NO_CI***') == false && contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
     steps:
+#      - name: Check Commit Type
+#        uses: gsactions/commit-message-checker@v1
+#        with:
+#          pattern: '\[[^]]+\] .+$'
+#          flags: 'gm'
+#          error: 'Your first line has to contain a commit type like "[BUGFIX]".'
+#      - name: Check Line Length
+#        uses: gsactions/commit-message-checker@v1
+#        with:
+#          pattern: '^[^#].{74}'
+#          error: 'The maximum line length of 74 characters is exceeded.'
+#      - name: Check for Resolves / Fixes
+#        uses: gsactions/commit-message-checker@v1
+#        with:
+#          pattern: '^.+(Resolves|Fixes): \#[0-9]+$'
+#          error: 'You need at least one "Resolves|Fixes: #<issue number>" line.'
+      - name : GITHUB CONTEXT
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+#      - name: get commit message
+#        run: |
+#          echo ::set-env name=commitmsg::$(git log --format=%B -n 1 ${{ github.event.after }})
       - name: Checking out - (${{ matrix.os }})
         uses: actions/checkout@v2
         with:
@@ -49,6 +78,8 @@ jobs:
       - name: Gpg initialization - (${{ matrix.os }})
         shell: bash
         run: |
+          echo "GnuGpg initialization step ..."
+
           TMPDIR=${TMPDIR:-$(dirname $(mktemp))}
           KEYSTORE=${KEYSTORE:-$TMPDIR/.keystore}
           IN_PUB=$(pwd)/.gnugp/deploy/pubring.gpg.asc
@@ -58,13 +89,13 @@ jobs:
 
           mkdir -pv $KEYSTORE
 
-          echo "GnuGpg initialization step ..."
-
           gpg --decrypt --yes --batch --passphrase=${{ secrets.GPG_MASTER_PASSWORD }} --output=$OUT_PUB $IN_PUB
           gpg --decrypt --yes --batch --passphrase=${{ secrets.GPG_MASTER_PASSWORD }} --output=$OUT_PRV $IN_PRV
 
           gpg --yes --batch --import $OUT_PUB >/dev/null 2>&1;
           gpg --yes --batch --import $OUT_PRV >/dev/null 2>&1;
+
+          rm -rfv $KEYSTORE
       - name: Set up JDK ${{ matrix.version }}
         uses: actions/setup-java@v1
         with:
