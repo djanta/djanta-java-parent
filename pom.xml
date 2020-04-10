@@ -710,6 +710,18 @@
             </configuration>
           </plugin>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-help-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>effective-pom</id>
+                <goals>
+                  <goal>effective-pom</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
             <extensions>true</extensions>
