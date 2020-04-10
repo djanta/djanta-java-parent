@@ -251,6 +251,10 @@
     <maven.source.attach>false</maven.source.attach>
     <maven.source.skip>false</maven.source.skip>
     <sort.createBackupFile>false</sort.createBackupFile>
+
+    <!-- Github distribution repository configuration -->
+    <mvn.pkg.github.repository>repository-maven-public</mvn.pkg.github.repository>
+    <mvn.pkg.github.owner>djanta</mvn.pkg.github.owner>
   </properties>
 
   <url>https://github.com/djanta/djanta-java-parent</url>
@@ -703,27 +707,6 @@
       <properties/>
       <build>
         <plugins>
-          <!--
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-deploy-plugin</artifactId>
-            <configuration>
-              <skip>true</skip>
-            </configuration>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-help-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>effective-pom</id>
-                <goals>
-                  <goal>effective-pom</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-          -->
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -731,7 +714,9 @@
             <configuration>
               <serverId>${mvn.sonatype.id}</serverId>
               <nexusUrl>${mvn.sonatype.url}</nexusUrl>
+              <!--
               <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              -->
               <tags>
                 <localUsername>${env.USER}</localUsername>
                 <javaVersion>${java.version}</javaVersion>
@@ -864,10 +849,6 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
-      <properties>
-        <mvn.pkg.github.repository>djanta-java-parent</mvn.pkg.github.repository>
-        <mvn.pkg.github.owner>djanta</mvn.pkg.github.owner>
-      </properties>
       <repositories>
         <repository>
           <releases>
