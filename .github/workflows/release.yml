@@ -95,6 +95,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_USERNAME: ${{ secrets.GH_USER }}
         run: |
-          ./.release/release.sh --api --profile="sonatype,release,-license;github,release,-sonatype,-license" \
+          ./.release/release.sh --api --profile="github,release,-sonatype;sonatype,release,-license,-license" \
             --setting-file=$(pwd)/.mvn/settings.xml --varg="-Dfindbugs.skip=true" \
             --release-branch=release

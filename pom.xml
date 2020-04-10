@@ -21,7 +21,7 @@
 
   <groupId>io.djanta</groupId>
   <artifactId>djanta-java-parent</artifactId>
-  <version>1.1.5-SNAPSHOT</version>
+  <version>1.1.6-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <description>djanta.io makes writing java microservice easier for everyone</description>
@@ -699,9 +699,7 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
-      <properties>
-        <autoReleaseAfterClose>true</autoReleaseAfterClose>
-      </properties>
+      <properties/>
       <build>
         <plugins>
           <plugin>
@@ -711,6 +709,11 @@
             <configuration>
               <serverId>${mvn.sonatype.id}</serverId>
               <nexusUrl>${mvn.sonatype.url}</nexusUrl>
+
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              <updateReleaseInfo>true</updateReleaseInfo>
+              <detectBuildFailures>true</detectBuildFailures>
             </configuration>
             <executions>
               <execution>
