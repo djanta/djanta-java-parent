@@ -122,7 +122,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_USERNAME: ${{ secrets.GH_USER }}
         run: |
-          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -Dsync.dryRun -DskipTests=false clean verify
-          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype -DskipTests=true help:effective-pom clean deploy
-          ./mvnw -X -B -s $(pwd)/.mvn/settings.xml -Prelease,sonatype -DskipTests=true help:effective-pom clean deploy
-#          mvn -X help:effective-pom
+          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -DskipTests=false clean verify

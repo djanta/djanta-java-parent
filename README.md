@@ -1,6 +1,4 @@
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/djanta/djanta-java-parent)
-![GitHub All Releases](https://img.shields.io/github/downloads/djanta/djanta-java-parent/total)
-[![Maven Central](https://img.shields.io/maven-central/v/io.djanta/djanta-java-parent.svg?maxAge=2592000)](http://search.maven.org/#artifactdetails%7Cio.djanta%7Cdjanta-java-parent)
+![Maven Central](https://img.shields.io/maven-central/v/io.djanta/djanta-java-parent)
 ![Master](https://github.com/djanta/djanta-java-parent/workflows/Master/badge.svg)
 ![Develop](https://github.com/djanta/djanta-java-parent/workflows/Build/badge.svg?branch=develop)
 
