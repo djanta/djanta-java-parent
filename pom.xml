@@ -23,10 +23,10 @@
   <artifactId>djanta-java-parent</artifactId>
   <version>1.2.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-
-  <description>djanta.io makes writing java microservice easier for everyone</description>
   <!-- <name>Java parent POM (DJANTA.IO)</name> -->
   <name>${project.artifactId}</name>
+
+  <description>djanta.io makes writing java microservice easier for everyone</description>
 
   <modules>
     <module>bom</module>
@@ -275,8 +275,8 @@
   </licenses>
 
   <scm>
-    <connection>scm:git:https://github.com/djanta/djanta-java-parent.git</connection>
     <url>https://github.com/djanta/djanta-java-parent</url>
+    <connection>scm:git:https://github.com/djanta/djanta-java-parent.git</connection>
     <developerConnection>scm:git:https://github.com/djanta/djanta-java-parent.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
@@ -705,7 +705,7 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
-      <properties/>
+      <properties></properties>
       <build>
         <plugins>
           <plugin>
@@ -868,8 +868,8 @@
       <distributionManagement>
         <repository>
           <id>github</id>
-          <url>https://maven.pkg.github.com/${mvn.pkg.github.owner}/${mvn.pkg.github.repository}</url>
           <name>GitHub OWNER Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/${mvn.pkg.github.owner}/${mvn.pkg.github.repository}</url>
         </repository>
       </distributionManagement>
     </profile>
@@ -2059,6 +2059,8 @@
                 <exclude>**/.mvn/**</exclude>
                 <exclude>**/.maven/**</exclude>
                 <exclude>**/travis/**</exclude>
+                <!-- Exclude any folder start with (.) -->
+                <exclude>**/.*/**</exclude>
                 <exclude>**/mvnw*</exclude>
                 <exclude>**/.idea/**</exclude>
                 <exclude>**/target/**</exclude>
