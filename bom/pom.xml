@@ -22,15 +22,15 @@
   <parent>
     <groupId>io.djanta</groupId>
     <artifactId>djanta-java-parent</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>djanta-java-bom</artifactId>
   <packaging>pom</packaging>
-
-  <description>djanta.io java dependency BOM (Bill Of Material) for flexible and easy dependency management</description>
   <!-- <name>Java parent dependencies (BOM) (DJANTA.IO)</name> -->
   <name>${project.artifactId}</name>
+
+  <description>djanta.io java dependency BOM (Bill Of Material) for flexible and easy dependency management</description>
 
   <properties>
     <mvn.formatter.configfile>${project.parent.basedir}/.mvn/coding/eclipse-java-style.xml</mvn.formatter.configfile>
