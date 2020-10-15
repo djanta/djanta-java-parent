@@ -22,7 +22,7 @@
   <parent>
     <groupId>io.djanta</groupId>
     <artifactId>djanta-java-parent</artifactId>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>1.2.2-SNAPSHOT</version>
   </parent>
 
   <artifactId>djanta-java-bom</artifactId>
@@ -228,6 +228,18 @@
         <groupId>org.mock-server</groupId>
         <artifactId>mockserver-core</artifactId>
         <version>${org.mock-server.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.mock-server</groupId>
+        <artifactId>mockserver-junit-rule</artifactId>
+        <version>${org.mock-server.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mock-server</groupId>
+        <artifactId>mockserver-junit-jupiter</artifactId>
+        <version>${org.mock-server.version}</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>com.github.stefanbirkner</groupId>

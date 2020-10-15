@@ -6,6 +6,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.2] - 2020-10-15
+
+### `Removed`
+- Removed `org.mockserver.maven.StopMockServerTestListener` from `mockserver` junit steps listener
+- Remove `mockserver` maven profile activation configuration: 
+```xml
+<activation>
+  <property>
+    <name>skipTests</name>
+    <value>false</value>
+  </property>
+</activation>
+```
+
+### `Added`
+- Upgrage `mockserver` dependency version to `5.10.0`
+- Adding to dependencies `BOM` mockserver junit rule dependencies: `org.mock-server` and `mockserver-junit-jupiter`
+
 ## [1.2.1] - 2020-04-29
 ### `Fixed`
 - Update the project(POM)  profile `license` by excluding any folder started by (.) e.g: `<exclude>**/.*/**</exclude>`
@@ -53,7 +71,8 @@ while releasing or tempting to close the `ossrh` node for release or promoting p
 - CNAME file to enable GitHub Pages custom domain
 - README now contains answers to common questions about CHANGELOGs
 
-[Unreleased]: https://github.com/djanta/djanta-java-parent/compare/v1.2.1...HEAD
+[Unreleased]: https://github.com/djanta/djanta-java-parent/compare/v1.2.2...HEAD
+[1.2.2]: https://github.com/djanta/djanta-java-parent/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/djanta/djanta-java-parent/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/djanta/djanta-java-parent/compare/v0.0.3...v1.2.0
 [0.0.3]: https://github.com/djanta/djanta-java-parent/compare/v0.0.2...v0.0.3
