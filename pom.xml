@@ -2176,26 +2176,20 @@
     </profile>
     <profile>
       <id>mockserver</id>
-      <activation>
-        <property>
-          <name>skipTests</name>
-          <value>false</value>
-        </property>
-      </activation>
       <build>
         <pluginManagement>
           <plugins>
             <plugin>
-              <artifactId>mockserver-maven-plugin</artifactId>
               <groupId>org.mock-server</groupId>
+              <artifactId>mockserver-maven-plugin</artifactId>
               <version>${maven.plugin.mock-server.version}</version>
             </plugin>
           </plugins>
         </pluginManagement>
         <plugins>
           <plugin>
-            <artifactId>build-helper-maven-plugin</artifactId>
             <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
             <version>${maven.plugin.build-helper.version}</version>
             <executions>
               <execution>
