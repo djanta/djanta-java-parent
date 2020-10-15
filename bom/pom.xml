@@ -230,6 +230,18 @@
         <version>${org.mock-server.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.mock-server</groupId>
+        <artifactId>mockserver-junit-rule</artifactId>
+        <version>${org.mock-server.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mock-server</groupId>
+        <artifactId>mockserver-junit-jupiter</artifactId>
+        <version>${org.mock-server.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>com.github.stefanbirkner</groupId>
         <artifactId>system-rules</artifactId>
         <version>${com.github.stefanbirkner.version}</version>
