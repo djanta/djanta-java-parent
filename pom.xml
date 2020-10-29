@@ -21,7 +21,8 @@
 
   <groupId>io.djanta</groupId>
   <artifactId>djanta-java-parent</artifactId>
-  <version>1.2.3-SNAPSHOT</version>
+  <version>1.2.4-SNAPSHOT</version>
+
   <packaging>pom</packaging>
   <!-- <name>Java parent POM (DJANTA.IO)</name> -->
   <name>${project.artifactId}</name>
