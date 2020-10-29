@@ -21,7 +21,8 @@
 
   <groupId>io.djanta</groupId>
   <artifactId>djanta-java-parent</artifactId>
-  <version>1.2.2-SNAPSHOT</version>
+  <version>1.2.3-SNAPSHOT</version>
+
   <packaging>pom</packaging>
   <!-- <name>Java parent POM (DJANTA.IO)</name> -->
   <name>${project.artifactId}</name>
@@ -745,7 +746,7 @@
             <updatePolicy>never</updatePolicy>
           </snapshots>
           <id>central1</id>
-          <url>http://repo1.maven.org/maven2</url>
+          <url>https://repo1.maven.org/maven2</url>
         </repository>
         <repository>
           <releases>
@@ -757,7 +758,7 @@
             <updatePolicy>never</updatePolicy>
           </snapshots>
           <id>central2</id>
-          <url>http://repo2.maven.org/maven2</url>
+          <url>https://repo2.maven.org/maven2</url>
         </repository>
       </repositories>
       <pluginRepositories>
@@ -771,7 +772,7 @@
             <checksumPolicy>fail</checksumPolicy>
           </snapshots>
           <id>central1</id>
-          <url>http://repo1.maven.org/maven2</url>
+          <url>https://repo1.maven.org/maven2</url>
         </pluginRepository>
         <pluginRepository>
           <releases>
@@ -783,7 +784,7 @@
             <updatePolicy>never</updatePolicy>
           </snapshots>
           <id>central2</id>
-          <url>http://repo2.maven.org/maven2</url>
+          <url>https://repo2.maven.org/maven2</url>
         </pluginRepository>
       </pluginRepositories>
       <distributionManagement>
