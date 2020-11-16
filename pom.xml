@@ -255,9 +255,9 @@
     <sort.createBackupFile>false</sort.createBackupFile>
 
     <!-- Github distribution repository configuration -->
-    <!--<mvn.pkg.github.repository>djanta-java-parent</mvn.pkg.github.repository>-->
-    <mvn.pkg.github.owner>djanta</mvn.pkg.github.owner>
-    <mvn.pkg.github.repository>maven</mvn.pkg.github.repository>
+    <!--<mvn.github.repository>djanta-java-parent</mvn.github.repository>-->
+    <mvn.github.owner>djanta</mvn.github.owner>
+    <mvn.github.repository>maven-repo</mvn.github.repository>
   </properties>
 
   <url>https://github.com/djanta/djanta-java-parent</url>
@@ -853,6 +853,10 @@
       </activation>
       <repositories>
         <repository>
+          <id>github</id>
+          <url>https://maven.pkg.github.com/${mvn.github.owner}/${mvn.github.repository}</url>
+        </repository>
+        <repository>
           <releases>
             <enabled>true</enabled>
           </releases>
@@ -862,16 +866,11 @@
           <id>central</id>
           <url>https://repo1.maven.org/maven2</url>
         </repository>
-        <repository>
-          <id>github</id>
-          <url>https://maven.pkg.github.com/${mvn.pkg.github.owner}</url>
-        </repository>
       </repositories>
       <distributionManagement>
         <repository>
+          <url>https://maven.pkg.github.com/${mvn.github.owner}/${mvn.github.repository}</url>
           <id>github</id>
-          <name>GitHub OWNER Apache Maven Packages</name>
-          <url>https://maven.pkg.github.com/${mvn.pkg.github.owner}/${mvn.pkg.github.repository}</url>
         </repository>
       </distributionManagement>
     </profile>
