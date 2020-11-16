@@ -100,15 +100,28 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.version }}
-      - name: GitHub credentials configuration - ${{ matrix.os }} with version ${{ matrix.version }}
+      - name: GitHub credentials configuration
         shell: bash
         run: |
-          echo "GITHUB_TOKEN = $GITHUB_TOKEN, GITHUB_TOKEN Secret: ${{ secrets.GITHUB_TOKEN }}"
           git config user.name "${{ secrets.GH_USER }}"
           git config user.email "${{ secrets.GH_USER_EMAIL }}"
           git config credential.helper "store --file=.git/credentials"
           echo "https://${{ secrets.GITHUB_TOKEN }}:@github.com" > .git/credentials
-      - name: Maven Build (Clean & verify) - ${{ matrix.os }} with version ${{ matrix.version }}
+
+      - name: Set up Java for publishing to Maven Central Repository
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+      - name: Publish to the Maven Central Repository
+        run: ./mvnw -B -s $(pwd)/.mvn/settings.xml -DskipTests=false deploy
+        env:
+          MAVEN_USERNAME: ${{ secrets.SONATYPE_USER }}
+          MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+
+      - name: Maven Build (Clean & verify)
         env:
           GH_USER: ${{ secrets.GH_USER }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -123,4 +136,4 @@ jobs:
           GITHUB_USERNAME: ${{ secrets.GH_USER }}
         run: |
           ./mvnw -B -s $(pwd)/.mvn/settings.xml -DskipTests=false clean verify
-          ./mvnw -B -nsu -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype clean deploy
+#          ./mvnw -B -nsu -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype clean deploy
