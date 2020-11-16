@@ -122,4 +122,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_USERNAME: ${{ secrets.GH_USER }}
         run: |
-          ./mvnw -B -X -s $(pwd)/.mvn/settings.xml -DskipTests=false clean verify
+          ./mvnw -B -s $(pwd)/.mvn/settings.xml -DskipTests=false clean verify
+          ./mvnw -B -nsu -s $(pwd)/.mvn/settings.xml -Prelease,github,-sonatype clean deploy
