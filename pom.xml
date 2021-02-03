@@ -24,7 +24,7 @@
   <version>1.2.4-SNAPSHOT</version>
 
   <packaging>pom</packaging>
-  <!-- <name>Java parent POM (DJANTA.IO)</name> -->
+
   <name>${project.artifactId}</name>
 
   <description>djanta.io makes writing java microservice easier for everyone</description>
@@ -37,13 +37,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
 
-    <!-- specifying jvm arguments -->
     <jvm.options>-Duser.language=en</jvm.options>
-
-    <!-- default bytecode version for src/main -->
     <main.signature.artifact>java18</main.signature.artifact>
-
-    <!-- default bytecode version for src/test -->
     <main.java.version>1.8</main.java.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -111,7 +106,6 @@
     <org.apache.commons.lang3.version>3.9</org.apache.commons.lang3.version>
     <org.apache.httpcomponents.verion>4.5.10</org.apache.httpcomponents.verion>
     <org.apache.httpclient.verion>4.4.12</org.apache.httpclient.verion>
-    <!--<com.squareup.okhttp3.version>4.2.1</com.squareup.okhttp3.version> -->
     <com.jayway.jsonpath.version>2.4.0</com.jayway.jsonpath.version>
     <com.squareup.retrofit.version>2.7.0</com.squareup.retrofit.version>
     <io.opentracing.version>0.33.0</io.opentracing.version>
@@ -137,7 +131,6 @@
     <redis.clients.version>2.8.1</redis.clients.version>
     <com.samskivert.version>1.15</com.samskivert.version>
 
-    <!-- :: Maven plugin version configuration -->
     <maven.plugin.animal-sniffer.version>1.18</maven.plugin.animal-sniffer.version>
     <maven.plugin.compiler.version>3.8.0</maven.plugin.compiler.version>
     <maven.plugin.install.version>2.5.2</maven.plugin.install.version>
@@ -156,7 +149,6 @@
     <maven.plugin.resources.version>3.0.2</maven.plugin.resources.version>
     <maven.plugin.enforcer.version>1.4.1</maven.plugin.enforcer.version>
     <maven.plugin.dependency.version>3.0.0</maven.plugin.dependency.version>
-    <!-- <maven.plugin.site.version>0.12</maven.plugin.site.version> -->
     <maven.plugin.jacoco.version>0.8.4</maven.plugin.jacoco.version>
     <maven.plugin.buildnumber.version>1.4</maven.plugin.buildnumber.version>
     <maven.plugin.sortpom.version>2.8.0</maven.plugin.sortpom.version>
@@ -183,11 +175,9 @@
     <maven.plugin.help.version>3.2.0</maven.plugin.help.version>
     <maven.plugin.fabric8.version>4.4.0</maven.plugin.fabric8.version>
 
-    <!-- Github plugin version declaration -->
     <github.plugin.proguard.version>2.1.1</github.plugin.proguard.version>
     <github.plugin.site.version>0.12</github.plugin.site.version>
 
-    <!-- Plugins configurations section -->
     <mvn.license.header>.mvn/licenses/apache-2.0-header</mvn.license.header>
     <mvn.formatter.configfile>.mvn/coding/eclipse-java-style.xml</mvn.formatter.configfile>
     <mvn.bom.template.filepath>file://${project.basedir}/.mvn/resources/bom.xml</mvn.bom.template.filepath>
@@ -257,7 +247,7 @@
     <!-- Github distribution repository configuration -->
     <!--<mvn.github.repository>djanta-java-parent</mvn.github.repository>-->
     <mvn.github.owner>djanta</mvn.github.owner>
-    <mvn.github.repository>maven-repo</mvn.github.repository>
+    <mvn.github.repository>maven-packages</mvn.github.repository>
   </properties>
 
   <url>https://github.com/djanta/djanta-java-parent</url>
@@ -286,13 +276,25 @@
   <developers>
     <developer>
       <id>stanislaska</id>
-      <name>Stanislas Koffi ASSOUTOVI</name>
+      <name>Koffi Stanislas ASSOUTOVI</name>
       <url>http://github.com/stanislaska</url>
       <organization>DJANTA, LLC</organization>
       <organizationUrl>http://djanta.io</organizationUrl>
       <roles>
         <role>architect</role>
         <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+    </developer>
+    <developer>
+      <id>djanta</id>
+      <name>Koffi Stanislas ASSOUTOVI</name>
+      <url>http://github.com/djanta</url>
+      <organization>DJANTA, LLC</organization>
+      <organizationUrl>http://djanta.io</organizationUrl>
+      <roles>
+        <role>CEO</role>
+        <role>CTO</role>
       </roles>
       <timezone>+1</timezone>
     </developer>
@@ -327,6 +329,14 @@
             <artifactId>logback-classic</artifactId>
           </exclusion>
         </exclusions>
+      </dependency>
+
+      <!-- Importing the internal BOM -->
+      <dependency>
+        <groupId>io.djanta</groupId>
+        <artifactId>djanta-java-bom</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -658,9 +668,11 @@
               <rules>
                 <bannedPlugins>
                   <level>WARN</level>
-                  <!--excludes>
+                  <!--
+                  <excludes>
                     <exclude>org.apache.maven.plugins:maven-verifier-plugin</exclude>
-                  </excludes-->
+                  </excludes>
+                  -->
                   <message>Please consider using the maven-invoker-plugin
                                         (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
                 </bannedPlugins>
@@ -668,7 +680,7 @@
                   <version>3.3</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
-                  <version>[${main.java.version},11)</version>
+                  <version>[${main.java.version}, 11)</version>
                 </requireJavaVersion>
                 <!--
                   <requireActiveProfile>
@@ -707,7 +719,6 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
-      <properties></properties>
       <build>
         <plugins>
           <plugin>
@@ -849,15 +860,17 @@
     <profile>
       <id>github</id>
       <activation>
-        <activeByDefault>false</activeByDefault>
+        <property>
+          <name>scmPrivateOnly</name>
+        </property>
       </activation>
       <repositories>
         <repository>
-          <name>GitHub</name>
           <id>github</id>
+          <name>GitHub</name>
           <url>https://maven.pkg.github.com/${mvn.github.owner}/${mvn.github.repository}</url>
         </repository>
-        <!--<repository>
+        <repository>
           <releases>
             <enabled>true</enabled>
           </releases>
@@ -866,21 +879,21 @@
           </snapshots>
           <id>central</id>
           <url>https://repo1.maven.org/maven2</url>
-        </repository>-->
+        </repository>
       </repositories>
       <distributionManagement>
-        <snapshotRepository>
-          <name>GitHub snapshot</name>
-          <url>https://maven.pkg.github.com/${mvn.github.owner}/${mvn.github.repository}</url>
-          <id>github</id>
-          <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
         <repository>
+          <uniqueVersion>false</uniqueVersion>
+          <id>github</id>
           <name>GitHub release</name>
           <url>https://maven.pkg.github.com/${mvn.github.owner}/${mvn.github.repository}</url>
-          <id>github</id>
-          <uniqueVersion>false</uniqueVersion>
         </repository>
+        <snapshotRepository>
+          <uniqueVersion>true</uniqueVersion>
+          <id>github</id>
+          <name>GitHub snapshot</name>
+          <url>https://maven.pkg.github.com/${mvn.github.owner}/${mvn.github.repository}</url>
+        </snapshotRepository>
       </distributionManagement>
     </profile>
     <profile>
@@ -951,6 +964,7 @@
                 </goals>
                 <phase>validate</phase>
                 <configuration>
+                  <skip>false</skip>
                   <consoleOutput>true</consoleOutput>
                   <failsOnError>true</failsOnError>
                   <linkXRef>false</linkXRef>
@@ -966,6 +980,7 @@
                 </goals>
                 <phase>validate</phase>
                 <configuration>
+                  <skip>false</skip>
                   <consoleOutput>true</consoleOutput>
                   <failsOnError>true</failsOnError>
                   <linkXRef>false</linkXRef>
@@ -1014,6 +1029,7 @@
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
             <executions>
+              <!--
               <execution>
                 <id>pre-unit-test</id>
                 <goals>
@@ -1059,8 +1075,9 @@
                   <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
                 </configuration>
               </execution>
+              -->
               <execution>
-                <id>jacoco-check</id>
+                <id>check</id>
                 <goals>
                   <goal>check</goal>
                 </goals>
@@ -1110,6 +1127,7 @@
         </plugins>
       </build>
     </profile>
+
     <!-- Development Integration Test-->
     <profile>
       <id>dit</id>
@@ -1128,6 +1146,9 @@
               <includes>
                 <include>**/*TestDit</include>
                 <include>**/*TestDIT</include>
+                <include>**/*UnitTest</include>
+                <include>**/*UniCase</include>
+                <include>**/*UnitTestCase</include>
               </includes>
             </configuration>
           </plugin>
@@ -1137,7 +1158,7 @@
             <artifactId>jacoco-maven-plugin</artifactId>
             <executions>
               <execution>
-                <id>pre-unit-test</id>
+                <id>pre-integration-test</id>
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
@@ -1146,30 +1167,21 @@
                   <destFile>${mvn.jacoco.report.dir}/dit/jacoco-ut.exec</destFile>
                   <propertyName>surefireArgLine</propertyName>
                 </configuration>
+                <phase>pre-integration-test</phase>
               </execution>
               <execution>
-                <id>post-unit-test</id>
+                <id>post-integration-test</id>
                 <goals>
                   <goal>report</goal>
                 </goals>
-                <phase>test</phase>
+                <!--<phase>test</phase>-->
+                <phase>post-integration-test</phase>
                 <configuration>
                   <dataFile>${mvn.jacoco.report.dir}/dit/jacoco-ut.exec</dataFile>
                   <outputDirectory>${project.reporting.outputDirectory}/dit/jacoco-ut</outputDirectory>
                 </configuration>
               </execution>
-              <execution>
-                <id>pre-integration-test</id>
-                <goals>
-                  <goal>prepare-agent</goal>
-                </goals>
-                <phase>pre-integration-test</phase>
-                <configuration>
-                  <dumpOnExit>true</dumpOnExit>
-                  <destFile>${mvn.jacoco.report.dir}/dit/jacoco-it.exec</destFile>
-                  <propertyName>failsafeArgLine</propertyName>
-                </configuration>
-              </execution>
+              <!--
               <execution>
                 <id>post-integration-test</id>
                 <goals>
@@ -1181,6 +1193,7 @@
                   <outputDirectory>${project.reporting.outputDirectory}/dit/jacoco-it</outputDirectory>
                 </configuration>
               </execution>
+              -->
               <execution>
                 <id>jacoco-check</id>
                 <goals>
@@ -1373,8 +1386,11 @@
               <argLine>${jvm.options}</argLine>
               <includes>
                 <!-- Include all development Integration testing -->
+                <include>**/*UniCase</include>
+                <include>**/*UnitTestCase</include>
                 <include>**/*TestDit</include>
                 <include>**/*TestDIT</include>
+                <include>**/*UnitTest</include>
 
                 <!-- Include all (Functional, Framework & Feature) Integration testing -->
                 <include>**/*TestFit</include>
@@ -1436,7 +1452,7 @@
                 </configuration>
               </execution>
               <execution>
-                <id>jacoco-check</id>
+                <id>check</id>
                 <goals>
                   <goal>check</goal>
                 </goals>
@@ -1629,8 +1645,14 @@
               <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
+                <include>**/*QaCase</include>
+                <include>**/*QqTestCase</include>
+                <include>**/*QACase</include>
+                <include>**/*QATestCase</include>
                 <include>**/*TestQa</include>
                 <include>**/*TestQA</include>
+                <include>**/*QaTest</include>
+                <include>**/*QATest</include>
               </includes>
             </configuration>
           </plugin>
@@ -1944,8 +1966,9 @@
                   <outputDirectory>${project.reporting.outputDirectory}/iat/jacoco-it</outputDirectory>
                 </configuration>
               </execution>
+              <!--
               <execution>
-                <id>jacoco-check</id>
+                <id>check</id>
                 <goals>
                   <goal>check</goal>
                 </goals>
@@ -1991,6 +2014,7 @@
                   <haltOnFailure>${mvn.jacoco.haltOnFailure}</haltOnFailure>
                 </configuration>
               </execution>
+              -->
             </executions>
           </plugin>
         </plugins>
@@ -2254,7 +2278,8 @@
               </execution>
             </executions>
           </plugin>
-          <!--<plugin>
+          <!--
+          <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
@@ -2265,7 +2290,8 @@
                 </property>
               </properties>
             </configuration>
-          </plugin>-->
+          </plugin>
+          -->
         </plugins>
       </build>
     </profile>
@@ -2449,6 +2475,11 @@
     </profile>
     <profile>
       <id>sonar</id>
+      <activation>
+        <property>
+          <name>sonar.host.url</name>
+        </property>
+      </activation>
       <build>
         <plugins>
           <plugin>
