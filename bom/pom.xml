@@ -22,7 +22,11 @@
   <parent>
     <groupId>io.djanta</groupId>
     <artifactId>djanta-java-parent</artifactId>
+<<<<<<< HEAD
     <version>1.2.4-SNAPSHOT</version>
+=======
+    <version>1.2.3-SNAPSHOT</version>
+>>>>>>> 713e63036b52622d6d9d0e9fc7ed8acecade88f2
   </parent>
 
   <artifactId>djanta-java-bom</artifactId>
