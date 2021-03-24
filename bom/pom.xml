@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2019-2020 DJANTA, LLC (https://www.djanta.io)
+    Copyright 2019-2021 DJANTA, LLC (https://www.djanta.io)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -22,11 +22,7 @@
   <parent>
     <groupId>io.djanta</groupId>
     <artifactId>djanta-java-parent</artifactId>
-<<<<<<< HEAD
     <version>1.2.4-SNAPSHOT</version>
-=======
-    <version>1.2.3-SNAPSHOT</version>
->>>>>>> 713e63036b52622d6d9d0e9fc7ed8acecade88f2
   </parent>
 
   <artifactId>djanta-java-bom</artifactId>

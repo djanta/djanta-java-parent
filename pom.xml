@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2019-2020 DJANTA, LLC (https://www.djanta.io)
+    Copyright 2019-2021 DJANTA, LLC (https://www.djanta.io)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -1162,12 +1162,12 @@
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
+                <phase>pre-integration-test</phase>
                 <configuration>
                   <dumpOnExit>true</dumpOnExit>
                   <destFile>${mvn.jacoco.report.dir}/dit/jacoco-ut.exec</destFile>
                   <propertyName>surefireArgLine</propertyName>
                 </configuration>
-                <phase>pre-integration-test</phase>
               </execution>
               <execution>
                 <id>post-integration-test</id>
