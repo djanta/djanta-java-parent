@@ -122,4 +122,3 @@ jobs:
           GITHUB_USERNAME: ${{ secrets.GH_USER }}
         run: |
           ./mvnw -B -s $(pwd)/.mvn/settings.xml -DskipTests=false clean verify
-          ./mvnw -B -X -e -s $(pwd)/.mvn/settings.xml -Pgithub clean install deploy
