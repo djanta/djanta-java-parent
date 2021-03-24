@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.0] - 2021-03-04
+
+### `Added`
+- Upgrage major version to `2.0.0`
+- Optimizing the `integration testing` and `feature testing`
+
+### `Change`
+- Changing out internal git repository name to `maven-packages`
+
+## [1.2.4] - 2021-02-04
+
+### `Added`
+- Introducing the property `mvn.github.repository` as the way to export and variabilize the target github hoster maven package
+
 ## [1.2.3] - 2020-10-29
 
 ### `Fixed`
@@ -76,7 +90,8 @@ while releasing or tempting to close the `ossrh` node for release or promoting p
 - CNAME file to enable GitHub Pages custom domain
 - README now contains answers to common questions about CHANGELOGs
 
-[Unreleased]: https://github.com/djanta/djanta-java-parent/compare/v1.2.3...HEAD
+[Unreleased]: https://github.com/djanta/djanta-java-parent/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/djanta/djanta-java-parent/compare/v1.2.3...v2.0.0
 [1.2.3]: https://github.com/djanta/djanta-java-parent/compare/v1.2.3...v1.2.3
 [1.2.2]: https://github.com/djanta/djanta-java-parent/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/djanta/djanta-java-parent/compare/v1.2.0...v1.2.1
