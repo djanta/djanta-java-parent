@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2021-04-24
+
+### `Added`
+- Introducing OpenJdk JMH benchmark `org.openjdk.jmh` version dependency `1.29` and it maven pluging configuration
+- Normalizing `Dit`, `Fit`, `etc ...` profile and configuration clean up.
+
 ## [2.0.0] - 2021-03-04
 
 ### `Added`
@@ -90,7 +96,8 @@ while releasing or tempting to close the `ossrh` node for release or promoting p
 - CNAME file to enable GitHub Pages custom domain
 - README now contains answers to common questions about CHANGELOGs
 
-[Unreleased]: https://github.com/djanta/djanta-java-parent/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/djanta/djanta-java-parent/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/djanta/djanta-java-parent/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/djanta/djanta-java-parent/compare/v1.2.3...v2.0.0
 [1.2.3]: https://github.com/djanta/djanta-java-parent/compare/v1.2.3...v1.2.3
 [1.2.2]: https://github.com/djanta/djanta-java-parent/compare/v1.2.1...v1.2.2
