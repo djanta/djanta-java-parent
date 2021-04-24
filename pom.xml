@@ -21,7 +21,7 @@
 
   <groupId>io.djanta</groupId>
   <artifactId>djanta-java-parent</artifactId>
-  <version>1.2.5-SNAPSHOT</version>
+  <version>2.0.1-SNAPSHOT</version>
 
   <packaging>pom</packaging>
 
@@ -52,8 +52,12 @@
     <org.slf4j.version>1.7.28</org.slf4j.version>
     <junit.version>4.12</junit.version>
     <org.powermock.version>2.0.2</org.powermock.version>
-    <org.mockito.version>2.7.5</org.mockito.version>
+    <org.mockito.version>3.8.0</org.mockito.version>
     <org.mockito.all.version>2.0.2-beta</org.mockito.all.version>
+    <org.mockito.jupiter.version>3.8.0</org.mockito.jupiter.version>
+    <org.junit.platform.version>1.7.0</org.junit.platform.version>
+    <org.junit.jupiter.version>5.7.0</org.junit.jupiter.version>
+    <org.junit.vintage.version>5.7.0</org.junit.vintage.version>
     <org.everit.json.version>1.4.1</org.everit.json.version>
     <org.jbehave.version>4.5.1</org.jbehave.version>
     <de.codecentric.version>1.2.0</de.codecentric.version>
@@ -130,6 +134,7 @@
     <io.fares.junit.mongodb.version>1.1.0</io.fares.junit.mongodb.version>
     <redis.clients.version>2.8.1</redis.clients.version>
     <com.samskivert.version>1.15</com.samskivert.version>
+    <org.openjdk.jmh.version>1.29</org.openjdk.jmh.version>
 
     <maven.plugin.animal-sniffer.version>1.18</maven.plugin.animal-sniffer.version>
     <maven.plugin.compiler.version>3.8.0</maven.plugin.compiler.version>
@@ -141,7 +146,8 @@
     <maven.plugin.release.version>2.5.3</maven.plugin.release.version>
     <maven.plugin.bundle.version>4.0.0</maven.plugin.bundle.version>
     <maven.plugin.centralsync.version>0.1.0</maven.plugin.centralsync.version>
-    <maven.plugin.surefire.version>2.22.0</maven.plugin.surefire.version>
+    <maven.plugin.surefire.version>3.0.0-M5</maven.plugin.surefire.version>
+    <maven.plugin.failsafe.version>3.0.0-M5</maven.plugin.failsafe.version>
     <maven.plugin.scm.version>1.11.2</maven.plugin.scm.version>
     <maven.plugin.versions.version>2.7</maven.plugin.versions.version>
     <maven.plugin.shade.version>3.2.1</maven.plugin.shade.version>
@@ -149,7 +155,7 @@
     <maven.plugin.resources.version>3.0.2</maven.plugin.resources.version>
     <maven.plugin.enforcer.version>1.4.1</maven.plugin.enforcer.version>
     <maven.plugin.dependency.version>3.0.0</maven.plugin.dependency.version>
-    <maven.plugin.jacoco.version>0.8.4</maven.plugin.jacoco.version>
+    <maven.plugin.jacoco.version>0.8.6</maven.plugin.jacoco.version>
     <maven.plugin.buildnumber.version>1.4</maven.plugin.buildnumber.version>
     <maven.plugin.sortpom.version>2.8.0</maven.plugin.sortpom.version>
     <maven.plugin.build-helper.version>3.0.0</maven.plugin.build-helper.version>
@@ -261,7 +267,7 @@
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
@@ -277,9 +283,9 @@
     <developer>
       <id>stanislaska</id>
       <name>Koffi Stanislas ASSOUTOVI</name>
-      <url>http://github.com/stanislaska</url>
+      <url>https://github.com/stanislaska</url>
       <organization>DJANTA, LLC</organization>
-      <organizationUrl>http://djanta.io</organizationUrl>
+      <organizationUrl>https://djanta.io</organizationUrl>
       <roles>
         <role>architect</role>
         <role>developer</role>
@@ -289,9 +295,9 @@
     <developer>
       <id>djanta</id>
       <name>Koffi Stanislas ASSOUTOVI</name>
-      <url>http://github.com/djanta</url>
+      <url>https://github.com/djanta</url>
       <organization>DJANTA, LLC</organization>
-      <organizationUrl>http://djanta.io</organizationUrl>
+      <organizationUrl>https://djanta.io</organizationUrl>
       <roles>
         <role>CEO</role>
         <role>CTO</role>
@@ -344,6 +350,7 @@
   <build>
     <!-- <finalName>${project.artifactId}-${project.version}-r${buildNumber}</finalName> -->
     <finalName>${project.artifactId}-${project.version}</finalName>
+
     <pluginManagement>
       <plugins>
         <plugin>
@@ -389,11 +396,14 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-failsafe-plugin</artifactId>
+          <version>${maven.plugin.failsafe.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
           <version>${maven.plugin.surefire.version}</version>
           <configuration>
-            <redirectTestOutputToFile>true</redirectTestOutputToFile>
-            <trimStackTrace>false</trimStackTrace>
             <argLine>${jvm.options}</argLine>
           </configuration>
           <dependencies>
@@ -558,23 +568,6 @@
           </dependency>
         </dependencies>
       </plugin>
-      <!-- Ensures unit tesing to be run -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <redirectTestOutputToFile>true</redirectTestOutputToFile>
-          <trimStackTrace>false</trimStackTrace>
-          <argLine>${jvm.options}</argLine>
-          <includes>
-            <include>**/*Test</include>
-            <include>**/*UnitTesting</include>
-            <include>**/*Testing</include>
-            <include>**/*TestUnit</include>
-          </includes>
-        </configuration>
-      </plugin>
-
       <!-- Ensures checksums are added to published jars -->
       <plugin>
         <artifactId>maven-install-plugin</artifactId>
@@ -942,6 +935,59 @@
       </activation>
       <build>
         <plugins>
+          <!-- Jacoco Configuration -->
+          <plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>check</id>
+                <goals>
+                  <goal>check</goal>
+                </goals>
+                <configuration>
+                  <rules>
+                    <rule>
+                      <element>BUNDLE</element>
+                      <limits>
+                        <limit>
+                          <counter>CLASS</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${mvn.jacoco.classRatio}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>INSTRUCTION</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${mvn.jacoco.instructionRatio}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>METHOD</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${mvn.jacoco.methodRatio}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>BRANCH</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${mvn.jacoco.branchRatio}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>LINE</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${mvn.jacoco.lineRatio}</minimum>
+                        </limit>
+                        <limit>
+                          <counter>COMPLEXITY</counter>
+                          <value>COVEREDRATIO</value>
+                          <minimum>${mvn.jacoco.complexityRatio}</minimum>
+                        </limit>
+                      </limits>
+                    </rule>
+                  </rules>
+                  <haltOnFailure>${mvn.jacoco.haltOnFailure}</haltOnFailure>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
@@ -1024,106 +1070,6 @@
               </execution>
             </executions>
           </plugin>
-          <!-- Jacoco Configuration -->
-          <plugin>
-            <groupId>org.jacoco</groupId>
-            <artifactId>jacoco-maven-plugin</artifactId>
-            <executions>
-              <!--
-              <execution>
-                <id>pre-unit-test</id>
-                <goals>
-                  <goal>prepare-agent</goal>
-                </goals>
-                <configuration>
-                  <dumpOnExit>true</dumpOnExit>
-                  <destFile>${mvn.jacoco.report.dir}/jacoco-ut.exec</destFile>
-                  <propertyName>surefireArgLine</propertyName>
-                </configuration>
-              </execution>
-              <execution>
-                <id>post-unit-test</id>
-                <goals>
-                  <goal>report</goal>
-                </goals>
-                <phase>test</phase>
-                <configuration>
-                  <dataFile>${mvn.jacoco.report.dir}/jacoco-ut.exec</dataFile>
-                  <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
-                </configuration>
-              </execution>
-              <execution>
-                <id>pre-integration-test</id>
-                <goals>
-                  <goal>prepare-agent</goal>
-                </goals>
-                <phase>pre-integration-test</phase>
-                <configuration>
-                  <dumpOnExit>true</dumpOnExit>
-                  <destFile>${mvn.jacoco.report.dir}/jacoco-it.exec</destFile>
-                  <propertyName>failsafeArgLine</propertyName>
-                </configuration>
-              </execution>
-              <execution>
-                <id>post-integration-test</id>
-                <goals>
-                  <goal>report</goal>
-                </goals>
-                <phase>post-integration-test</phase>
-                <configuration>
-                  <dataFile>${mvn.jacoco.report.dir}/jacoco-it.exec</dataFile>
-                  <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
-                </configuration>
-              </execution>
-              -->
-              <execution>
-                <id>check</id>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-                <configuration>
-                  <rules>
-                    <rule>
-                      <element>BUNDLE</element>
-                      <limits>
-                        <limit>
-                          <counter>CLASS</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.classRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>INSTRUCTION</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.instructionRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>METHOD</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.methodRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>BRANCH</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.branchRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>LINE</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.lineRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>COMPLEXITY</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.complexityRatio}</minimum>
-                        </limit>
-                      </limits>
-                    </rule>
-                  </rules>
-                  <haltOnFailure>${mvn.jacoco.haltOnFailure}</haltOnFailure>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
         </plugins>
       </build>
     </profile>
@@ -1140,16 +1086,19 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <trimStackTrace>false</trimStackTrace>
+              <reportNameSuffix>dit</reportNameSuffix>
               <argLine>${jvm.options}</argLine>
               <includes>
-                <include>**/*TestDit</include>
-                <include>**/*TestDIT</include>
-                <include>**/*UnitTest</include>
-                <include>**/*UniCase</include>
-                <include>**/*UnitTestCase</include>
+                <include>**/*TestDit.java</include>
+                <include>**/*TestDIT.java</include>
+                <include>**/*Test.java</include>
               </includes>
+              <excludes>
+                <exclude>**/norun/*.java</exclude>
+                <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
+                <exclude>**/*$*</exclude>
+              </excludes>
+              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1164,9 +1113,9 @@
                 </goals>
                 <phase>pre-integration-test</phase>
                 <configuration>
-                  <dumpOnExit>true</dumpOnExit>
+                  <!--<dumpOnExit>true</dumpOnExit>-->
                   <destFile>${mvn.jacoco.report.dir}/dit/jacoco-ut.exec</destFile>
-                  <propertyName>surefireArgLine</propertyName>
+                  <!--<propertyName>surefireArgLine</propertyName>-->
                 </configuration>
               </execution>
               <execution>
@@ -1174,26 +1123,12 @@
                 <goals>
                   <goal>report</goal>
                 </goals>
-                <!--<phase>test</phase>-->
                 <phase>post-integration-test</phase>
                 <configuration>
                   <dataFile>${mvn.jacoco.report.dir}/dit/jacoco-ut.exec</dataFile>
                   <outputDirectory>${project.reporting.outputDirectory}/dit/jacoco-ut</outputDirectory>
                 </configuration>
               </execution>
-              <!--
-              <execution>
-                <id>post-integration-test</id>
-                <goals>
-                  <goal>report</goal>
-                </goals>
-                <phase>post-integration-test</phase>
-                <configuration>
-                  <dataFile>${mvn.jacoco.report.dir}/dit/jacoco-it.exec</dataFile>
-                  <outputDirectory>${project.reporting.outputDirectory}/dit/jacoco-it</outputDirectory>
-                </configuration>
-              </execution>
-              -->
               <execution>
                 <id>jacoco-check</id>
                 <goals>
@@ -1258,13 +1193,17 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
-                <include>**/*TestFit</include>
-                <include>**/*TestFIT</include>
+                <include>**/*TestFit.java</include>
+                <include>**/*TestFIT.java</include>
               </includes>
+              <excludes>
+                <exclude>**/norun/*.java</exclude>
+                <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
+                <exclude>**/*$*</exclude>
+              </excludes>
+              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1381,24 +1320,25 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
                 <!-- Include all development Integration testing -->
-                <include>**/*UniCase</include>
-                <include>**/*UnitTestCase</include>
-                <include>**/*TestDit</include>
-                <include>**/*TestDIT</include>
-                <include>**/*UnitTest</include>
+                <include>**/*TestDit.java</include>
+                <include>**/*TestDIT.java</include>
 
                 <!-- Include all (Functional, Framework & Feature) Integration testing -->
-                <include>**/*TestFit</include>
-                <include>**/*TestFIT</include>
+                <include>**/*TestFit.java</include>
+                <include>**/*TestFIT.java</include>
 
                 <!-- Include any other Pre Integration testing -->
-                <include>**/*TestPredit</include>
+                <include>**/*TestPredit.java</include>
               </includes>
+              <excludes>
+                <exclude>**/norun/*.java</exclude>
+                <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
+                <exclude>**/*$*</exclude>
+              </excludes>
+              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1515,16 +1455,20 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
                 <!--
                     Include all User Acceptance testing
                 -->
-                <include>**/*TestUat</include>
-                <include>**/*TestUAT</include>
+                <include>**/*TestUat.java</include>
+                <include>**/*TestUAT.java</include>
               </includes>
+              <excludes>
+                <exclude>**/norun/*.java</exclude>
+                <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
+                <exclude>**/*$*</exclude>
+              </excludes>
+              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1641,19 +1585,23 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
-                <include>**/*QaCase</include>
-                <include>**/*QqTestCase</include>
-                <include>**/*QACase</include>
-                <include>**/*QATestCase</include>
-                <include>**/*TestQa</include>
-                <include>**/*TestQA</include>
-                <include>**/*QaTest</include>
-                <include>**/*QATest</include>
+                <include>**/*QaCase.java</include>
+                <include>**/*QaTestCase.java</include>
+                <include>**/*QACase.java</include>
+                <include>**/*QATestCase.java</include>
+                <include>**/*TestQa.java</include>
+                <include>**/*TestQA.java</include>
+                <include>**/*QaTest.java</include>
+                <include>**/*QATest.java</include>
               </includes>
+              <excludes>
+                <exclude>**/norun/*.java</exclude>
+                <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
+                <exclude>**/*$*</exclude>
+              </excludes>
+              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1770,27 +1718,31 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
                 <!--
                     Include all User Acceptance testing
                 -->
-                <include>**/*TestUat</include>
-                <include>**/*TestUAT</include>
+                <include>**/*TestUat.java</include>
+                <include>**/*TestUAT.java</include>
 
                 <!--
                     Include all Quality (assurance) Acceptance testing
                 -->
-                <include>**/*TestQa</include>
-                <include>**/*TestQA</include>
+                <include>**/*TestQa.java</include>
+                <include>**/*TestQA.java</include>
 
                 <!--
                     Include any other Staging Integration testing
                 -->
-                <include>**/*TestStaging</include>
+                <include>**/*TestStaging.java</include>
               </includes>
+              <excludes>
+                <exclude>**/norun/*.java</exclude>
+                <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
+                <exclude>**/*$*</exclude>
+              </excludes>
+              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1907,13 +1859,17 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
-              <redirectTestOutputToFile>true</redirectTestOutputToFile>
-              <trimStackTrace>false</trimStackTrace>
               <argLine>${jvm.options}</argLine>
               <includes>
-                <include>**/*TestIat</include>
-                <include>**/*TestIAT</include>
+                <include>**/*TestIat.java</include>
+                <include>**/*TestIAT.java</include>
               </includes>
+              <excludes>
+                <exclude>**/norun/*.java</exclude>
+                <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
+                <exclude>**/*$*</exclude>
+              </excludes>
+              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -2015,6 +1971,115 @@
                 </configuration>
               </execution>
               -->
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>benchmark</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-core</artifactId>
+          <version>${org.openjdk.jmh.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-core-ct</artifactId>
+          <version>${org.openjdk.jmh.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-core-it</artifactId>
+          <version>${org.openjdk.jmh.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-core-benchmarks</artifactId>
+          <version>${org.openjdk.jmh.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-generator-annprocess</artifactId>
+          <version>${org.openjdk.jmh.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-generator-bytecode</artifactId>
+          <version>${org.openjdk.jmh.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-generator-asm</artifactId>
+          <version>${org.openjdk.jmh.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.openjdk.jmh</groupId>
+          <artifactId>jmh-generator-reflection</artifactId>
+          <version>${org.openjdk.jmh.version}</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.0.0</version>
+            <executions>
+              <execution>
+                <id>run-benchmarks</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>integration-test</phase>
+                <configuration>
+                  <classpathScope>test</classpathScope>
+                  <executable>java</executable>
+                  <arguments>
+                    <argument>-classpath</argument>
+                    <classpath></classpath>
+                    <argument>org.openjdk.jmh.Main</argument>
+                    <argument>.*</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>shade</goal>
+                </goals>
+                <phase>package</phase>
+                <configuration>
+                  <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
+                  <shadedClassifierName>benchmarks</shadedClassifierName>
+                  <createDependencyReducedPom>true</createDependencyReducedPom>
+                  <shadedArtifactAttached>true</shadedArtifactAttached>
+                  <transformers>
+                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                      <mainClass>org.openjdk.jmh.Main</mainClass>
+                    </transformer>
+                  </transformers>
+                  <filters>
+                    <filter>
+                      <artifact>*:*</artifact>
+                      <excludes>
+                        <exclude>META-INF/*.SF</exclude>
+                        <exclude>META-INF/*.DSA</exclude>
+                        <exclude>META-INF/*.RSA</exclude>
+                      </excludes>
+                    </filter>
+                  </filters>
+                </configuration>
+              </execution>
             </executions>
           </plugin>
         </plugins>
@@ -2155,7 +2220,7 @@
       </build>
     </profile>
     <profile>
-      <id>fatjar</id>
+      <id>shade</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
@@ -2210,6 +2275,9 @@
     </profile>
     <profile>
       <id>mockserver</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
       <build>
         <pluginManagement>
           <plugins>
