@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright 2019-2021 DJANTA, LLC (https://www.djanta.io)
+    Copyright 2019-2022 DJANTA, LLC (https://www.djanta.io)
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@
 
   <groupId>io.djanta</groupId>
   <artifactId>djanta-java-parent</artifactId>
-  <version>2.0.1-SNAPSHOT</version>
+  <version>2.0.2-SNAPSHOT</version>
 
   <packaging>pom</packaging>
 
@@ -398,6 +398,17 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>${maven.plugin.failsafe.version}</version>
+          <configuration>
+            <argLine>${it.failsafe.argLine}</argLine>
+            <trimStackTrace>false</trimStackTrace>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.surefire</groupId>
+              <artifactId>surefire-junit47</artifactId>
+              <version>${maven.plugin.failsafe.version}</version>
+            </dependency>
+          </dependencies>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -407,6 +418,11 @@
             <argLine>${jvm.options}</argLine>
           </configuration>
           <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.surefire</groupId>
+              <artifactId>surefire-junit47</artifactId>
+              <version>${maven.plugin.surefire.version}</version>
+            </dependency>
             <dependency>
               <groupId>org.ow2.asm</groupId>
               <artifactId>asm</artifactId>
@@ -933,6 +949,11 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
+      <properties>
+        <checkstyle.failsOnError>true</checkstyle.failsOnError>
+        <pmd.verbose>true</pmd.verbose>
+        <pmd.printFailingErrors>true</pmd.printFailingErrors>
+      </properties>
       <build>
         <plugins>
           <!-- Jacoco Configuration -->
@@ -1017,6 +1038,9 @@
                   <sourceDirectories>
                     <sourceDirectory>${basedir}/src/main</sourceDirectory>
                   </sourceDirectories>
+                  <testSourceDirectories>
+                    <testSourceDirectory>${basedir}/src/test</testSourceDirectory>
+                  </testSourceDirectories>
                 </configuration>
               </execution>
               <execution>
@@ -1028,7 +1052,7 @@
                 <configuration>
                   <skip>false</skip>
                   <consoleOutput>true</consoleOutput>
-                  <failsOnError>true</failsOnError>
+                  <failsOnError>${checkstyle.failsOnError}</failsOnError>
                   <linkXRef>false</linkXRef>
                   <sourceDirectories>
                     <sourceDirectory>${basedir}/src/test</sourceDirectory>
@@ -1080,6 +1104,9 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
+      <properties>
+        <surefire.properties.file>src/test/resources/surefire.properties</surefire.properties.file>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -1098,7 +1125,7 @@
                 <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
                 <exclude>**/*$*</exclude>
               </excludes>
-              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
+              <systemPropertiesFile>${surefire.properties.file}</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1187,6 +1214,9 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <properties>
+        <surefire.properties.file>src/test/resources/surefire.properties</surefire.properties.file>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -1203,7 +1233,7 @@
                 <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
                 <exclude>**/*$*</exclude>
               </excludes>
-              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
+              <systemPropertiesFile>${surefire.properties.file}</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1308,12 +1338,15 @@
         </plugins>
       </build>
     </profile>
-    <!-- Pre Developement Integration Test -->
+    <!-- Pre Development Integration Test -->
     <profile>
       <id>predit</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <properties>
+        <surefire.properties.file>src/test/resources/surefire.properties</surefire.properties.file>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -1338,7 +1371,7 @@
                 <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
                 <exclude>**/*$*</exclude>
               </excludes>
-              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
+              <systemPropertiesFile>${surefire.properties.file}</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1449,6 +1482,9 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <properties>
+        <surefire.properties.file>src/test/resources/surefire.properties</surefire.properties.file>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -1457,9 +1493,6 @@
             <configuration>
               <argLine>${jvm.options}</argLine>
               <includes>
-                <!--
-                    Include all User Acceptance testing
-                -->
                 <include>**/*TestUat.java</include>
                 <include>**/*TestUAT.java</include>
               </includes>
@@ -1468,7 +1501,7 @@
                 <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
                 <exclude>**/*$*</exclude>
               </excludes>
-              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
+              <systemPropertiesFile>${surefire.properties.file}</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1579,6 +1612,9 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <properties>
+        <surefire.properties.file>src/test/resources/surefire.properties</surefire.properties.file>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -1601,7 +1637,7 @@
                 <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
                 <exclude>**/*$*</exclude>
               </excludes>
-              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
+              <systemPropertiesFile>${surefire.properties.file}</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1712,6 +1748,9 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <properties>
+        <surefire.properties.file>src/test/resources/surefire.properties</surefire.properties.file>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -1742,7 +1781,7 @@
                 <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
                 <exclude>**/*$*</exclude>
               </excludes>
-              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
+              <systemPropertiesFile>${surefire.properties.file}</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1847,12 +1886,15 @@
         </plugins>
       </build>
     </profile>
-    <!-- Infrastructure automatiion Test -->
+    <!-- Infrastructure automation Test -->
     <profile>
       <id>iat</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <properties>
+        <surefire.properties.file>src/test/resources/surefire.properties</surefire.properties.file>
+      </properties>
       <build>
         <plugins>
           <plugin>
@@ -1869,7 +1911,7 @@
                 <exclude>%regex[com.*Heavy.*.class], Ignored*</exclude>
                 <exclude>**/*$*</exclude>
               </excludes>
-              <systemPropertiesFile>src/test/resources/.properties</systemPropertiesFile>
+              <systemPropertiesFile>${surefire.properties.file}</systemPropertiesFile>
             </configuration>
           </plugin>
           <!-- Jacoco Configuration -->
@@ -1981,6 +2023,10 @@
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
+      <properties>
+        <openjdk.jmh.argument>.*</openjdk.jmh.argument>
+        <openjdk.jmh.main>org.openjdk.jmh.Main</openjdk.jmh.main>
+      </properties>
       <dependencies>
         <dependency>
           <groupId>org.openjdk.jmh</groupId>
@@ -2041,9 +2087,9 @@
                   <executable>java</executable>
                   <arguments>
                     <argument>-classpath</argument>
-                    <classpath></classpath>
-                    <argument>org.openjdk.jmh.Main</argument>
-                    <argument>.*</argument>
+                    <argument>${openjdk.jmh.main}</argument>
+                    <argument>${openjdk.jmh.argument}</argument>
+                    <!--<classpath></classpath>-->
                   </arguments>
                 </configuration>
               </execution>
@@ -2060,7 +2106,7 @@
                 <phase>package</phase>
                 <configuration>
                   <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
-                  <shadedClassifierName>benchmarks</shadedClassifierName>
+                  <shadedClassifierName>benchmark</shadedClassifierName>
                   <createDependencyReducedPom>true</createDependencyReducedPom>
                   <shadedArtifactAttached>true</shadedArtifactAttached>
                   <transformers>
@@ -2079,6 +2125,32 @@
                     </filter>
                   </filters>
                 </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+              <appendAssemblyId>false</appendAssemblyId>
+              <attach>true</attach>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+                <!--<descriptorRef>bin</descriptorRef>
+                <descriptorRef>src</descriptorRef>
+                <descriptorRef>project</descriptorRef>-->
+              </descriptorRefs>
+              <!-- <descriptors>
+                <descriptor>assembly/ourAssembly.xml</descriptor>
+              </descriptors>-->
+            </configuration>
+            <executions>
+              <execution>
+                <id>broker-assembly</id>
+                <goals>
+                  <goal>single</goal>
+                </goals>
+                <phase>package</phase>
               </execution>
             </executions>
           </plugin>
