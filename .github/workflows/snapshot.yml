@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-name: Master
+name: Snapshot
 
 # On push event ...
 on:
