@@ -22,8 +22,8 @@ on:
   push:
     branches:
       - release
-    tags:
-      - /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/             # Push events to v1 tag
+#    tags:
+#      - /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/             # Push events to v1 tag
 
 jobs:
   release:
