@@ -39,9 +39,9 @@
 
     <jvm.options>-Duser.language=en</jvm.options>
     <main.signature.artifact>java18</main.signature.artifact>
-    <main.java.version>1.8</main.java.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <main.java.version>11</main.java.version>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
     <main.basedir>${project.basedir}</main.basedir>
 
     <com.fasterxml.jackson.version>2.10.1</com.fasterxml.jackson.version>
@@ -184,6 +184,7 @@
     <github.plugin.proguard.version>2.1.1</github.plugin.proguard.version>
     <github.plugin.site.version>0.12</github.plugin.site.version>
 
+    <mvn.profile.required></mvn.profile.required>
     <mvn.license.header>.mvn/licenses/apache-2.0-header</mvn.license.header>
     <mvn.formatter.configfile>.mvn/coding/eclipse-java-style.xml</mvn.formatter.configfile>
     <mvn.bom.template.filepath>file://${project.basedir}/.mvn/resources/bom.xml</mvn.bom.template.filepath>
@@ -675,6 +676,9 @@
             </goals>
             <configuration>
               <rules>
+                <requireJavaVersion>
+                  <version>[11,)</version>
+                </requireJavaVersion>
                 <bannedPlugins>
                   <level>WARN</level>
                   <!--
@@ -683,20 +687,15 @@
                   </excludes>
                   -->
                   <message>Please consider using the maven-invoker-plugin
-                                        (http://maven.apache.org/plugins/maven-invoker-plugin/)!</message>
+                                        (http://maven.apache.org/plugins/maven-invoker¬-plugin/)!</message>
                 </bannedPlugins>
                 <requireMavenVersion>
                   <version>3.3</version>
                 </requireMavenVersion>
-                <requireJavaVersion>
-                  <version>[11, ${main.java.version})</version>
-                </requireJavaVersion>
-                <!--
                   <requireActiveProfile>
-                      <profiles>check</profiles>
-                      <message>The following profiles: (check) cannot be deactivated</message>
+                      <profiles>${mvn.profile.required}</profiles>
+                      <message>The following profiles: (check) are required</message>
                   </requireActiveProfile>
-                -->
               </rules>
             </configuration>
           </execution>
