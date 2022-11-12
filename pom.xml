@@ -694,7 +694,7 @@
                 </requireMavenVersion>
                   <requireActiveProfile>
                       <profiles>${mvn.profile.required}</profiles>
-                      <message>The following profiles: (check) are required</message>
+                      <message>The following profiles: (${mvn.profile.required}) are required</message>
                   </requireActiveProfile>
               </rules>
             </configuration>
