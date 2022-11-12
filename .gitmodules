@@ -1,12 +1,12 @@
 [submodule ".mvn"]
 	path = .mvn
-	url = https://github.com/djanta/djanta-java-maven.git
+	url = git@github.com:djanta/djanta-java-maven.git
 	branch = master
 [submodule ".gnugp"]
 	path = .gnugp
-	url = https://github.com/djanta/djanta-build-gpg.git
+	url = git@github.com:djanta/djanta-build-gpg.git
 	branch = master
 [submodule ".release"]
 	path = .release
-	url = https://github.com/djanta/djanta-build-release.git
+	url = git@github.com:djanta/djanta-build-release.git
 	branch = master
