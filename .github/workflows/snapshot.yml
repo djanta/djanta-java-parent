@@ -28,7 +28,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        version: ['1.8']
+        version: ['11']
         os: [ubuntu-latest]
     steps:
       - name : GITHUB CONTEXT
@@ -36,7 +36,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
       - name: Checking out - (${{ matrix.os }})
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
           submodules: true
@@ -67,9 +67,10 @@ jobs:
 
           rm -rfv $KEYSTORE
       - name: Set up JDK ${{ matrix.version }}
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.version }}
+          distribution: 'zulu'
       - name: GitHub credentials configuration - ${{ matrix.os }} with version ${{ matrix.version }}
         shell: bash
         run: |
