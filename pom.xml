@@ -139,7 +139,7 @@
     <com.samskivert.version>1.15</com.samskivert.version>
     <org.openjdk.jmh.version>1.29</org.openjdk.jmh.version>
 
-    <maven.plugin.animal-sniffer.version>1.18</maven.plugin.animal-sniffer.version>
+    <maven.plugin.animal-sniffer.version>1.22</maven.plugin.animal-sniffer.version>
     <maven.plugin.compiler.version>3.8.0</maven.plugin.compiler.version>
     <maven.plugin.install.version>2.5.2</maven.plugin.install.version>
     <maven.plugin.source.version>3.0.1</maven.plugin.source.version>
