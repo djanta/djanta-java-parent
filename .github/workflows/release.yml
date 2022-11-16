@@ -21,7 +21,8 @@ on:
   # Trigger the workflow on push or pull request, but only for the master branch
   push:
     branches:
-      - release
+      - master
+#      - release
 #    tags:
 #      - /^((rc|v|version|release|tag)(-)?)?([0-9\.]+)((-)?(patch|beta|alpha))?$/             # Push events to v1 tag
 
@@ -97,4 +98,4 @@ jobs:
         run: |
           ./.release/release.sh --api --profile="github,release,-sonatype;sonatype,release,-license" \
             --setting-file=$(pwd)/.mvn/settings.xml --varg="-Dfindbugs.skip=true" \
-            --release-branch=release
+            --release-branch=master
