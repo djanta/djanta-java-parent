@@ -32,8 +32,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        version: ['11']
-        os: [ubuntu-latest]
+        version:
+          - '11'
+        os:
+          - 'ubuntu-latest'
     steps:
       - name : GITHUB CONTEXT
         env:
@@ -75,6 +77,13 @@ jobs:
         with:
           java-version: ${{ matrix.version }}
           distribution: 'zulu'
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: GitHub credentials configuration - ${{ matrix.os }} with version ${{ matrix.version }}
         shell: bash
         run: |
