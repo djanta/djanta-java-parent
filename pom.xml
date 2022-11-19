@@ -184,6 +184,11 @@
     <maven.plugin.help.version>3.2.0</maven.plugin.help.version>
     <maven.plugin.fabric8.version>4.4.0</maven.plugin.fabric8.version>
 
+    <aggregate.report.dir>${project.build.outputDirectory}/site/jacoco-aggregate</aggregate.report.dir>
+    <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+    <aggregate.report.file>${aggregate.report.dir}/jacoco.xml</aggregate.report.file>
+    <sonar.language>java</sonar.language>
+
     <github.plugin.proguard.version>2.1.1</github.plugin.proguard.version>
     <github.plugin.site.version>0.12</github.plugin.site.version>
 
@@ -871,15 +876,20 @@
     <profile>
       <id>github</id>
       <activation>
-        <property>
-          <name>scmPrivateOnly</name>
-        </property>
+        <activeByDefault>false</activeByDefault>
       </activation>
       <repositories>
         <repository>
-          <id>github</id>
-          <name>GitHub</name>
+          <id>djanta-public</id>
           <url>https://maven.pkg.github.com/${mvn.github.owner}/${mvn.github.repository}</url>
+          <releases>
+            <updatePolicy>daily</updatePolicy>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <updatePolicy>daily</updatePolicy>
+            <enabled>true</enabled>
+          </snapshots>
         </repository>
         <repository>
           <releases>
@@ -962,6 +972,10 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <title>${sonar.projectKey}</title>
+              <propertyName>surefireArgLine</propertyName>
+            </configuration>
             <executions>
               <execution>
                 <id>check</id>
@@ -1067,7 +1081,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-pmd-plugin</artifactId>
             <configuration>
-              <minimumTokens>120</minimumTokens>
+              <minimumTokens>${minimumTokens}</minimumTokens>
               <targetJdk>${maven.compiler.target}</targetJdk>
             </configuration>
             <executions>
@@ -1120,7 +1134,10 @@
               <includes>
                 <include>**/*TestDit.java</include>
                 <include>**/*TestDIT.java</include>
-                <include>**/*Test.java</include>
+                <include>**/*DITTest.java</include>
+                <include>**/*DitTest.java</include>
+                <include>**/*Dit.java</include>
+                <include>**/*DIT.java</include>
               </includes>
               <excludes>
                 <exclude>**/norun/*.java</exclude>
@@ -1134,6 +1151,10 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <title>${sonar.projectKey}</title>
+              <propertyName>surefireArgLine</propertyName>
+            </configuration>
             <executions>
               <execution>
                 <id>pre-integration-test</id>
@@ -1229,6 +1250,10 @@
               <includes>
                 <include>**/*TestFit.java</include>
                 <include>**/*TestFIT.java</include>
+                <include>**/*FITTest.java</include>
+                <include>**/*FitTest.java</include>
+                <include>**/*Fit.java</include>
+                <include>**/*FIT.java</include>
               </includes>
               <excludes>
                 <exclude>**/norun/*.java</exclude>
@@ -1242,6 +1267,10 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <title>${sonar.projectKey}</title>
+              <propertyName>surefireArgLine</propertyName>
+            </configuration>
             <executions>
               <execution>
                 <id>pre-unit-test</id>
@@ -1286,53 +1315,6 @@
                 <configuration>
                   <dataFile>${mvn.jacoco.report.dir}/fit/jacoco-it.exec</dataFile>
                   <outputDirectory>${project.reporting.outputDirectory}/fit/jacoco-it</outputDirectory>
-                </configuration>
-              </execution>
-              <execution>
-                <id>jacoco-check</id>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-                <configuration>
-                  <dataFile>${mvn.jacoco.report.dir}/fit/jacoco-ut.exec</dataFile>
-                  <rules>
-                    <rule>
-                      <element>BUNDLE</element>
-                      <limits>
-                        <limit>
-                          <counter>CLASS</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.classRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>INSTRUCTION</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.instructionRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>METHOD</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.methodRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>BRANCH</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.branchRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>LINE</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.lineRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>COMPLEXITY</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.complexityRatio}</minimum>
-                        </limit>
-                      </limits>
-                    </rule>
-                  </rules>
-                  <haltOnFailure>${mvn.jacoco.haltOnFailure}</haltOnFailure>
                 </configuration>
               </execution>
             </executions>
@@ -1380,6 +1362,10 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <title>${sonar.projectKey}</title>
+              <propertyName>surefireArgLine</propertyName>
+            </configuration>
             <executions>
               <execution>
                 <id>pre-unit-test</id>
@@ -1426,53 +1412,6 @@
                   <outputDirectory>${project.reporting.outputDirectory}/predit/jacoco-it</outputDirectory>
                 </configuration>
               </execution>
-              <execution>
-                <id>check</id>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-                <configuration>
-                  <dataFile>${mvn.jacoco.report.dir}/predit/jacoco-ut.exec</dataFile>
-                  <rules>
-                    <rule>
-                      <element>BUNDLE</element>
-                      <limits>
-                        <limit>
-                          <counter>CLASS</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.classRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>INSTRUCTION</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.instructionRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>METHOD</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.methodRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>BRANCH</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.branchRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>LINE</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.lineRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>COMPLEXITY</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.complexityRatio}</minimum>
-                        </limit>
-                      </limits>
-                    </rule>
-                  </rules>
-                  <haltOnFailure>${mvn.jacoco.haltOnFailure}</haltOnFailure>
-                </configuration>
-              </execution>
             </executions>
           </plugin>
         </plugins>
@@ -1510,6 +1449,10 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <title>${sonar.projectKey}</title>
+              <propertyName>surefireArgLine</propertyName>
+            </configuration>
             <executions>
               <execution>
                 <id>pre-unit-test</id>
@@ -1556,53 +1499,6 @@
                   <outputDirectory>${project.reporting.outputDirectory}/uat/jacoco-it</outputDirectory>
                 </configuration>
               </execution>
-              <execution>
-                <id>jacoco-check</id>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-                <configuration>
-                  <dataFile>${mvn.jacoco.report.dir}/uat/jacoco-ut.exec</dataFile>
-                  <rules>
-                    <rule>
-                      <element>BUNDLE</element>
-                      <limits>
-                        <limit>
-                          <counter>CLASS</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.classRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>INSTRUCTION</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.instructionRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>METHOD</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.methodRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>BRANCH</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.branchRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>LINE</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.lineRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>COMPLEXITY</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.complexityRatio}</minimum>
-                        </limit>
-                      </limits>
-                    </rule>
-                  </rules>
-                  <haltOnFailure>${mvn.jacoco.haltOnFailure}</haltOnFailure>
-                </configuration>
-              </execution>
             </executions>
           </plugin>
         </plugins>
@@ -1646,6 +1542,10 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <title>${sonar.projectKey}</title>
+              <propertyName>surefireArgLine</propertyName>
+            </configuration>
             <executions>
               <execution>
                 <id>pre-unit-test</id>
@@ -1690,53 +1590,6 @@
                 <configuration>
                   <dataFile>${mvn.jacoco.report.dir}/qa/jacoco-it.exec</dataFile>
                   <outputDirectory>${project.reporting.outputDirectory}/qa/jacoco-it</outputDirectory>
-                </configuration>
-              </execution>
-              <execution>
-                <id>jacoco-check</id>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-                <configuration>
-                  <dataFile>${mvn.jacoco.report.dir}/qa/jacoco-ut.exec</dataFile>
-                  <rules>
-                    <rule>
-                      <element>BUNDLE</element>
-                      <limits>
-                        <limit>
-                          <counter>CLASS</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.classRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>INSTRUCTION</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.instructionRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>METHOD</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.methodRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>BRANCH</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.branchRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>LINE</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.lineRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>COMPLEXITY</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.complexityRatio}</minimum>
-                        </limit>
-                      </limits>
-                    </rule>
-                  </rules>
-                  <haltOnFailure>${mvn.jacoco.haltOnFailure}</haltOnFailure>
                 </configuration>
               </execution>
             </executions>
@@ -1790,6 +1643,10 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <title>${sonar.projectKey}</title>
+              <propertyName>surefireArgLine</propertyName>
+            </configuration>
             <executions>
               <execution>
                 <id>pre-unit-test</id>
@@ -1836,53 +1693,6 @@
                   <outputDirectory>${project.reporting.outputDirectory}/staging/jacoco-it</outputDirectory>
                 </configuration>
               </execution>
-              <execution>
-                <id>jacoco-check</id>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-                <configuration>
-                  <dataFile>${mvn.jacoco.report.dir}/staging/jacoco-ut.exec</dataFile>
-                  <rules>
-                    <rule>
-                      <element>BUNDLE</element>
-                      <limits>
-                        <limit>
-                          <counter>CLASS</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.classRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>INSTRUCTION</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.instructionRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>METHOD</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.methodRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>BRANCH</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.branchRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>LINE</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.lineRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>COMPLEXITY</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.complexityRatio}</minimum>
-                        </limit>
-                      </limits>
-                    </rule>
-                  </rules>
-                  <haltOnFailure>${mvn.jacoco.haltOnFailure}</haltOnFailure>
-                </configuration>
-              </execution>
             </executions>
           </plugin>
         </plugins>
@@ -1920,6 +1730,10 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
+            <configuration>
+              <title>${sonar.projectKey}</title>
+              <propertyName>surefireArgLine</propertyName>
+            </configuration>
             <executions>
               <execution>
                 <id>pre-unit-test</id>
@@ -1966,55 +1780,6 @@
                   <outputDirectory>${project.reporting.outputDirectory}/iat/jacoco-it</outputDirectory>
                 </configuration>
               </execution>
-              <!--
-              <execution>
-                <id>check</id>
-                <goals>
-                  <goal>check</goal>
-                </goals>
-                <configuration>
-                  <dataFile>${mvn.jacoco.report.dir}/iat/jacoco-ut.exec</dataFile>
-                  <rules>
-                    <rule>
-                      <element>BUNDLE</element>
-                      <limits>
-                        <limit>
-                          <counter>CLASS</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.classRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>INSTRUCTION</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.instructionRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>METHOD</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.methodRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>BRANCH</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.branchRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>LINE</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.lineRatio}</minimum>
-                        </limit>
-                        <limit>
-                          <counter>COMPLEXITY</counter>
-                          <value>COVEREDRATIO</value>
-                          <minimum>${mvn.jacoco.complexityRatio}</minimum>
-                        </limit>
-                      </limits>
-                    </rule>
-                  </rules>
-                  <haltOnFailure>${mvn.jacoco.haltOnFailure}</haltOnFailure>
-                </configuration>
-              </execution>
-              -->
             </executions>
           </plugin>
         </plugins>

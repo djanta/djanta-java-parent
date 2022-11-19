@@ -37,8 +37,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        version: ['11']
-        os: [ubuntu-latest]
+        version:
+          - '11'
+        os:
+          - 'ubuntu-latest'
 #        fail-fast: false
 #    if: github.event_name == 'push' && startsWith(toJson(github.event.commits), '***NO_CI***') == false && contains(toJson(github.event.commits), '[ci skip]') == false && contains(toJson(github.event.commits), '[skip ci]') == false
     steps:
@@ -74,7 +76,7 @@ jobs:
         shell: bash
         run: |
           git submodule sync --recursive
-          git submodule update --init --recursive --remote --merge --force --depth=3
+          git submodule update --recursive --remote --merge --force --depth=3
       - name: Gpg initialization - (${{ matrix.os }})
         shell: bash
         run: |
@@ -101,6 +103,13 @@ jobs:
         with:
           java-version: ${{ matrix.version }}
           distribution: 'zulu'
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: GitHub credentials configuration
         shell: bash
         run: |
